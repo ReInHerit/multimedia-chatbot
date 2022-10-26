@@ -13,16 +13,16 @@ class Migration(migrations.Migration):
             model_name='question_answer',
             name='question_error_type',
             field=models.CharField(choices=[('One character question', 'One character question'),
-                                            ('Too long question', 'Too long question'), (
-                                            'What is? as question or two words question',
+                                            ('Too long question', 'Too long question'),
+                                            ('What is? as question or two words question',
                                             'What is? as question or two words question'),
                                             ('Commission related wrong question', 'Commission related wrong question'),
                                             ('Who instead of Where or viceversa', 'Who instead of Where or viceversa'),
-                                            (
-                                            'What instead of Where or viceversa', 'What instead of Where or viceversa'),
+                                            ('What instead of Where or viceversa',
+                                             'What instead of Where or viceversa'),
                                             ('Was instead of were or viceversa', 'Was inted of were or viceversa'),
-                                            ('Part of the sentence repeated', 'Part of the sentence repeated'), (
-                                            'Indefinite article instead of definite article or viceversa',
+                                            ('Part of the sentence repeated', 'Part of the sentence repeated'),
+                                            ('Indefinite article instead of definite article or viceversa',
                                             'Indefinite article instead of definite article or viceversa'),
                                             ('No sense question', 'No sense question'), ('Correct', 'Correct'),
                                             ('Unrevised', 'Unrevised')], default='Unrevised', max_length=500),

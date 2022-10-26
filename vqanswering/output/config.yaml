@@ -253,7 +253,7 @@ MODEL:
     NAME: SemSegFPNHead
     NORM: GN
     NUM_CLASSES: 54
-  WEIGHTS: /equilibrium/pietrobongini/demo_icpr/vqanswering/VQA_DEMO_IDEHA/grid_feats_vqa_master/weights/X-101.pth
+  WEIGHTS: /equilibrium/pietrobongini/demo_icpr/vqanswering/question_classifier/grid_feats_vqa_master/weights/X-101.pth
 OUTPUT_DIR: ./output
 SEED: -1
 SOLVER:

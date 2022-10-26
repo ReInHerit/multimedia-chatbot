@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 from .models import Artwork
@@ -7,7 +6,6 @@ from .models import Suggestion
 from .models import Question_Answer
 from .forms import QAForm
 from django.views import View
-import json
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
