@@ -1,4 +1,3 @@
-
 from VQA_DEMO_IDEHA.grid_feats_vqa_master.extract_grid_feature import gen_feats, load_model
 import os
 from VQA_DEMO_IDEHA.bert import get_pretrained_bert
@@ -15,10 +14,13 @@ from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up.preprocessing import 
 from VQA_DEMO_IDEHA.bert_evaluation.bert_eval import normalize_answer
 import numpy as np
 import torch.nn.functional as F
-os.environ['CUDA_VISIBLE_DEVICES']  = ''
+
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 device = torch.device('cpu')
-#def extract_models_for_answer():
+
+
+# def extract_models_for_answer():
 def download_image(image_url):
     r = requests.get(image_url, stream=True)
 
@@ -28,24 +30,29 @@ def download_image(image_url):
         r.raw.decode_content = True
 
         # Open a local file with wb ( write binary ) permission.
-        #with open(filename, 'wb') as f:
-        #shutil.copyfileobj(r.raw, f)
-        img =Image.open(r.raw)
+        # with open(filename, 'wb') as f:
+        # shutil.copyfileobj(r.raw, f)
+        img = Image.open(r.raw)
         return img
     else:
         return 0
 
+
 class AnswerGenerator():
     def __init__(self):
         super(AnswerGenerator, self).__init__()
-        self.idx2word, self.word2idx = pickle.load(open(os.path.join('../VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
-        self.idx2ans, self.ans2idx = pickle.load(open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
+        self.idx2word, self.word2idx = pickle.load(
+            open(os.path.join('../VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
+        self.idx2ans, self.ans2idx = pickle.load(
+            open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
         data_path = '/delorean/pietrobongini/'
         self.question_classifier = get_pretrained_bert(use_cuda=False)
-        self.question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
+        self.question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad',
+                                                               args={'reprocess_input_data': True,
+                                                                     'overwrite_output_dir': True}, use_cuda=False)
         mode = 'eval'
         glove_embed_dir = './VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data/glove_pretrained_300.npy'
-        model_name = './VQA_DEMO_IDEHA/model_bs_256_adamax_grid_feats'#'bottom_up_new_att_batch_512_adamax'
+        model_name = './VQA_DEMO_IDEHA/model_bs_256_adamax_grid_feats'  # 'bottom_up_new_att_batch_512_adamax'
         resume = './VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint/' + model_name + '/best.pth.tar'
         optimizer = 'Adamax'
         device = torch.device('cpu')
@@ -72,13 +79,13 @@ class AnswerGenerator():
         return self.model, self.question_classifier, self.question_answering_model
 
     def get_image_features(self, url_path):
-        feat_path = './image_features/' + url_path.split('/')[-1].split('.')[0]+ '.pth'
+        feat_path = './image_features/' + url_path.split('/')[-1].split('.')[0] + '.pth'
         if os.path.isfile(feat_path):
             print('loading feats...')
             vfeats = torch.load(feat_path)
         else:
             print('computing feats...')
-            image = download_image(url_path)#Image.open(request.form['image'])
+            image = download_image(url_path)  # Image.open(request.form['image'])
             vfeats = gen_feats(self.feats_extractor, image)
             torch.save(vfeats, feat_path)
         return vfeats

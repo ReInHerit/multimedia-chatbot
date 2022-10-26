@@ -21,13 +21,15 @@ from django.urls import path, include
 from artworks.views import home_view, add_suggestion, gallery_view, add_questionanswer, post_edit
 from artworks.models import Artwork
 from django.http import HttpRequest
-from artworks.views import ArtworkDetails, qa_delete, qa_revision, revision_edit, qa_delete_rand, revided, revision_result, handle_chat_question
+from artworks.views import ArtworkDetails, qa_delete, qa_revision, revision_edit, qa_delete_rand, revided, \
+    revision_result, handle_chat_question
 from artworks.views import chat_view, Artworkchat
+
 urlpatterns = [
-	path('home/', home_view, {}),
+    path('home/', home_view, {}),
     path('admin/', admin.site.urls),
-    path('add_suggestion/', add_suggestion, name = 'add_suggestion'),
-    path('home/gallery', gallery_view), 
+    path('add_suggestion/', add_suggestion, name='add_suggestion'),
+    path('home/gallery', gallery_view),
     path('add_questionanswer/', add_questionanswer),
     path('home/<int:pk>/edit/', post_edit, name='post_edit'),
     path('home/<int:pk>/remove/', qa_delete, name='qa_delete'),
@@ -38,11 +40,11 @@ urlpatterns = [
     path('home/revision_result', revision_result),
     path('home/chat', chat_view),
     path('handle_chat_question/', handle_chat_question, name='handle_chat')
-    ]
+]
 
 obj = Artwork.objects.all()
 for article in obj:
-    link= 'home/' + article.link + '/'
+    link = 'home/' + article.link + '/'
     link_chat = link + 'chat/'
-    urlpatterns.append(path(link, ArtworkDetails.as_view(art = article)))
-    urlpatterns.append(path(link_chat, Artworkchat.as_view(art = article)))
+    urlpatterns.append(path(link, ArtworkDetails.as_view(art=article)))
+    urlpatterns.append(path(link_chat, Artworkchat.as_view(art=article)))

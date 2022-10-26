@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('artworks', '0009_auto_20200905_1707'),
     ]
@@ -13,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='question_answer',
             name='sentence_type',
-            field=models.CharField(choices=[('visual sentence', 'visual sentence'), ('contextual sentence', 'contextual sentence')], default='contextual sentence', max_length=150),
+            field=models.CharField(
+                choices=[('visual sentence', 'visual sentence'), ('contextual sentence', 'contextual sentence')],
+                default='contextual sentence', max_length=150),
         ),
     ]

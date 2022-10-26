@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('artworks', '0007_artwork_thumb_image'),
     ]
@@ -17,7 +16,9 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=150)),
                 ('question', models.TextField()),
                 ('answer', models.TextField()),
-                ('generation', models.CharField(choices=[('human generated', 'human generated'), ('auto generated', 'auto generated')], max_length=50)),
+                ('generation', models.CharField(
+                    choices=[('human generated', 'human generated'), ('auto generated', 'auto generated')],
+                    max_length=50)),
             ],
         ),
     ]

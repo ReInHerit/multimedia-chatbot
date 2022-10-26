@@ -18,18 +18,20 @@ import torch
 import sys
 from transformers import BertTokenizer, BertForQuestionAnswering
 
-os.environ['CUDA_VISIBLE_DEVICES']  = ''
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
-idx2word, word2idx = pickle.load(open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
-idx2ans, ans2idx = pickle.load(open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
+idx2word, word2idx = pickle.load(
+    open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
+idx2ans, ans2idx = pickle.load(
+    open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
 data_path = '/delorean/pietrobongini/'
 question_classifier = get_pretrained_bert(use_cuda=False)
 tokenizer = BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
 qamodel = BertForQuestionAnswering.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
-#question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
+# question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
 mode = 'eval'
 glove_embed_dir = './vqa_bottom_up_evaluation/VQA_bottom_up/data/glove_pretrained_300.npy'
-model_name = 'model_bs_256_adamax_grid_feats'#'bottom_up_new_att_batch_512_adamax'
+model_name = 'model_bs_256_adamax_grid_feats'  # 'bottom_up_new_att_batch_512_adamax'
 resume = './vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint/' + model_name + '/best.pth.tar'
 optimizer = 'Adamax'
 device = torch.device('cpu')
@@ -56,8 +58,9 @@ model.eval()
 class VQAForm(FlaskForm):
     question = StringField('question:', validators=[validators.required()])
     context = StringField('context:', validators=[validators.required()])
-    image = StringField('image:', validators=[validators.required()])#validators=[FileRequired('File was empty!')])
+    image = StringField('image:', validators=[validators.required()])  # validators=[FileRequired('File was empty!')])
     submit = SubmitField('Upload')
+
 
 feats_extractor = load_model(None)
 
@@ -67,8 +70,9 @@ app.config['UPLOAD_FOLDER'] = PAINTINGS_FOLDER
 CSS_FOLDER = os.path.join('static', 'style')
 app.config['CSS_FOLDER'] = CSS_FOLDER
 app.config['SECRET_KEY'] = 'asjhcsfpic'
-@app.route("/", methods=['GET','POST'], )
 
+
+@app.route("/", methods=['GET', 'POST'], )
 def display_home():
     answer = ""
     form = VQAForm()
@@ -76,7 +80,7 @@ def display_home():
     if request.method == 'POST':
         if form.validate_on_submit():
 
-            #image = Image.open(request.form['image']) #Image.open(io.BytesIO(form.image.data.stream.read()))
+            # image = Image.open(request.form['image']) #Image.open(io.BytesIO(form.image.data.stream.read()))
             question = request.form['question']
 
             feat_path = './VQA_DEMO_IDEHA/image_features/' + request.form['image'].split('/')[-1].split('.')[0] + '.pth'
@@ -97,16 +101,16 @@ def display_home():
         return render_template('vqa_form.html', form=form, css_path=css_dir, answer=answer)
 
     if request.method == 'GET':
-        return render_template('vqa_form.html', form=form, css_path=css_dir, answer= answer)
+        return render_template('vqa_form.html', form=form, css_path=css_dir, answer=answer)
 
 
-
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    app.run(host='0.0.0.0', port=80)
 from glob import glob
 from os import getcwd, chdir
 from tqdm import tqdm
 import numpy as np
+
 path = '/oblivion/users/pietrobongini/VisualDialog/VisualDialog_test2018/'
 feat_path = '/oblivion/users/pietrobongini/VisualDialog/VisualDialog_test2018_feats/'
 if os.path.isdir(feat_path) == False:

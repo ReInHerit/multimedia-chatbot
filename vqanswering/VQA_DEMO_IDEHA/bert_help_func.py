@@ -6,7 +6,7 @@ import sys
 import logging
 
 logger = logging.getLogger()
-csv.field_size_limit(2147483647) # Increase CSV reader's field limit incase we have long text.
+csv.field_size_limit(2147483647)  # Increase CSV reader's field limit incase we have long text.
 
 
 class InputExample(object):
@@ -84,6 +84,7 @@ class BinaryClassificationProcessor(DataProcessor):
             examples.append(
                 InputExample(guid=guid, text_a=text_a, text_b=None, label=label))
         return examples
+
 
 class InputFeatures(object):
     """A single set of features of data."""

@@ -14,8 +14,9 @@ from bert_help_func import convert_example_to_feature
 
 # OPTIONAL: if you want to have more information on what's happening, activate the logger as follows
 import logging
+
 logging.basicConfig(level=logging.INFO)
-os.environ['CUDA_VISIBLE_DEVICES']  = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # The input data dir. Should contain the .tsv files (or other data files) for the task.
@@ -60,16 +61,15 @@ cache_dir = CACHE_DIR
 print(NUM_TRAIN_EPOCHS)
 
 if os.path.exists(REPORTS_DIR) and os.listdir(REPORTS_DIR):
-        REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
-        os.makedirs(REPORTS_DIR)
+    REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
+    os.makedirs(REPORTS_DIR)
 if not os.path.exists(REPORTS_DIR):
     os.makedirs(REPORTS_DIR)
     REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
     os.makedirs(REPORTS_DIR)
 
-
 if os.path.exists(OUTPUT_DIR) and os.listdir(OUTPUT_DIR):
-        raise ValueError("Output directory ({}) already exists and is not empty.".format(OUTPUT_DIR))
+    raise ValueError("Output directory ({}) already exists and is not empty.".format(OUTPUT_DIR))
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
@@ -77,10 +77,8 @@ processor = BinaryClassificationProcessor()
 train_examples = processor.get_train_examples(DATA_DIR)
 train_examples_len = len(train_examples)
 
-
-label_list = processor.get_labels() # [0, 1] for binary classification
+label_list = processor.get_labels()  # [0, 1] for binary classification
 num_labels = len(label_list)
-
 
 num_train_optimization_steps = int(
     train_examples_len / TRAIN_BATCH_SIZE / GRADIENT_ACCUMULATION_STEPS) * NUM_TRAIN_EPOCHS
@@ -88,9 +86,9 @@ num_train_optimization_steps = int(
 # Load pre-trained model tokenizer (vocabulary)
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased', do_lower_case=False)
 
-
 label_map = {label: i for i, label in enumerate(label_list)}
-train_examples_for_processing = [(example, label_map, MAX_SEQ_LENGTH, tokenizer, OUTPUT_MODE) for example in train_examples]
+train_examples_for_processing = [(example, label_map, MAX_SEQ_LENGTH, tokenizer, OUTPUT_MODE) for example in
+                                 train_examples]
 
 process_count = cpu_count() - 1
 
@@ -100,7 +98,8 @@ print(f'Spawning {process_count} processes..')
 load_features = True
 if not load_features:
     with Pool(process_count) as p:
-        train_features = list(tqdm(p.imap(convert_example_to_feature, train_examples_for_processing), total=train_examples_len))
+        train_features = list(
+            tqdm(p.imap(convert_example_to_feature, train_examples_for_processing), total=train_examples_len))
 
     with open(DATA_DIR + "train_features.pkl", "wb") as f:
         pickle.dump(train_features, f)
@@ -118,7 +117,7 @@ no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
 optimizer_grouped_parameters = [
     {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': 0.01},
     {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
-    ]
+]
 
 optimizer = BertAdam(optimizer_grouped_parameters,
                      lr=LEARNING_RATE,

@@ -1,26 +1,30 @@
-#from bert import get_pretrained_bert
+# from bert import get_pretrained_bert
 import pickle
-#import json
+# import json
 import os
-#from simpletransformers.question_answering import QuestionAnsweringModel
-#from vqa_bottom_up_evaluation.VQA_bottom_up import data_loader,base_model
-#import torch.nn as nn
-#from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up.preprocessing import _tokenize
+# from simpletransformers.question_answering import QuestionAnsweringModel
+# from vqa_bottom_up_evaluation.VQA_bottom_up import data_loader,base_model
+# import torch.nn as nn
+# from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up.preprocessing import _tokenize
 import numpy as np
 import torch.nn.functional as F
 import torch
-#from VQA_DEMO_IDEHA.bert_evaluation.bert_eval import normalize_answer
 
-os.environ['CUDA_VISIBLE_DEVICES']  = ''
+# from VQA_DEMO_IDEHA.bert_evaluation.bert_eval import normalize_answer
+
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 # test = json.load(open(os.path.join('/delorean/pietrobongini', 'artpedia.json'), 'rb'))
 # test_qa = json.load(open('./vqa_bottom_up_evaluation/VQA_bottom_up/data/artpedia_vqa.json','rb'))
 #
-idx2word, word2idx = pickle.load(open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
-idx2ans, ans2idx = pickle.load(open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
+idx2word, word2idx = pickle.load(
+    open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
+idx2ans, ans2idx = pickle.load(
+    open(os.path.join('./vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
 # data_path = '/delorean/pietrobongini/'
 # artpedia_image_folder = 'artpedia_images/'
 # question_classifier = get_pretrained_bert(use_cuda=False)
-# question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
+# question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad',
+# args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
 # artpedia = json.load(open(data_path + 'artpedia.json', 'rb'))
 # mode = 'eval'
 # glove_embed_dir = './vqa_bottom_up_evaluation/VQA_bottom_up/data/glove_pretrained_300.npy'
@@ -28,6 +32,8 @@ idx2ans, ans2idx = pickle.load(open(os.path.join('./vqa_bottom_up_evaluation/VQA
 # resume = './vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint/' + model_name + '/best.pth.tar'
 # optimizer = 'Adamax'
 device = torch.device('cpu')
+
+
 # num_hid = 1024
 # lr = 0.002
 # constructor = 'bottom_up_newatt'
@@ -48,12 +54,13 @@ device = torch.device('cpu')
 # model.eval()
 
 
-#function to load visual features
+# function to load visual features
 def get_img_feats(img_path):
     f = torch.load(img_path).to(device)
     return f
 
-#TODO: before giving the context in input to ProduceAnswer remember to add to the context the sentence "this painting was depicted in 'year' "
+
+# TODO: before giving the context in input to ProduceAnswer remember to add to the context the sentence "this painting was depicted in 'year' "
 
 def produceAnswer(question_classifier, model, question_answering_model, question, context, vfeats):
     predictions, raw_outputs = question_classifier.predict([question])
@@ -71,14 +78,15 @@ def produceAnswer(question_classifier, model, question_answering_model, question
                 if word in word2idx:
                     que[i] = word2idx[word]
 
-        v = F.pad(vfeats ,(0,32-vfeats.size(3),0,32-vfeats.size(2)))
+        v = F.pad(vfeats, (0, 32 - vfeats.size(3), 0, 32 - vfeats.size(2)))
 
         q = torch.tensor(que).to(device).unsqueeze(0)
-        v = v.transpose(1,3)
-        logits = model(q, torch.reshape(v, (v.size(0), v.size(1)*v.size(2), v.size(3))))
+        v = v.transpose(1, 3)
+        logits = model(q, torch.reshape(v, (v.size(0), v.size(1) * v.size(2), v.size(3))))
         pred_cpu_idx = torch.max(logits, 1)[1].cpu()
         a_pred = idx2ans[pred_cpu_idx]
     return a_pred
+
 
 def main():
     img_path = '/delorean/pietrobongini/feats_vqa_demo/artpedia/image_5299.pth'
@@ -89,5 +97,5 @@ def main():
         ans = produceAnswer(question, context, vfeat)
         print(ans)
 
-#if __name__ == '__main__':
+# if __name__ == '__main__':
 #    main()

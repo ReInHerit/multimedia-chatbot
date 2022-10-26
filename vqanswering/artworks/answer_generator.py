@@ -1,35 +1,38 @@
-
-#from VQA_DEMO_IDEHA.grid_feats_vqa_master.extract_grid_feature import gen_feats, load_model
+# from VQA_DEMO_IDEHA.grid_feats_vqa_master.extract_grid_feature import gen_feats, load_model
 import os
 from VQA_DEMO_IDEHA.bert import get_pretrained_bert
 import pickle
 import os
-#from simpletransformers.question_answering import QuestionAnsweringModel
-#from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up import base_model
+# from simpletransformers.question_answering import QuestionAnsweringModel
+# from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up import base_model
 import torch.nn as nn
 from PIL import Image
 import torch
 import requests
 import shutil
-from transformers import AutoTokenizer, BertForQuestionAnswering, pipeline, DistilBertForQuestionAnswering, DistilBertTokenizer, ViltProcessor, ViltForQuestionAnswering
+from transformers import AutoTokenizer, BertForQuestionAnswering, pipeline, DistilBertForQuestionAnswering, \
+    DistilBertTokenizer, ViltProcessor, ViltForQuestionAnswering
 import torch
-#from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up.preprocessing import _tokenize
-#from VQA_DEMO_IDEHA.bert_evaluation.bert_eval import normalize_answer
+# from VQA_DEMO_IDEHA.vqa_bottom_up_evaluation.VQA_bottom_up.preprocessing import _tokenize
+# from VQA_DEMO_IDEHA.bert_evaluation.bert_eval import normalize_answer
 import numpy as np
 import torch.nn.functional as F
 from collections import OrderedDict
-#from googletrans import Translator
+# from googletrans import Translator
 from google_trans_new import google_translator
-os.environ['CUDA_VISIBLE_DEVICES']  = '0'
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 device = torch.device('cpu')
-#def extract_models_for_answer():
+
+
+# def extract_models_for_answer():
 def download_image(image_url):
     url = image_url
     print(url)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'}
-    r = requests.get(url, headers = headers, stream=True)
+    r = requests.get(url, headers=headers, stream=True)
 
     # Check if the image was retrieved successfully
     print(r.status_code)
@@ -38,34 +41,36 @@ def download_image(image_url):
         r.raw.decode_content = True
 
         # Open a local file with wb ( write binary ) permission.
-        #with open(filename, 'wb') as f:
-        #shutil.copyfileobj(r.raw, f)
-        img =Image.open(r.raw)
+        # with open(filename, 'wb') as f:
+        # shutil.copyfileobj(r.raw, f)
+        img = Image.open(r.raw)
         return img
     else:
         return 0
 
+
 class AnswerGenerator():
     def __init__(self):
         super(AnswerGenerator, self).__init__()
-        #self.idx2word, self.word2idx = pickle.load(open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
-        #self.idx2ans, self.ans2idx = pickle.load(open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
-        #data_path = '/delorean/pietrobongini/'
+        # self.idx2word, self.word2idx = pickle.load(open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_q.pkl'), 'rb'))
+        # self.idx2ans, self.ans2idx = pickle.load(open(os.path.join('./VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data', 'dict_ans.pkl'), 'rb'))
+        # data_path = '/delorean/pietrobongini/'
         self.question_classifier = get_pretrained_bert(use_cuda=False)
-        self.translator = google_translator()#Translator()
+        self.translator = google_translator()  # Translator()
         device = torch.device('cpu')
-        #self.question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
+        # self.question_answering_model = QuestionAnsweringModel('distilbert', 'distilbert-base-uncased-distilled-squad', args={'reprocess_input_data': True, 'overwrite_output_dir': True},use_cuda=False)
 
+        modelname = 'distilbert-base-uncased'  # 'deepset/bert-base-cased-squad2'
 
-        modelname = 'distilbert-base-uncased' #'deepset/bert-base-cased-squad2'
-
-        self.vqamodel = DistilBertForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad') #BertForQuestionAnswering.from_pretrained(modelname)
-        self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased',return_token_type_ids = True) #AutoTokenizer.from_pretrained(modelname)
+        self.vqamodel = DistilBertForQuestionAnswering.from_pretrained(
+            'distilbert-base-uncased-distilled-squad')  # BertForQuestionAnswering.from_pretrained(modelname)
+        self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased',
+                                                             return_token_type_ids=True)  # AutoTokenizer.from_pretrained(modelname)
         self.vqamodel.eval()
         self.vilt = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.vilt_processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.vilt.eval()
-        #self.nlp = pipeline('question-answering', model=self.vqamodel, tokenizer=self.tokenizer)
+        # self.nlp = pipeline('question-answering', model=self.vqamodel, tokenizer=self.tokenizer)
 
         # mode = 'eval'
         # glove_embed_dir = './VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/data/glove_pretrained_300.npy'
@@ -102,15 +107,16 @@ class AnswerGenerator():
         #     self.model.load_state_dict(new_state_dict)
         #     optim.load_state_dict(ckpt['optim_state_dict'])
 
-            #torch.save(self.model.module.state_dict(), './VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint/' + model_name + '/best_simp.pth.tar')
-            #print('saved')
+        # torch.save(self.model.module.state_dict(), './VQA_DEMO_IDEHA/vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint/' + model_name + '/best_simp.pth.tar')
+        # print('saved')
         # self.model.eval()
 
     def get_models(self):
         return self.model, self.question_classifier, self.question_answering_model
 
     def get_image_features(self, url_path):
-        feat_path = '/equilibrium/pietrobongini/demo_icpr/vqanswering/VQA_DEMO_IDEHA/image_features/' + url_path.split('/')[-1].split('.')[0]+ '.pth'
+        feat_path = '/equilibrium/pietrobongini/demo_icpr/vqanswering/VQA_DEMO_IDEHA/image_features/' + \
+                    url_path.split('/')[-1].split('.')[0] + '.pth'
         print(feat_path)
         if os.path.isfile(feat_path):
             print('loading feats...')
@@ -118,25 +124,26 @@ class AnswerGenerator():
         else:
             print('computing feats...')
             print(url_path)
-            image = download_image(url_path)#Image.open(request.form['image'])
+            image = download_image(url_path)  # Image.open(request.form['image'])
             print(image)
             vfeats = gen_feats(self.feats_extractor, image)
             torch.save(vfeats, feat_path)
         return vfeats
 
     def produceAnswer(self, question, context, vfeats):
-        #print(question)
-        #tras = self.translator.translate(question, lang_src='it', lang_tgt='en')
-        #question = tras #.text
+        # print(question)
+        # tras = self.translator.translate(question, lang_src='it', lang_tgt='en')
+        # question = tras #.text
         print(question)
         predictions, raw_outputs = self.question_classifier.predict([question])
         print(predictions[0])
         if predictions[0] == 0:
             self.tokenizer.encode_plus(question)
 
-            encoding = self.tokenizer(question, context, return_tensors='pt', truncation=True, max_length=512)#r.encode_plus(question, context)
+            encoding = self.tokenizer(question, context, return_tensors='pt', truncation=True,
+                                      max_length=512)  # r.encode_plus(question, context)
 
-            #input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
+            # input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
 
             if len(encoding.input_ids) > 512:
                 print(encoding.input_ids)
@@ -148,7 +155,7 @@ class AnswerGenerator():
             answer_end_index = outputs.end_logits.argmax()
             predict_answer_tokens = encoding.input_ids[0, answer_start_index: answer_end_index + 1]
             answer_tokens_to_string = self.tokenizer.decode(predict_answer_tokens)
-            #self.vqamodel(torch.tensor([input_ids]), attention_mask=torch.tensor([attention_mask]))
+            # self.vqamodel(torch.tensor([input_ids]), attention_mask=torch.tensor([attention_mask]))
 
             # ans_tokens = input_ids[torch.argmax(start_scores): torch.argmax(end_scores) + 1]
             # answer_tokens = self.tokenizer.convert_ids_to_tokens(ans_tokens, skip_special_tokens=True)
@@ -164,7 +171,7 @@ class AnswerGenerator():
                 scale_rate = 1600 / max(image.size[0], image.size[1])
                 x = int(image.size[1] * scale_rate)
                 y = int(image.size[0] * scale_rate)
-                image = image.resize((x,y))
+                image = image.resize((x, y))
             encoding = self.vilt_processor(image, question, return_tensors='pt')
             outputs = self.vilt(**encoding)
             logits = outputs.logits
@@ -185,9 +192,6 @@ class AnswerGenerator():
             # logits = self.model(q, torch.reshape(v, (v.size(0), v.size(1) * v.size(2), v.size(3))))
             # pred_cpu_idx = torch.max(logits, 1)[1].cpu()
             # a_pred = self.idx2ans[pred_cpu_idx]
-
-
-
 
         if type(a_pred) != list:
             a_pred = a_pred.split('.')[0]

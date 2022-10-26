@@ -17,9 +17,11 @@ from tqdm import tqdm_notebook, trange, tqdm
 import os
 from pytorch_pretrained_bert import BertTokenizer, BertModel, BertForMaskedLM, BertForSequenceClassification
 from pytorch_pretrained_bert.optimization import BertAdam, WarmupLinearSchedule
+
 os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 # OPTIONAL: if you want to have more information on what's happening, activate the logger as follows
 import logging
+
 logging.basicConfig(level=logging.INFO)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -61,12 +63,13 @@ CONFIG_NAME = "config.json"
 WEIGHTS_NAME = "pytorch_model.bin"
 
 if os.path.exists(REPORTS_DIR) and os.listdir(REPORTS_DIR):
-        REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
-        os.makedirs(REPORTS_DIR)
+    REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
+    os.makedirs(REPORTS_DIR)
 if not os.path.exists(REPORTS_DIR):
     os.makedirs(REPORTS_DIR)
     REPORTS_DIR += f'./report_{len(os.listdir(REPORTS_DIR))}'
     os.makedirs(REPORTS_DIR)
+
 
 def get_eval_report(task_name, labels, preds):
     mcc = matthews_corrcoef(labels, preds)
@@ -80,28 +83,32 @@ def get_eval_report(task_name, labels, preds):
         "fn": fn
     }
 
+
 def compute_metrics(task_name, labels, preds):
     assert len(preds) == len(labels)
     return get_eval_report(task_name, labels, preds)
+
 
 # Load pre-trained model tokenizer (vocabulary)
 tokenizer = BertTokenizer.from_pretrained(OUTPUT_DIR + 'vocab.txt', do_lower_case=False)
 
 processor = BinaryClassificationProcessor()
 eval_examples = processor.get_dev_examples(DATA_DIR)
-label_list = processor.get_labels() # [0, 1] for binary classification
+label_list = processor.get_labels()  # [0, 1] for binary classification
 num_labels = len(label_list)
 eval_examples_len = len(eval_examples)
 
 label_map = {label: i for i, label in enumerate(label_list)}
-eval_examples_for_processing = [(example, label_map, MAX_SEQ_LENGTH, tokenizer, OUTPUT_MODE) for example in eval_examples]
+eval_examples_for_processing = [(example, label_map, MAX_SEQ_LENGTH, tokenizer, OUTPUT_MODE) for example in
+                                eval_examples]
 
 process_count = cpu_count() - 1
-if __name__ ==  '__main__':
+if __name__ == '__main__':
     print(f'Preparing to convert {eval_examples_len} examples..')
     print(f'Spawning {process_count} processes..')
     with Pool(process_count) as p:
-        eval_features = list(tqdm(p.imap(convert_example_to_feature, eval_examples_for_processing), total=eval_examples_len))
+        eval_features = list(
+            tqdm(p.imap(convert_example_to_feature, eval_examples_for_processing), total=eval_examples_len))
 
     all_input_ids = torch.tensor([f.input_ids for f in eval_features], dtype=torch.long)
     all_input_mask = torch.tensor([f.input_mask for f in eval_features], dtype=torch.long)

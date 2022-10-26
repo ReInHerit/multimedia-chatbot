@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('artworks', '0014_question_answer_error_type'),
     ]
@@ -17,11 +16,36 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='question_answer',
             name='answer_error_type',
-            field=models.CharField(choices=[('Pronoun as answer', 'Pronoun as answer'), ('The painting, the work or similiar as answer', 'The painting, the work or similiar as answer'), ('One character answer', 'One character answer'), ('Commission related wrong answer', 'Commission related wrong answer'), ('Was instead of were or viceversa', 'Was inted of were or viceversa'), ('Part of the sentence repeated', 'Part of the sentence repeated'), ('Indefinite article instead of definite article or viceversa', 'Indefinite article instead of definite article or viceversa'), ('First as answer', 'First as answer'), ('Now as answer', 'Now as answer'), ('No sense number as answer', 'No sense number as answer'), ('No sense answer', 'No sense answer'), ('Correct', 'Correct'), ('Unrevised', 'Unrevised')], default='Unrevised', max_length=500),
+            field=models.CharField(choices=[('Pronoun as answer', 'Pronoun as answer'),
+                                            ('The painting, the work or similiar as answer',
+                                             'The painting, the work or similiar as answer'),
+                                            ('One character answer', 'One character answer'),
+                                            ('Commission related wrong answer', 'Commission related wrong answer'),
+                                            ('Was instead of were or viceversa', 'Was inted of were or viceversa'),
+                                            ('Part of the sentence repeated', 'Part of the sentence repeated'), (
+                                            'Indefinite article instead of definite article or viceversa',
+                                            'Indefinite article instead of definite article or viceversa'),
+                                            ('First as answer', 'First as answer'), ('Now as answer', 'Now as answer'),
+                                            ('No sense number as answer', 'No sense number as answer'),
+                                            ('No sense answer', 'No sense answer'), ('Correct', 'Correct'),
+                                            ('Unrevised', 'Unrevised')], default='Unrevised', max_length=500),
         ),
         migrations.AddField(
             model_name='question_answer',
             name='question_error_type',
-            field=models.CharField(choices=[('One character question', 'One character question'), ('Too long question', 'Too long question'), ('What is? as question or two words question', 'What is? as question or two words question'), ('Commission related wrong question', 'Commission related wrong question'), ('Who instead of Where or viceversa', 'Who instead of Where or viceversa'), ('What instead of Where or viceversa', 'What instead of Where or viceversa'), ('Was instead of were or viceversa', 'Was inted of were or viceversa'), ('Part of the sentence repeated', 'Part of the sentence repeated'), ('Indefinite article instead of definite article or viceversa', 'Indefinite article instead of definite article or viceversa'), ('No sense question', 'No sense question'), ('Correct', 'Correct'), ('Unrevised', 'Unrevised')], default='Unrevised', max_length=500),
+            field=models.CharField(choices=[('One character question', 'One character question'),
+                                            ('Too long question', 'Too long question'), (
+                                            'What is? as question or two words question',
+                                            'What is? as question or two words question'),
+                                            ('Commission related wrong question', 'Commission related wrong question'),
+                                            ('Who instead of Where or viceversa', 'Who instead of Where or viceversa'),
+                                            (
+                                            'What instead of Where or viceversa', 'What instead of Where or viceversa'),
+                                            ('Was instead of were or viceversa', 'Was inted of were or viceversa'),
+                                            ('Part of the sentence repeated', 'Part of the sentence repeated'), (
+                                            'Indefinite article instead of definite article or viceversa',
+                                            'Indefinite article instead of definite article or viceversa'),
+                                            ('No sense question', 'No sense question'), ('Correct', 'Correct'),
+                                            ('Unrevised', 'Unrevised')], default='Unrevised', max_length=500),
         ),
     ]
