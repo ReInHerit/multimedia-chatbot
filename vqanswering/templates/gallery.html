@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>Artwork Dataset Interface</title>
+      <meta content="" name="descriptison">
+      <meta content="" name="keywords">
+      <!-- Favicons -->
+      <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+      <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
+      <!-- Libraries CSS Files -->
+      <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <!-- Main CSS File -->
+      <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
+   </head>
+   <body>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top  d-flex justify-content-center align-items-center ">
+         <nav class="nav-menu d-none d-lg-block">
+            <ul>
+               <li><a href="/home">Home</a></li>
+               <li><a href="/home/gallery">Gallery</a></li>
+               <li><a href='/home/#collaborate'>Help us</a></li>
+               <li><a href='/home/#results'>Revision results</a></li>
+               <li><a href="/home/#contact">Contact us</a></li>
+            </ul>
+         </nav>
+      </header>
+      <!-- End Header -->
+      <main id="main">
+         <!-- ======= Breadcrumbs ======= -->
+         <section class="breadcrumbs">
+            <div class="container">
+               <div class="d-flex justify-content-between align-items-center">
+                  <h2>Gallery</h2>
+                  <ol>
+                     <li><a href="/home">Home</a></li>
+                     <li>Gallery</li>
+                  </ol>
+               </div>
+            </div>
+         </section>
+         <!-- End Breadcrumbs -->
+         <!-- ======= My portfolio ======= -->
+         <section id="portfolio" class="portfolio">
+            <div class="container">
+               <div class="large-view">
+                  <ul id="portfolio-flters" class="d-flex justify-content-center">
+                     <li data-filter="*" class="filter-active">All</li>
+                     <li data-filter=".filter-2">1200</li>
+                     <li data-filter=".filter-3">1300</li>
+                     <li data-filter=".filter-4">1400</li>
+                     <li data-filter=".filter-5">1500</li>
+                     <li data-filter=".filter-6">1600</li>
+                     <li data-filter=".filter-7">1700</li>
+                     <li data-filter=".filter-8">1800</li>
+                     <li data-filter=".filter-9">1900</li>
+                     <li data-filter=".filter-0">2000</li>
+                  </ul>
+               </div>
+               </ul>
+               <div class="choose-century">
+                  <label for="myDropdown" class="select-cn">Select a century: </label>
+                  <div class="dropdown">
+                     <button onclick="myFunction()" class="dropbtn">--------------------------------</button>
+                     <div id="myDropdown" class="dropdown-content">
+                        <ul id="portfolio-flters" >
+                           <li data-filter="*" class="filter-active">All</li>
+                           <li data-filter=".filter-2">1200</li>
+                           <li data-filter=".filter-3">1300</li>
+                           <li data-filter=".filter-4">1400</li>
+                           <li data-filter=".filter-5">1500</li>
+                           <li data-filter=".filter-6">1600</li>
+                           <li data-filter=".filter-7">1700</li>
+                           <li data-filter=".filter-8">1800</li>
+                           <li data-filter=".filter-9">1900</li>
+                           <li data-filter=".filter-0">2000</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="row portfolio-container">
+                  {% for work in artwork %}
+                  {% if work.century == 1200 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-2">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {%elif work.century == 1300 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-3">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {%elif work.century == 1400 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-4">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {% elif work.century == 1500 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-5">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {% elif work.century == 1600 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-6">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {% elif work.century == 1700 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-7">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {% elif work.century == 1800 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-8">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {%elif work.century == 1900 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-9">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {%elif work.century == 2000 %}
+                  <div class="col-lg-4 col-md-6 portfolio-item filter-0">
+                     <div class="portfolio-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}"></a></div>
+                     <div class="portfolio-info">
+                        <h4>{{work.title}}</h4>
+                        <p>{{work.year}}</p>
+                     </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+               </div>
+            </div>
+         </section>
+         <!-- End My Portfolio Section -->
+      </main>
+      <!-- End #main -->
+      <!-- ======= Footer ======= -->
+      <footer id="footer">
+         <div class="container">
+            <h3>Artwork</h3>
+            <p>Artpedia dataset managing interface</p>
+            <div class="social-links">
+               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+               <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+               <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+               <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+            <div class="copyright">
+               &copy; Copyright <strong><span>Francesco Vannoni</span></strong>. All Rights Reserved
+            </div>
+         </div>
+      </footer>
+      <!-- End Footer -->
+      <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+      <!-- Libraries JS Files -->
+      <script src="{% static 'assets/libraries/jquery/jquery.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/jquery.easing/jquery.easing.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/owl.carousel/owl.carousel.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/isotope-layout/isotope.pkgd.min.js'%}"></script>
+      <!-- Main JS File -->
+      <script src="{% static 'assets/js/main.js' %}"></script>
+   </body>
+</html>

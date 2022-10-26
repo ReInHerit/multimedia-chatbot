@@ -1,0 +1,9 @@
+# ignore grid_feats weights
+grid_feats_vqa_master/weights
+
+#ignore weights and data of VQA model
+vqa_bottom_up_evaluation/VQA_bottom_up/checkpoint
+vqa_bottom_up_evaluation/VQA_bottom_up/data
+
+#ignore weights and data of classifier
+outputs

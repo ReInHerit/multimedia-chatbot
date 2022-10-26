@@ -1,0 +1,155 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>{{artwork.title}}</title>
+      <meta content="" name="descriptison">
+      <meta content="" name="keywords">
+      <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+      <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
+      <!-- Libraries CSS Files -->
+      <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <!-- Template Main CSS File -->
+      <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
+   </head>
+   <body>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top  d-flex justify-content-center align-items-center ">
+         <nav class="nav-menu d-none d-lg-block">
+            <ul>
+               <li><a href="/home">Home</a></li>
+               <li><a href="/home/gallery">Gallery</a></li>
+               <li><a href='/home/#collaborate'>Help us</a></li>
+               <li><a href='/home/#results'>Revision results</a></li>
+               <li><a href="/home/#contact">Contact us</a></li>
+            </ul>
+         </nav>
+         <!-- .nav-menu -->
+      </header>
+      <!-- End Header -->
+      <main id="main">
+         <!-- ======= Breadcrumbs Section ======= -->
+         <section class="breadcrumbs">
+            <div class="container">
+               <div class="d-flex justify-content-between align-items-center">
+                  <h2>{{artwork.title}} - details</h2>
+                  <ol>
+                     <li><a href="../">Home</a></li>
+                     <li><a href="/home/gallery">Gallery</a></li>
+                     <li>{{artwork.title}}</li>
+                  </ol>
+               </div>
+            </div>
+         </section>
+         <!-- Breadcrumbs Section -->
+         <!-- ======= Portfolio Details Section ======= -->
+         <section class="portfolio-details">
+            <div class="container">
+               <div class="portfolio-det-container">
+                  <div class="portfolio-det-container">
+                     <img src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+                  </div>
+                  <div class="portfolio-info">
+                     <h3>Artwork informations</h3>
+                     <ul>
+                        <li><strong>Title</strong>: {{artwork.title}}</li>
+                        <li><strong>Year</strong>: {{artwork.year}}</li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="portfolio-description">
+                  <h2>Visual sentences</h2>
+                  <p>
+                     {{artwork.visual_description}}
+                  </p>
+                  <h2>Contextual senctences </h2>
+                  <p>
+                     {{artwork.contextual_description}}
+                  </p>
+                  <h2>Ask question </h2>
+                  <a href="./chat/"> Click here, and start asking questions to our AI </a>
+                  <section id="questionanswer">
+                     <h2>Questions and answers</h2>
+                     {% for q in question %}
+                     <div class="question-element">
+                        <p>Question: {{q.question}}</p>
+                        <p>Answer: {{q.answer}}</p>
+                        <p>Type : {{q.sentence_type}}</p>
+                        <p>Dataset version : {{q.dataset_version}}</p>
+                        <a class ="edit-button" href="{% url 'post_edit' pk=q.pk %}">Edit</a>
+                        <a class ="edit-button " href="{% url 'qa_delete' pk=q.pk %}" onclick="return confirm('Do you want to remove this question/answer couple?')">Delete</a>
+                     </div>
+                     {%endfor %}
+                  </section>
+                  <h2>Create a new question and its answer</h2>
+                  <form id= "qa-form" action="/add_questionanswer/" method="post" class="email-form">
+                     {%csrf_token %}
+                     <div class="form-row">
+                        <input type ="hidden" name="title" value = "{{artwork.title}}"/>
+                        <div class="col-md-12 form-group">
+                           <input type="text" autocomplete="off" name="question" class="form-control" id="question" placeholder="Insert a new question" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                           <div class="validate"></div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                           <input type="text" autocomplete="off" class="form-control" name="answer" id="answer" placeholder="Insert the answer" data-rule="minlen:1" data-msg="Please enter at least 1 char" />
+                        </div> 
+                        <div class="col-md-12 form-group">
+                           <label class="radio-container">Visual sentence
+                           <input type="radio" name="sent_type" value="visual sentence" checked="checked" />
+                           <span class="checkmark"></span>
+                           </label>
+                           <label class="radio-container">Contextual sentence
+                           <input type="radio" name="sent_type" id="sent_type" value ="contextual sentence" />
+                            <span class="checkmark"></span>
+                         </label>
+                        </div>                     
+                     </div>
+                     <div class="text-center"><button type="submit">Send Data</button></div>
+                  </form>
+               </div>
+            </div>
+         </section>
+         </section>
+         <!-- End Portfolio Details Section -->
+         </div>
+      </main>
+      <!-- End #main -->
+      <!-- ======= Footer ======= -->
+      <footer id="footer">
+         <div class="container">
+            <h3>Artwork</h3>
+            <p>Artpedia dataset managing interface</p>
+            <div class="social-links">
+               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+               <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+               <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+               <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+            <div class="copyright">
+               &copy; Copyright <strong><span>Francesco Vannoni</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+            </div>
+         </div>
+      </footer>
+      <!-- End Footer -->
+      <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+      <script src="{% static 'assets/libraries/jquery/jquery.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/jquery.easing/jquery.easing.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/owl.carousel/owl.carousel.min.js'%}"></script>
+      <script src="{% static 'assets/libraries/isotope-layout/isotope.pkgd.min.js'%}"></script>
+      <!-- Main JS File -->
+      <script src="{% static 'assets/js/main.js' %}"></script>
+      {% endblock %}
+   </body>
+</html>
