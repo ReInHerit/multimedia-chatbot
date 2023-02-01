@@ -6,70 +6,78 @@
 
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Question Answer Revision</title>
-      <meta content="" name="descriptison">
-      <meta content="" name="keywords">
-      <!-- Favicons -->
-      <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-      <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-      <!-- Google Fonts -->
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy" rel="stylesheet">
-      <!-- Libraries CSS Files -->
-      <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-      <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
-      <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-      <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-      <!-- Main CSS File -->
-      <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
-      <link href="{% static 'assets/css/style3.css' %}" rel="stylesheet">
-   </head>
-   <body>
-      <!-- ======= Header ======= -->
-       <header id="header" class="fixed-top  d-flex justify-content-center align-items-center ">
-         <nav class="nav-menu d-none d-lg-block">
-            <ul>
-               <li><a href="/home">Home</a></li>
-               <li><a href="/home/gallery">Gallery</a></li>
-               <li><a href='/home/#collaborate'>Help us</a></li>
-               <li><a href='/home/#results'>Revision results</a></li>
-               <li><a href="/home/#contact">Contact us</a></li>
-            </ul>
-         </nav>
-       </header>
-  <main id="main">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Question Answer Revision</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Satisfy"
+          rel="stylesheet">
+    <!-- Libraries CSS Files -->
+    <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
+    <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style3.css' %}" rel="stylesheet">
+</head>
+<body>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center "> <!-- justify-content-center -->
+    <img id="header_logo" alt="reinherit logo"
+         src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg">
+    <div id="header_title">
+        <em>Re</em><strong>InHerit</strong>
+        <div id="undertitle">Redefining the Future of Cultural Heritage</div>
+    </div>
+    <nav class="nav-menu d-none d-lg-block">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/home/gallery">Gallery</a></li>
+            <!--         <li><a href='/home/#collaborate'>Help us</a></li>-->
+            <!--         <li><a href='/home/#results'>Revision results</a></li>-->
+            <!--         <li><a href="/home/#contact">Contact us</a></li>-->
+        </ul>
+    </nav>
+</header>
+<main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
     <section class="breadcrumbs">
-      <div class="container">
+        <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Artwork Chat</h2>
-          <ol>
-            <li><a href="/home">Home</a></li>
-            <li>Chat</li>
-          </ol>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Artwork Chat</h2>
+                <ol>
+                    <li><a href="/home">Home</a></li>
+                    <li>Chat</li>
+                </ol>
+            </div>
+
         </div>
-
-      </div>
     </section><!-- End Breadcrumbs -->
 
-        <section class="portfolio-details">
-            <div class="container to-pad">
-               <div class="portfolio-det-container col-lg-6 col-md 12 "  style="text-align:center" >
-                     <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+    <section class="portfolio-details">
+        <div class="container to-pad">
+            <div class="portfolio-det-container col-lg-6 col-md 12 " style="text-align:center">
+                <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+            </div>
+            <div class="d-inline-block col-lg-5 col-md-12 col-lg-offset-1 frame">
+                <div class="chat-ul" style="line-height: normal">
+                    <ul style="line-height: 120%"></ul>
                 </div>
-        <div class="d-inline-block col-lg-5 col-md-12 col-lg-offset-1 frame">
-          <div class="chat-ul" style="line-height: normal">
-            <ul style="line-height: 120%"></ul>
-          </div>
-            <div class="typing">
+                <div class="typing">
 
                     <div class="msj-rta-2 macro">
                         <div class="text text-r" style="background:whitesmoke !important">
-                            <input class="mytext" name="question" id="question" placeholder="Type a question and press enter"/>
+                            <input class="mytext" name="question" id="question"
+                                   placeholder="Type a question and press enter"/>
                         </div>
 
                     </div>
@@ -77,43 +85,45 @@
                         <!--<span><img src="https://img.icons8.com/color/96/000000/send-letter--v1.png"/></span>-->
                         <!--<button type="image" src="https://img.icons8.com/color/96/000000/send-letter--v1.png" href={% url "handle_chat" %} ></button>-->
                     </div>
+                </div>
             </div>
-        </div>
-          
-            
-                  </section>
 
-  </main><!-- End #main -->
-      <!-- End #main -->
-      <!-- ======= Footer ======= -->
-      <footer id="footer">
-         <div class="container">
-            <h3>Artwork</h3>
-            <p>Artpedia dataset managing interface</p>
-            <div class="social-links">
-               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-               <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-               <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-               <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-            <div class="copyright">
-               &copy; Copyright <strong><span>Francesco Vannoni</span></strong>. All Rights Reserved
-            </div>
-         </div>
-      </footer>
-      <!-- End Footer -->
-      <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-      <!-- Libraries JS Files -->
-      <script src="{% static 'assets/libraries/jquery/jquery.min.js'%}"></script>
-      <script src="{% static 'assets/libraries/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-      <script src="{% static 'assets/libraries/jquery.easing/jquery.easing.min.js'%}"></script>
-      <script src="{% static 'assets/libraries/owl.carousel/owl.carousel.min.js'%}"></script>
-      <script src="{% static 'assets/libraries/isotope-layout/isotope.pkgd.min.js'%}"></script>
-      <!-- Main JS File -->
-      <script src="{% static 'assets/js/main.js' %}"></script>
-      <script src="{% static 'assets/js/index.js' %}"></script>  
-   </body>
+
+    </section>
+
+</main><!-- End #main -->
+<!-- End #main -->
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="container">
+        <h3>VQA</h3>
+        <p>Visual Question Answering</p>
+        <div class="social-links">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+        <!--        <div class="copyright">-->
+        <!--            &copy; Copyright <strong><span>Francesco Vannoni</span></strong>. All Rights Reserved-->
+        <!--        </div>-->
+        <div class="credits">
+        </div>
+    </div>
+</footer>
+<!-- End Footer -->
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<!-- Libraries JS Files -->
+<script src="{% static 'assets/libraries/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'assets/libraries/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/libraries/jquery.easing/jquery.easing.min.js'%}"></script>
+<script src="{% static 'assets/libraries/owl.carousel/owl.carousel.min.js'%}"></script>
+<script src="{% static 'assets/libraries/isotope-layout/isotope.pkgd.min.js'%}"></script>
+<!-- Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/js/index.js' %}"></script>
+</body>
 </html>
 
 

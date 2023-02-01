@@ -63,21 +63,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header.header-transparent {
-  background: transparent;
+  background: rgba(25, 28, 31, 0.8);
 }
 
 #header.header-scrolled {
   height: 60px;
   background: rgba(25, 28, 31, 0.8);
 }
+#header_logo {
+  max-height: 50px;
+  margin: 10px;
+  float: left;
+}
+#header_title {
+  color: #FFFFFF;
+  max-width: 90px;
+  float: left;
+  text-align: left;
+  line-height: 1;
+  font-size: 20px;
+  display: inline-block;
+}
+#undertitle {
+  font-size: 11px;
 
+}
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
 /* Desktop Navigation */
 
 
-}
+/*}*/
 .nav-menu, .nav-menu * {
   margin: 0;
   padding: 0;
@@ -213,7 +230,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 55px;
   right: 15px;
-  left: 15px;
+  left: 50%;
   z-index: 9999;
   overflow-y: auto;
   background: #fff;
@@ -410,7 +427,7 @@ section {
 
 .section-title {
   text-align: center;
-  padding: 30px 0;
+  padding: 60px 0 30px 0;
   position: relative;
 }
 
