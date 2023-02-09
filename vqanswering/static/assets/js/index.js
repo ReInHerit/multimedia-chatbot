@@ -28,7 +28,7 @@ function insertChat(who, text, time){
         control = '<li style="width:100%">' +
                         '<div class="msj macro">' +
                             '<div class="text">' +
-                                '<p class="text-l" style="line-height: normal">'+ text +'</p>' +
+                                '<p class="text-l">'+ text +'</p>' +
                                 '<p>'+date+'</p>' +
                             '</div>' +
                         '</div>' +
@@ -37,7 +37,7 @@ function insertChat(who, text, time){
         control = '<li style="width:100%;">' +
                         '<div class="msj-rta macro">' +
                             '<div class="text text-r">' +
-                                '<p class="text-r-2" style="line-height: normal">'+text+'</p>' +
+                                '<p class="text-r-2">'+text+'</p>' +
                                 '<p>'+date+'</p>' +
                             '</div>' +
                   '</li>';

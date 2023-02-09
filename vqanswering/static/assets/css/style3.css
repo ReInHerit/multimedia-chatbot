@@ -1,28 +1,6 @@
-.mytext{
-    border:0;padding:10px;background:whitesmoke;font-size: 16px;
-}
-.text{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-}
-.text > p:first-of-type{
-    width:100%;margin-top:0;margin-bottom:auto;line-height: 13px;font-size: 18px;
-}
-.text > p:last-of-type{
-    width:100%;text-align:right;margin-bottom:-7px;margin-top:auto;
-}
-.text-l{
-    float:left;padding-right:20px;
-    padding-top:5px;
-    padding-bottom: 15px;
-}     
 
-.text-r-2{
-    float:right;padding-left:10px;
-    padding-top: 5px;
-    padding-bottom: 15px;
-}
+
+
 
 .avatar{
     display:flex;
@@ -33,74 +11,39 @@
 }
 
 
-.macro{
-    margin-top:5px;width:95%;border-radius:5px;padding:5px;display:flex;
-}
 
-.msj-rta{
-    float:right;background:#e6e6e6;
-}
-.msj-rta-2{
-    float:right;background:#f2f2f2;
-}
-.msj{
-    float:left;
-    background:#0066ff;
-    color: white;
-    word-wrap: break-word;
-    overflow: hidden;
-    padding-right: 15px;
-}
 .frame{
     background: white;
     height:450px;
     overflow:hidden;
     padding:0;
+    flex: 0 0 50%;
     border-radius: 8px;
     border: 1px solid gray;
+    position: relative;
 }
+@media screen and (max-width: 459px){
+    .frame{
+        flex: 0 0 100%;
+    }
+}
+
 .frame > div:last-of-type{
-    position:absolute;bottom:0;width:100%;display:flex;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    display:flex;
 }
 body > div > div > div:nth-child(2) > span{
-    background: whitesmoke;padding: 10px;font-size: 21px;border-radius: 50%;
+    background: whitesmoke;
+    padding: 10px;
+    font-size: 21px;
+    border-radius: 50%;
 }
 body > div > div > div.msj-rta.macro{
-    margin:auto;margin-left:1%;
+    margin:auto;
+    margin-left:1%;
 }
-.chat-ul ul {
-    width:100%;
-    list-style-type: none;
-    padding:18px;
-    position:absolute;
-    bottom:47px;
-    display:flex;
-    flex-direction: column;
-    top:0;
-    overflow-y:scroll;
-}
-.msj:before{
-    width: 0;
-    height: 0;
-    content:"";
-    top:-5px;
-    left:-14px;
-    position:relative;
-    border-style: solid;
-    border-width: 0 13px 13px 0;
-    border-color:  #ffffff transparent transparent;            
-}
-.msj-rta:after{
-    width: 0;
-    height: 0;
-    content:"";
-    top:-5px;
-    left:14px;
-    position:relative;
-    border-style: solid;
-    border-width: 13px 13px 0 0;
-    border-color:  transparent transparent transparent;           
-}  
 
 
 input:focus{
@@ -134,11 +77,26 @@ input:focus{
     max-height:100%;
 }
 
-.to-pad{
-    padding-top: 10px;
+.to-pad {
+    /*padding-top: 8vh;*/
     padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 95vw;
+    height: inherit;
 }
+@media screen and (max-width: 459px) {
+    .to-pad {
+    display: flow-root;
+        max-width: 80vw;
 
-.typing{
-    background-color: whitesmoke;
 }
+}
+/*@media (min-width: 460px) and (max-width: 768px) {*/
+/*    .to-pad {*/
+/*    display: flow-root;*/
+
+/*}*/
+/*}*/
+

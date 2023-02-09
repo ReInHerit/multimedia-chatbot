@@ -1,0 +1,60 @@
+{
+  "1": {
+    "title": "Euphrosina von Wilferstorf (Unbekannter Maler)",
+    "img_url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Dauerausstellung_360GRAZ_-_Euphrosina_Scholastica_Dann_de_Wilfersdorf%2C_Baronissa_A._Maswanau%2C_1636.jpg",
+    "year": 1636,
+    "visual_sentences": [
+      "Euphrosina von Wilferstorf, is depicted in a classic aristocratic portrait, with her jewelry, clothing and curtain in the background attesting to the richness and importance of personality.",
+      "As a sign of her religiosity and education, she holds a prayer book.",
+      "The text on the painting identifies Euphrosina as the wife of Freiherr von Wilferstorf, but her origin is emphasized by the word \"born as\"."
+    ],
+    "contextual_sentences": [
+      "The GrazMuseum preserves two Baroque representative portraits of 26-year-old Jonas von Wilferstorf and his wife Euphrosina von Wilferstorf, which together form a unit.",
+      "The Portrait of Euphrosina von Wilferstorf is a classic portrait of aristocracy, in which the jewellery, the clothing and the curtain in the background all testify to the wealth and importance of the personality."
+    ],
+    "split": "train"
+  },
+  "2": {
+    "title": "Jonas von Wilferstorf (Unbekannter Maler)",
+    "img_url": "https://upload.wikimedia.org/wikipedia/commons/1/16/Dauerausstellung_360GRAZ_-_Ionas_Liber_Baro_a_Wilfersdorf%2C_1635.jpg",
+    "year": 1636,
+    "visual_sentences": [
+      "In addition to the jewelry, which proves the wealth of the baron, sabres and spurs symbolize male attributes such as strength and drive.",
+      "The elaborate dress represents power and dignity."
+    ],
+    "contextual_sentences": [
+      "The GrazMuseum preserves two Baroque representative portraits of 26-year-old Jonas von Wilferstorf and his wife Euphrosina von Wilferstorf, which together form a unit.",
+      "In 1631 he was promoted to baron by the emperor."
+    ],
+    "split": "train"
+  },
+  "3": {
+    "title": "Maria Anna Remschmidin (Josef Schladerer)",
+    "img_url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Dauerausstellung_360GRAZ_-_Maria_Anna_Remschmidin_aus_Graz%2C_die_Gattin_des_Maurermeisters_Witalm_auf_einem_Gem%C3%A4lde_von_Josef_Schlanderer_um_1810.jpg",
+    "year": 1810,
+    "visual_sentences": [
+      "In addition to the jewelry, which proves the wealth of the baron, sabres and spurs symbolize male attributes such as strength and drive.",
+      "The elaborate dress represents power and dignity."
+    ],
+    "contextual_sentences": [
+      "She was the wife of the architect Josef Benedict Withalm",
+      "This portrait was part of the GrazMuseum's historical display collection and permanent exhibition “360GRAZ | The city of all times\" that shows the political, economic and social history of the city of Graz in an open form."
+    ],
+    "split": "train"
+  },
+  "4": {
+    "title": "Josef Benedict Withalm (Josef Schlanderer)",
+    "img_url": "https://portal-os.si/wp-content/uploads/sites/15/2019/09/KOLIZEJ-01-255x300.jpg",
+    "year": 1810,
+    "visual_sentences": [
+      "In the portrait, Josef smiles"
+    ],
+    "contextual_sentences": [
+      "Based on his experience from both his military and construction careers, he first built the Withalm Coliseum in Graz, and then in Ljubljana.",
+      "This portrait was part of the GrazMuseum's exhibition \"Graz Portraits.\" in 2008.",
+      "He set an even greater milestone in Styrian architectural and construction history in 1846, when he began in Graz with the construction of the Iron House, one of the first examples of cast iron construction in Europe.",
+      "In 1817, he became a master builder in Graz, where he became known for good work execution and innovation: he invented a system for removing odors from toilets and paving roads with oak blocks."
+    ],
+    "split": "train"
+  }
+}
