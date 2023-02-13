@@ -24,14 +24,13 @@
     <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="{% static 'assets/css/style2.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/css/style3.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
 </head>
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top d-flex align-items-center "> <!-- justify-content-center -->
-    <img id="header_logo" href="/home" alt="reinherit logo"
-         src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg">
+    <a href="/home" title="HOME"><img id="header_logo"  alt="reinherit logo"
+         src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
         <div id="undertitle">Redefining the Future of Cultural Heritage</div>
@@ -44,13 +43,12 @@
     </nav>
 </header>
 <main id="main">
-
-    <!-- ======= Breadcrumbs ======= -->
     <div id="artwork-schedule">
-        <div class="title"><h3><strong>{{artwork.title}}</strong> {{artwork.year}}</h3></div>
-        <div class="schedule">
-            <div class="artwork-image">
-                <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+            <div class="artwork-section">
+                <div class="title"><h3><strong>{{artwork.title}}</strong> {{artwork.year}}</h3></div>
+                <div class="artwork-image">
+                    <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+            </div>
             </div>
             <div id="chat-section" class="chat-link">
                 <h2 id="chat_title">Artwork Chat</h2>
@@ -58,15 +56,10 @@
                     <ul style="line-height: 120%"></ul>
                 </div>
                 <div class="typing">
-                    <div class="msj-rta-2 macro">
-                        <div class="text text-r" style="background:whitesmoke !important">
-                            <input class="mytext" name="question" id="question"
-                                   placeholder="Type a question and press enter"/>
-                        </div>
-                    </div>
+                    <input class="input_text" name="question" id="question"
+                           placeholder="Type a question and press enter"/>
                 </div>
             </div>
-        </div>
     </div>
 
 </main>
@@ -77,10 +70,11 @@
         <h3><em>Re</em><strong>InHerit</strong> Visual Question Answering </h3>
 
         <div class="social-links">
-            <a href="https://twitter.com/reinherit_" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="https://www.facebook.com/ReInHerit/" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="https://www.instagram.com/reinherit_/" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube" class="youtube"><i class="bx bxl-youtube"></i></a>
         </div>
     </div>
 </footer>

@@ -36,8 +36,8 @@ function insertChat(who, text, time){
     }else{
         control = '<li style="width:100%;">' +
                         '<div class="msj-rta macro">' +
-                            '<div class="text text-r">' +
-                                '<p class="text-r-2">'+text+'</p>' +
+                            '<div class="text">' +
+                                '<p class="text-r">'+text+'</p>' +
                                 '<p>'+date+'</p>' +
                             '</div>' +
                   '</li>';
@@ -61,7 +61,7 @@ function goPython(text, p_link){
             $.ajax({
                 type: "POST",
               url: "/handle_chat_question/",
-             //context: {'data': $(".mytext").val()}
+             //context: {'data': $(".input_text").val()}
                 data: {
                     'question': text,
                     'img': p_link.toString(),
@@ -72,7 +72,7 @@ function goPython(text, p_link){
             });
         }
 
-$(".mytext").on("keydown", function(e){
+$(".input_text").on("keydown", function(e){
     if (e.which == 13){
         var link = document.querySelector("#painting_link")
         var text = $(this).val();
@@ -115,7 +115,7 @@ recognition.onresult = function(event) {
     console.log(question)
     insertChat("me", question);
             var answer = goPython(question, link.src)
-            //$(".mytext").val('');
+            //$(".input_text").val('');
   //diagnostic.textContent = 'Result received: ' + color + '.';
   //bg.style.backgroundColor = color;
 }
@@ -126,7 +126,7 @@ recognition.onspeechend = function() {
 
 
 $('body > div > div > div:nth-child(2) > span').click(function(){
-    $(".mytext").trigger({type: 'keydown', which: 13, keyCode: 13});
+    $(".input_text").trigger({type: 'keydown', which: 13, keyCode: 13});
 })
 
 //-- Clear Chat

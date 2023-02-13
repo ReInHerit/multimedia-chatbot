@@ -138,8 +138,8 @@
       itemSelector: '.gallery-item'
     });
 
-    $('#gallery-flters li').on('click', function() {
-      $("#gallery-flters li").removeClass('filter-active');
+    $('#gallery-filters li').on('click', function() {
+      $("#gallery-filters li").removeClass('filter-active');
       $(this).addClass('filter-active');
 
       galleryIsotope.isotope({
