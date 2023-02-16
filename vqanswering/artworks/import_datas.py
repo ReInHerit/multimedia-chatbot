@@ -50,7 +50,6 @@ def uri_exists_stream(uri: str) -> bool:
 
 
 def create_thumb(normal_image):
-    print('normal', normal_image)
     if normal_image.find('wikimedia') != -1:
         style = normal_image.split("/")[4]
 
@@ -67,10 +66,7 @@ def create_thumb(normal_image):
 
     else:
         thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
-    print('np', thumb_image)
-    print(normal_image.split('/'))
 
-    print(thumb_image)
     return thumb_image
 
 
@@ -92,7 +88,6 @@ def import_datas(json_data, data):
                             contextual_description=json_data[article_id]['contextual_sentences'],
                             century=century,
                             link=create_link(json_data[article_id]['title']))
-        print('fatto')
 
 
 def import_autogen_qa(json_data, data):

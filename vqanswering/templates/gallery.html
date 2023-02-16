@@ -22,167 +22,190 @@
     <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
 </head>
 <body>
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top  d-flex align-items-center "><!-- justify-content-center -->
-        <a href="/home" title="HOME"><img id="header_logo"  alt="reinherit logo"
-             src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
-        <div id="header_title">
-            <em>Re</em><strong>InHerit</strong>
-            <div id="undertitle">Redefining the Future of Cultural Heritage</div>
-        </div>
-        <nav class="nav-menu d-none d-lg-block">
-            <ul>
-                <li class="menu_passive"><a href="/home">Home</a></li>
-                <li class="active menu_active"><a href="/home/gallery">Gallery</a></li>
-            </ul>
-        </nav>
-    </header>
-    <!-- End Header -->
-    <main id="main">
-        <!-- ======= Gallery ======= -->
-        <section id="gallery" class="gallery">
-            <div class="container">
-                <div class="large-view">
-                    <ul id="gallery-filters" class="d-flex justify-content-center">
-                        <li data-filter="*" class="filter-active">All</li>
-                        <li data-filter=".filter-2">1200</li>
-                        <li data-filter=".filter-3">1300</li>
-                        <li data-filter=".filter-4">1400</li>
-                        <li data-filter=".filter-5">1500</li>
-                        <li data-filter=".filter-6">1600</li>
-                        <li data-filter=".filter-7">1700</li>
-                        <li data-filter=".filter-8">1800</li>
-                        <li data-filter=".filter-9">1900</li>
-                        <li data-filter=".filter-0">2000</li>
-                    </ul>
-                </div>
-                    </ul>
-                <div class="choose-century">
-                    <label for="myDropdown" class="select-cn">Select a century: </label>
-                    <div class="dropdown">
-                        <button onclick="myFunction()" class="dropbtn">OOOOOOOOO</button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <ul id="gallery-filters">
-                                <li data-filter="*" class="filter-active">All</li>
-                                <li data-filter=".filter-2">1200</li>
-                                <li data-filter=".filter-3">1300</li>
-                                <li data-filter=".filter-4">1400</li>
-                                <li data-filter=".filter-5">1500</li>
-                                <li data-filter=".filter-6">1600</li>
-                                <li data-filter=".filter-7">1700</li>
-                                <li data-filter=".filter-8">1800</li>
-                                <li data-filter=".filter-9">1900</li>
-                                <li data-filter=".filter-0">2000</li>
-                            </ul>
-                        </div>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top  d-flex align-items-center "><!-- justify-content-center -->
+    <a href="/home" title="HOME"><img id="header_logo" alt="reinherit logo"
+                                      src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
+    <div id="header_title">
+        <em>Re</em><strong>InHerit</strong>
+        <div id="undertitle">Redefining the Future of Cultural Heritage</div>
+    </div>
+    <nav class="nav-menu d-none d-lg-block">
+        <ul>
+            <li class="menu_passive"><a href="/home">Home</a></li>
+            <li class="active menu_active"><a href="/home/gallery">Gallery</a></li>
+        </ul>
+    </nav>
+</header>
+<!-- End Header -->
+<main id="main">
+    <!-- ======= Gallery ======= -->
+    <section id="gallery" class="gallery">
+        <div class="centuries_container">
+            <div class="large-view">
+                <ul id="gallery-filters" class="d-flex justify-content-center">
+                    <li data-filter="*" class="filter-active">All</li>
+                    <li data-filter=".filter-2">1200</li>
+                    <li data-filter=".filter-3">1300</li>
+                    <li data-filter=".filter-4">1400</li>
+                    <li data-filter=".filter-5">1500</li>
+                    <li data-filter=".filter-6">1600</li>
+                    <li data-filter=".filter-7">1700</li>
+                    <li data-filter=".filter-8">1800</li>
+                    <li data-filter=".filter-9">1900</li>
+                    <li data-filter=".filter-0">2000</li>
+                </ul>
+            </div>
+            <!--                    </ul>-->
+            <div class="choose-century">
+                <label for="myDropdown" class="select-cn">Select a century: </label>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn">OOOOOOOOO</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <ul id="gallery-filters">
+                            <li data-filter="*" class="filter-active">All</li>
+                            <li data-filter=".filter-2">1200</li>
+                            <li data-filter=".filter-3">1300</li>
+                            <li data-filter=".filter-4">1400</li>
+                            <li data-filter=".filter-5">1500</li>
+                            <li data-filter=".filter-6">1600</li>
+                            <li data-filter=".filter-7">1700</li>
+                            <li data-filter=".filter-8">1800</li>
+                            <li data-filter=".filter-9">1900</li>
+                            <li data-filter=".filter-0">2000</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="row gallery-container">
-                    {% for work in artwork %}
-                    {% if work.century == 1200 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-2">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {%elif work.century == 1300 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-3">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {%elif work.century == 1400 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-4">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {% elif work.century == 1500 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-5">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {% elif work.century == 1600 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-6">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {% elif work.century == 1700 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-7">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {% elif work.century == 1800 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-8">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {%elif work.century == 1900 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-9">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {%elif work.century == 2000 %}
-                    <div class="col-lg-4 col-md-6 gallery-item filter-0">
-                        <div class="gallery-img"><a href="{{work.link}}"><img src="{{work.thumb_image}}" class="img-fluid"
-                                                                                alt="{{work.title}}"></a></div>
-                        <div class="gallery-info">
-                            <h4>{{work.title}}</h4>
-                            <p>{{work.year}}</p>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
             </div>
-        </section>
-        <!-- End My gallery Section -->
-    </main>
-    <!-- End #main -->
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-        <div class="footer_container">
-            <h3><em>Re</em><strong>InHerit</strong> Visual Question Answering </h3>
+        </div>
+        <div class="gallery-container">
+            {% for work in artwork %}
+            {% if work.century == 1200 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-2">
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+            </div>
+            {%elif work.century == 1300 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-3">
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
 
-            <div class="social-links">
-            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube" class="youtube"><i class="bx bxl-youtube"></i></a>
+            </div>
+            {%elif work.century == 1400 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-4">
+
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+
+            </div>
+            {% elif work.century == 1500 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-5">
+
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+
+                </div>
+            </div>
+            {% elif work.century == 1600 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-6">
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+            </div>
+            {% elif work.century == 1700 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-7">
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+            </div>
+            {% elif work.century == 1800 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-8">
+
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+
+                </div>
+            </div>
+            {%elif work.century == 1900 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-9">
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+            </div>
+            {%elif work.century == 2000 %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-0">
+
+                <a href="{{work.link}}">
+                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+                </a>
+                <div class="gallery-info">
+                    <h4>{{work.title}}</h4>
+                    <p>{{work.year}}</p>
+                </div>
+
+            </div>
+            {% endif %}
+            {% endfor %}
         </div>
+    </section>
+    <!-- End My gallery Section -->
+</main>
+<!-- End #main -->
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer_container">
+        <h3><em>Re</em><strong>InHerit</strong> Visual Question Answering </h3>
+
+        <div class="social-links">
+            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i
+                    class="bx bxl-twitter"></i></a>
+            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i
+                    class="bx bxl-facebook"></i></a>
+            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin"
+               class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube"
+               class="youtube"><i class="bx bxl-youtube"></i></a>
         </div>
-    </footer>
-    <!-- End Footer -->
+    </div>
+</footer>
+<!-- End Footer -->
 
 <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 <!-- Libraries JS Files -->

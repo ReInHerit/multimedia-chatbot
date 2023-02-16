@@ -4,12 +4,20 @@
     "img_url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Dauerausstellung_360GRAZ_-_Euphrosina_Scholastica_Dann_de_Wilfersdorf%2C_Baronissa_A._Maswanau%2C_1636.jpg",
     "year": 1636,
     "visual_sentences": [
-      "Euphrosina von Wilferstorf, is depicted in a classic aristocratic portrait, with her jewelry, clothing and curtain in the background attesting to the richness and importance of personality.",
-      "As a sign of her religiosity and education, she holds a prayer book.",
-      "The text on the painting identifies Euphrosina as the wife of Freiherr von Wilferstorf, but her origin is emphasized by the word \"born as\"."
+      "the woman in the picture is wearing her jewelry, clothing and curtain.",
+      "the woman in the picture has blond hair",
+      "there is a text in the background attesting to the richness and importance of personality.",
+      "she holds a prayer book, as a sign of her religiosity and education",
+      "the woman in the picture has red hair"
     ],
     "contextual_sentences": [
-      "The GrazMuseum preserves two Baroque representative portraits of 26-year-old Jonas von Wilferstorf and his wife Euphrosina von Wilferstorf, which together form a unit.",
+      "the woman in the picture is Euphrosina von Wilferstorf",
+      "the woman in the painting is the wife of Freiherr von Wilferstorf",
+      "the painting is classic aristocratic portrait",
+      "The painting is preserved at the Graz Museum",
+      "the stile of the painting is Baroque",
+      "the painter is Unbekannter Maler",
+      "The text on the painting identifies Euphrosina as the wife of Freiherr von Wilferstorf, but her origin is emphasized by the word \"born as\".",
       "The Portrait of Euphrosina von Wilferstorf is a classic portrait of aristocracy, in which the jewellery, the clothing and the curtain in the background all testify to the wealth and importance of the personality."
     ],
     "split": "train"
@@ -20,9 +28,19 @@
     "year": 1636,
     "visual_sentences": [
       "In addition to the jewelry, which proves the wealth of the baron, sabres and spurs symbolize male attributes such as strength and drive.",
-      "The elaborate dress represents power and dignity."
+      "The elaborate dress represents power and dignity.",
+      "He is wearing a red coat with gold seams and a white merlet",
+      "there is a text in the background attesting to the richness and importance of personality.",
+      "the man in the picture has mustaches and beard"
     ],
     "contextual_sentences": [
+      "the painter is Unbekannter Maler",
+      "the man in the painting is Jonas von Wilferstorf",
+      "he bore the coat of arms of the Kornpeck family with an ear of corn and a wreath of straw.",
+      "In 1631 he was raised to the rank of baron by the emperor.",
+      "He was 26-year-old in the painting",
+      "his wife was Euphrosina von Wilferstorf",
+      "he is wearing elaborate dress represents power and dignity.",
       "The GrazMuseum preserves two Baroque representative portraits of 26-year-old Jonas von Wilferstorf and his wife Euphrosina von Wilferstorf, which together form a unit.",
       "In 1631 he was promoted to baron by the emperor."
     ],
@@ -33,11 +51,15 @@
     "img_url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Dauerausstellung_360GRAZ_-_Maria_Anna_Remschmidin_aus_Graz%2C_die_Gattin_des_Maurermeisters_Witalm_auf_einem_Gem%C3%A4lde_von_Josef_Schlanderer_um_1810.jpg",
     "year": 1810,
     "visual_sentences": [
-      "In addition to the jewelry, which proves the wealth of the baron, sabres and spurs symbolize male attributes such as strength and drive.",
-      "The elaborate dress represents power and dignity."
+      "The woman in the picture is wearing a coat with flowers, fur, pearl collier and a typical hat",
+      "the woman in the painting is in a three quarter pose",
+      "the background of the painting is a neutral painted wall with the shadow of the woman",
+      "the woman in the painting holds a branch on her right hand"
     ],
     "contextual_sentences": [
-      "She was the wife of the architect Josef Benedict Withalm",
+      "the painter is Josef Schlanderer",
+      "the woman in the painting name is Maria Anna Remschmidin",
+      "the woman in the painting was the wife of the architect Josef Benedict Withalm",
       "This portrait was part of the GrazMuseum's historical display collection and permanent exhibition “360GRAZ | The city of all times\" that shows the political, economic and social history of the city of Graz in an open form."
     ],
     "split": "train"
@@ -47,13 +69,21 @@
     "img_url": "https://portal-os.si/wp-content/uploads/sites/15/2019/09/KOLIZEJ-01-255x300.jpg",
     "year": 1810,
     "visual_sentences": [
-      "In the portrait, Josef smiles"
+      "In the portrait, the man in the painting smiles",
+      "the man in the painting has short brown hair",
+      "the background of the painting is a neutral painted wall with the shadow of the man",
+      "the man in the painting is wearing a black coat over a white dress",
+      "the man in the painting has blue eyes"
     ],
     "contextual_sentences": [
-      "Based on his experience from both his military and construction careers, he first built the Withalm Coliseum in Graz, and then in Ljubljana.",
+      "the painter is Josef Schlanderer",
+      "the man in the painting is the husband of Maria Anna Remschmidin",
+      "the man in the painting was an architect",
+      "the man in the painting name is Josef Benedict Withalm",
+      "the man in the painting first built the Withalm Coliseum in Graz, and then in Ljubljana.",
       "This portrait was part of the GrazMuseum's exhibition \"Graz Portraits.\" in 2008.",
-      "He set an even greater milestone in Styrian architectural and construction history in 1846, when he began in Graz with the construction of the Iron House, one of the first examples of cast iron construction in Europe.",
-      "In 1817, he became a master builder in Graz, where he became known for good work execution and innovation: he invented a system for removing odors from toilets and paving roads with oak blocks."
+      "the man in the painting set an even greater milestone in Styrian architectural and construction history in 1846, when he began in Graz with the construction of the Iron House, one of the first examples of cast iron construction in Europe.",
+      "In 1817, the man in the painting became a master builder in Graz, where he became known for good work execution and innovation: he invented a system for removing odors from toilets and paving roads with oak blocks."
     ],
     "split": "train"
   }
