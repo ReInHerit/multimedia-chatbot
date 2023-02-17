@@ -335,7 +335,11 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 2;
 }
-
+.sup {
+  position: relative;
+  bottom: 1ex;
+  font-size: 80%;
+}
 .section-title p {
     margin-bottom: 0;
     position: relative;

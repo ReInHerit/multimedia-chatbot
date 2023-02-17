@@ -10,7 +10,7 @@ from random import randint
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .answer_generator import AnswerGenerator
-
+from .git_vqa import generate_answers
 from .import_datas import import_datas
 import json
 
@@ -226,6 +226,7 @@ def handle_chat_question(request):
     img_feats = img_url
     print(img_feats)
     answer = answer_generator.produceAnswer(question, text_info, img_feats)
+    # answer = generate_answers(img_url, question)[1]
     return JsonResponse({'answer': answer})  # render(request, "chat.html")#{'answer': answer}
 
 

@@ -98,8 +98,9 @@ function goPython(text, p_link) {
             'csrfmiddlewaretoken': '{{ csrf_token }}'
         }
     }).done(function (result) {
-        console.log(result)
-        insertChat("you", result['answer'], 1500);
+        let answer = result['answer'].toString()//.split("? ")
+        // console.log(answer)
+        insertChat("you", answer, 1500);
     });
 }
 
