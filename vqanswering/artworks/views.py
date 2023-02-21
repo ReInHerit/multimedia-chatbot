@@ -220,14 +220,14 @@ def handle_chat_question(request):
     artwork = Artwork.objects.get(image=img_url)
     v_desc = artwork.visual_description
     c_desc = artwork.contextual_description
+    title = artwork.title
     year = "this painting was depicted in " + str(artwork.year)
     text_info = c_desc + year + v_desc
-    # img_feats = answer_generator.get_image_features(img_url)
     img_feats = img_url
-    print(img_feats)
-    answer = answer_generator.produceAnswer(question, text_info, img_feats)
-    # answer = generate_answers(img_url, question)[1]
-    return JsonResponse({'answer': answer})  # render(request, "chat.html")#{'answer': answer}
+    print(type(v_desc))
+    answer = answer_generator.produceAnswer(question, title, str(artwork.year), text_info, img_feats)
+
+    return JsonResponse({'answer': answer})
 
 
 def chat_view(request):

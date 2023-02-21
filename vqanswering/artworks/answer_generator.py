@@ -6,11 +6,18 @@ from transformers import DistilBertForQuestionAnswering, DistilBertTokenizer, Vi
 import torch
 from google_trans_new import google_translator
 from .git_vqa import generate_answers
+import openai
+import json
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-
 device = torch.device('cpu')
-
-
+json_file = open('./static/assets/api-k.json')
+key_data = json.load(json_file)
+openai.api_key = key_data['openAI_key']
+# models = openai.Model.list()
+# print(models)
+# Set up the model and prompt
+model_engine = "text-davinci-003"
+# model_engine = "text-curie-001"
 def download_image(image_url):
     url = image_url
     print(url)
@@ -47,52 +54,52 @@ class AnswerGenerator():
         self.vilt_processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.vilt.eval()
 
-    def produceAnswer(self, question, context, vfeats):
+    def produceAnswer(self, question, artwork_title, year, context, vfeats):
         print(question)
-        predictions, raw_outputs = self.question_classifier.predict([question])
-        # print(predictions[0])
-        if predictions[0] == 0:
-            self.tokenizer.encode_plus(question)
+        prompt = "Consider the painting " + artwork_title + " depicted in " + year + ". " + question + \
+                 " Respond with up to 15 words and consider first the following " \
+                 "information to respond: " + context + "if the answer is not in there, give me your."
+        # Generate a response
+        try:
+            completion = openai.Completion.create(
+                engine=model_engine,
+                prompt=prompt,
+                max_tokens=25,
+                n=1,
+                stop=None,
+                temperature=0,
+            )
+            a_pred = completion.choices[0].text;
+            print(a_pred)
+        except openai.error.OpenAIError as e:
+            print("An error occurred: {}".format(e))
+            predictions, raw_outputs = self.question_classifier.predict([question])
 
-            encoding = self.tokenizer(question, context, return_tensors='pt', truncation=True,
-                                      max_length=512)
+            if predictions[0] == 0:
+                self.tokenizer.encode_plus(question)
+                encoding = self.tokenizer(question, context, return_tensors='pt', truncation=True,
+                                          max_length=512)
+                if len(encoding.input_ids) > 512:
+                    print(encoding.input_ids)
+                    encoding.input_ids = encoding.input_ids[:510]
+                    encoding.attention_mask = encoding.attention_mask[:510]
+                    encoding.token_type_ids = encoding.token_type_ids[:510]
+                outputs = self.vqamodel(**encoding)
+                answer_start_index = outputs.start_logits.argmax()
+                answer_end_index = outputs.end_logits.argmax()
+                predict_answer_tokens = encoding.input_ids[0, answer_start_index: answer_end_index + 1]
+                answer_tokens_to_string = self.tokenizer.decode(predict_answer_tokens)
+                a_pred = answer_tokens_to_string
+                print('contextual')
 
-            if len(encoding.input_ids) > 512:
-                print(encoding.input_ids)
-                encoding.input_ids = encoding.input_ids[:510]
-                encoding.attention_mask = encoding.attention_mask[:510]
-                encoding.token_type_ids = encoding.token_type_ids[:510]
-            outputs = self.vqamodel(**encoding)
-            answer_start_index = outputs.start_logits.argmax()
-            answer_end_index = outputs.end_logits.argmax()
-            predict_answer_tokens = encoding.input_ids[0, answer_start_index: answer_end_index + 1]
-            answer_tokens_to_string = self.tokenizer.decode(predict_answer_tokens)
-            a_pred = answer_tokens_to_string
-            print('contextual')
+            else:
+                git_answer = generate_answers(vfeats, question)
+                print(len(git_answer))
+                a_pred = concatenate_strings(git_answer)  #git_answer[0] + git_answer[1]
+                print('visual')
 
-        else:
-            # headers = {'User-Agent':
-            #         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) '
-            #         'Chrome/92.0.4515.159 Safari/537.36'}
-            # image = Image.open(requests.get(url=vfeats, headers=headers, stream=True).raw)
-            # print(image.size)
-            # if max(image.size[0], image.size[1]) > 1600:
-            #     scale_rate = 1600 / max(image.size[0], image.size[1])
-            #     x = int(image.size[1] * scale_rate)
-            #     y = int(image.size[0] * scale_rate)
-            #     image = image.resize((x, y))
-            # encoding = self.vilt_processor(image, question, return_tensors='pt')
-            # outputs = self.vilt(**encoding)
-            # logits = outputs.logits
-            # idx = logits.argmax(-1).item()
-            # a_pred = self.vilt.config.id2label[idx]
-            git_answer = generate_answers(vfeats, question)
-            print(len(git_answer))
-            a_pred = concatenate_strings(git_answer)  #git_answer[0] + git_answer[1]
-            print('visual')
-
-        if type(a_pred) != list:
-            a_pred = a_pred.split('.')[0]
+            if type(a_pred) != list:
+                a_pred = a_pred.split('.')[0]
         print(a_pred)
         return a_pred
 
