@@ -56,18 +56,22 @@ class AnswerGenerator():
 
     def produceAnswer(self, question, artwork_title, year, context, vfeats):
         print(question)
+        # prompt contextual
+        # prompt = "Consider the painting " + artwork_title + " depicted in " + year + ". " + question + \
+        #          " Respond with up to 30 words and consider first the following " \
+        #          "information to respond: " + context + "if the answer is not in there, give me your."
+        # prompt video
         prompt = "Consider the painting " + artwork_title + " depicted in " + year + ". " + question + \
-                 " Respond with up to 15 words and consider first the following " \
-                 "information to respond: " + context + "if the answer is not in there, give me your."
+                 "Respond with up to 30 words"
         # Generate a response
         try:
             completion = openai.Completion.create(
                 engine=model_engine,
                 prompt=prompt,
-                max_tokens=25,
+                max_tokens=45,
                 n=1,
                 stop=None,
-                temperature=0,
+                temperature=0.5,
             )
             a_pred = completion.choices[0].text;
             print(a_pred)
