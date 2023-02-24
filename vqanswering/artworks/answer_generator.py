@@ -10,7 +10,7 @@ import openai
 import json
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-json_key = open('./static/assets/api-k.json')
+json_key = open('./static/assets/json/api-k.json')
 json_which = open('./static/assets/json/which_to_use.json')
 # OPEN-AI APIs
 key_data = json.load(json_key)

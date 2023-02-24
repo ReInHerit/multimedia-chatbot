@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import json
 
-json_file = open('./static/assets/api-k.json')
+json_file = open('./static/assets/json/api-k.json')
 key_data = json.load(json_file)
 django_key = key_data['django_key']
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
