@@ -20,9 +20,7 @@ def generate_bert_dataset(dataset, split):
 def get_pretrained_bert(use_cuda=True):
     print('importing question_classifier...')
     # Create a ClassificationModel
-    model = ClassificationModel('bert',
-                                'C:\\Users\\arkfil\Desktop\demo_icpr\\vqanswering\question_classifier\outputs\\vqa_bert',
-                                use_cuda=use_cuda)  # 'bert-base-cased')
+    model = ClassificationModel('bert', './question_classifier/outputs/vqa_bert', use_cuda=use_cuda) # 'bert-base-cased')
     return model
     # Train the model
     # model.train_model(train_df)

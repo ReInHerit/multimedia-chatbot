@@ -2,7 +2,6 @@ from transformers import AutoProcessor, AutoModelForCausalLM
 import torch
 from PIL import Image
 import urllib.request
-from io import BytesIO
 
 git_processor_base = AutoProcessor.from_pretrained("microsoft/git-base-vqav2")
 git_model_base = AutoModelForCausalLM.from_pretrained("microsoft/git-base-vqav2")

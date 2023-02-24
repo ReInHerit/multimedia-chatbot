@@ -14,12 +14,9 @@ navigator.mediaDevices.enumerateDevices()
             // Microphone is available
             console.log("Microphone is available");
             micro_icon.attr("src", micro_icon_path);
-            // micro_icon.attr("src", "../img/microphone.png");
-
         } else {
             // Microphone is not available
             console.log("Microphone is not available");
-
             // Set the image source to the inactive microphone image
             micro_icon.attr("src", no_micro_icon_path);
             // Display an alert message to the user
@@ -82,7 +79,6 @@ function resetChat() {
 
 function goPython(text, p_link) {
     let token = $('input[name="csrfToken"]').attr('value');
-    console.log(token)
     $.ajax({
         type: "POST",
         url: "/handle_chat_question/",
@@ -94,7 +90,6 @@ function goPython(text, p_link) {
         }
     }).done(function (result) {
         let answer = result['answer'].toString()//.split("? ")
-        // console.log(answer)
         insertChat("you", answer, 1500);
     });
 }
@@ -109,7 +104,6 @@ $(".input_text").on("keydown", function (e) {
             let answer = goPython($(this).val(), link.src)
             $(this).val('');
         }
-        //console.log(answer)
     }
 });
 
@@ -150,7 +144,6 @@ function startRecording() {
             recognition.onresult = function (event) {
                 const link = document.querySelector("#painting_link")
                 let question = event.results[0][0].transcript + '?';
-                console.log(question)
                 insertChat("me", question);
                 let answer = goPython(question, link.src)
             };
@@ -187,7 +180,6 @@ recognition.onresult = function (event) {
     // We then return the transcript property of the SpeechRecognitionAlternative object
     var link = document.querySelector("#painting_link")
     var question = event.results[0][0].transcript + '?';
-    console.log(question)
     insertChat("me", question);
     var answer = goPython(question, link.src)
     //$(".input_text").val('');

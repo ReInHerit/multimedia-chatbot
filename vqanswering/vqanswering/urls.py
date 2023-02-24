@@ -15,25 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from artworks.views import home_view, add_suggestion, gallery_view, add_questionanswer, post_edit
+from artworks.views import home_view, gallery_view, ArtworkDetails, handle_chat_question, chat_view, \
+    Artworkchat
 from artworks.models import Artwork
-from artworks.views import ArtworkDetails, qa_delete, qa_revision, revision_edit, qa_delete_rand, revided, \
-    revision_result, handle_chat_question
-from artworks.views import chat_view, Artworkchat
 
 urlpatterns = [
     path('home/', home_view, {}),
     path('admin/', admin.site.urls),
-    path('add_suggestion/', add_suggestion, name='add_suggestion'),
     path('home/gallery', gallery_view),
-    path('add_questionanswer/', add_questionanswer),
-    path('home/<int:pk>/edit/', post_edit, name='post_edit'),
-    path('home/<int:pk>/remove/', qa_delete, name='qa_delete'),
-    path('home/random_revision/', qa_revision),
-    path('home/<int:pk>/revision_edit', revision_edit, name="revision_edit"),
-    path('home/<int:pk>/remove_rand/', qa_delete_rand, name='qa_delete_rand'),
-    path('home/<int:pk>/random_revision', revided, name="revided"),
-    path('home/revision_result', revision_result),
     path('home/chat', chat_view),
     path('handle_chat_question/', handle_chat_question, name='handle_chat')
 ]

@@ -6,14 +6,7 @@ import os
 
 here = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.abspath(os.path.join(here, os.pardir))
-print('here', here, 'parent', parent)
 thumbs_path = os.path.join(parent, 'static/assets/img/thumbs')
-print(thumbs_path)
-
-
-def first_n_digits(num, n):
-    print('first', num, n)
-    return num // 10 ** (int(math.log(num, 10)) - n + 1)
 
 
 def thumbnails(image_url):
@@ -23,7 +16,7 @@ def thumbnails(image_url):
         image = Image.open(BytesIO(response.content))
         concat = float(new_width / image.size[0])
         size = int((float(image.size[1]) * concat))
-        print(image.width, image.height)
+
         resized = image.resize((new_width, size), Image.ANTIALIAS)
         if not os.path.exists(thumbs_path):
             os.makedirs(thumbs_path)
@@ -49,25 +42,41 @@ def uri_exists_stream(uri: str) -> bool:
         return False
 
 
+# def create_thumb(normal_image):
+#     if normal_image.find('wikimedia') != -1:
+#         style = normal_image.split("/")[4]
+#
+#         if style == "en":
+#             thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
+#         else:
+#             thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
+#         new_part = normal_image.split("/")[-1]
+#         thumb_url = thumb_image + new_part
+#         if uri_exists_stream(thumb_url):
+#             thumb_image = thumb_url
+#         else:
+#             thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
+#
+#     else:
+#         thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
+#
+#     return thumb_image
+
 def create_thumb(normal_image):
-    if normal_image.find('wikimedia') != -1:
-        style = normal_image.split("/")[4]
+    if 'wikimedia' not in normal_image:
+        return "/static/assets/img/thumbs/" + thumbnails(normal_image)
 
-        if style == "en":
-            thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
-        else:
-            thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
-        new_part = normal_image.split("/")[-1]
-        thumb_url = thumb_image + new_part
-        if uri_exists_stream(thumb_url):
-            thumb_image = thumb_url
-        else:
-            thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
-
+    style = normal_image.split("/")[4]
+    if style == "en":
+        thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
     else:
-        thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
+        thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
 
-    return thumb_image
+    thumb_url = thumb_image + normal_image.split("/")[-1]
+    if uri_exists_stream(thumb_url):
+        return thumb_url
+    else:
+        return "/static/assets/img/thumbs/" + thumbnails(normal_image)
 
 
 def create_link(to_do_link):
@@ -78,7 +87,7 @@ def create_link(to_do_link):
 
 def import_datas(json_data, data):
     for article_id in json_data:
-        century = first_n_digits(json_data[article_id]['year'], 2) * 100
+        century = (json_data[article_id]['year'] // 10 ** (int(math.log(json_data[article_id]['year'], 10)) - 2 + 1)) * 100
         data.objects.create(title=json_data[article_id]['title'],
                             image=json_data[article_id]['img_url'],
                             thumb_image=create_thumb(json_data[article_id]['img_url']),
@@ -89,34 +98,34 @@ def import_datas(json_data, data):
                             link=create_link(json_data[article_id]['title']))
 
 
-def import_autogen_qa(json_data, data):
-    for article_id in json_data:
-        data.create(title=json_data[article_id]['title'],
-                    question=json_data[article_id]['question'],
-                    answer=json_data[article_id]['answer'],
-                    generation="auto generated",
-                    sentence_type=json_data[article_id]['type'],
-                    revised=False,
-                    to_show=True,
-                    dataset_version="second version")
-
-
-def create_qa(json_data, data):
-    for article_id in json_data:
-        data.create(title=json_data[article_id]['title'],
-                    question="In what year was it painted?",
-                    answer=json_data[article_id]['year'],
-                    generation="human generated",
-                    sentence_type="contextual sentence")
-        data.create(title=json_data[article_id]['title'],
-                    question="What is the title of the work?",
-                    answer=json_data[article_id]['title'],
-                    generation="human generated",
-                    sentence_type="contextual sentence")
-
-
-def change_thumb(data):
-    for element in data:
-        new_link = element.thumb_image.replace("200", "300")
-        element.thumb_image = new_link
-        element.save()
+# def import_autogen_qa(json_data, data):
+#     for article_id in json_data:
+#         data.create(title=json_data[article_id]['title'],
+#                     question=json_data[article_id]['question'],
+#                     answer=json_data[article_id]['answer'],
+#                     generation="auto generated",
+#                     sentence_type=json_data[article_id]['type'],
+#                     revised=False,
+#                     to_show=True,
+#                     dataset_version="second version")
+#
+#
+# def create_qa(json_data, data):
+#     for article_id in json_data:
+#         data.create(title=json_data[article_id]['title'],
+#                     question="In what year was it painted?",
+#                     answer=json_data[article_id]['year'],
+#                     generation="human generated",
+#                     sentence_type="contextual sentence")
+#         data.create(title=json_data[article_id]['title'],
+#                     question="What is the title of the work?",
+#                     answer=json_data[article_id]['title'],
+#                     generation="human generated",
+#                     sentence_type="contextual sentence")
+#
+#
+# def change_thumb(data):
+#     for element in data:
+#         new_link = element.thumb_image.replace("200", "300")
+#         element.thumb_image = new_link
+#         element.save()
