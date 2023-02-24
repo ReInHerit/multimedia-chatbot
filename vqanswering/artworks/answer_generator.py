@@ -3,21 +3,24 @@ import os
 from PIL import Image
 import requests
 from transformers import DistilBertForQuestionAnswering, DistilBertTokenizer, ViltProcessor, ViltForQuestionAnswering
+# from transformers import GPTJForQuestionAnswering, AutoTokenizer
 import torch
 from google_trans_new import google_translator
 from .git_vqa import generate_answers
 import openai
 import json
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-device = torch.device('cpu')
+# device = torch.device('cpu')
 json_file = open('./static/assets/api-k.json')
+##### OPEN-AI APIs
 key_data = json.load(json_file)
 openai.api_key = key_data['openAI_key']
-# models = openai.Model.list()
-# print(models)
-# Set up the model and prompt
+# Set up the model
 model_engine = "text-davinci-003"
-# model_engine = "text-curie-001"
+
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
 def download_image(image_url):
     url = image_url
     print(url)
@@ -54,21 +57,27 @@ class AnswerGenerator():
         self.vilt_processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.vilt.eval()
 
+
     def produceAnswer(self, question, artwork_title, year, context, vfeats):
         print(question)
         # prompt contextual
+        prompt = f"Consider the painting {artwork_title}  depicted in {year}. {question}" \
+                 f"Answer the question as truthfully as possible using the provided text with up to 15 words, " \
+                 f"and if the answer is not contained within the text below, say 'I don't know'  " \
+                 f"Context: {context} " \
+                 # f"if the answer is not in there, give me your."
+        # prompt video#
+
         # prompt = "Consider the painting " + artwork_title + " depicted in " + year + ". " + question + \
-        #          " Respond with up to 30 words and consider first the following " \
-        #          "information to respond: " + context + "if the answer is not in there, give me your."
-        # prompt video
-        prompt = "Consider the painting " + artwork_title + " depicted in " + year + ". " + question + \
-                 "Respond with up to 30 words"
-        # Generate a response
+        #          "Respond with up to 30 words"
+        print(prompt)
+
+        # Generate a response openAi
         try:
             completion = openai.Completion.create(
                 engine=model_engine,
                 prompt=prompt,
-                max_tokens=45,
+                max_tokens=25,
                 n=1,
                 stop=None,
                 temperature=0.5,

@@ -119,7 +119,6 @@
   });
 
 
-
   // Gallery isotope and filter
   $(window).on('load', function() {
     var galleryIsotope = $('.gallery-container').isotope({

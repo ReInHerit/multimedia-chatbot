@@ -1,12 +1,7 @@
 let me = {};
 
-// me.avatar = "https://i.postimg.cc/JzKLLD8Z/AI.png";
-
 let you = {};
-// you.avatar = "https://i.postimg.cc/SssHqDdp/Y.png";
 
-// const micro_div = document.getElementById("microphone")
-// const micro_icon = document.getElementById("micro-icon")
 const micro_div = $("#microphone")
 const micro_icon = $("#micro-icon")
 navigator.mediaDevices.enumerateDevices()
@@ -180,18 +175,8 @@ micro_div.click(function () {
     startRecording();
     console.log('Ready to receive a question.');
 });
-// document.body.onclick
-// micro_div.click(function () {
-//     console.log('start')
-//     // recognition.start();
-//     startRecording()
-//     micro_icon.addClass("blink-image");
-//     console.log('Ready to receive a question.');
-// })
 
 recognition.onresult = function (event) {
-    // micro_icon.removeClass("blink-image");
-    console.log('entered micro');
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
     // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
     // It has a getter so it can be accessed like an array

@@ -78,7 +78,6 @@ def create_link(to_do_link):
 
 def import_datas(json_data, data):
     for article_id in json_data:
-        print('id', article_id)
         century = first_n_digits(json_data[article_id]['year'], 2) * 100
         data.objects.create(title=json_data[article_id]['title'],
                             image=json_data[article_id]['img_url'],
