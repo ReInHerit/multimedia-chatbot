@@ -7,6 +7,8 @@ The user interface is divided into two sections: the home page and the gallery. 
 
 <p>Download the repository and follow the instructions below to set up the application.</p>
 
+---
+
 ## How to run the app
 You can choose to test the app in two ways:
 - creating a python virtual environment
