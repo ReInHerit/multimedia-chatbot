@@ -23,7 +23,7 @@ def thumbnails(image_url):
         file_name = image_url.split("/")[-1] + '_thumbnail.jpg'
         file_path = os.path.join(thumbs_path + '/' + file_name)
         resized.save(file_path)
-
+        print(file_name)
         return file_name
     except IOError:
         print('error')
@@ -42,41 +42,44 @@ def uri_exists_stream(uri: str) -> bool:
         return False
 
 
-# def create_thumb(normal_image):
-#     if normal_image.find('wikimedia') != -1:
-#         style = normal_image.split("/")[4]
-#
-#         if style == "en":
-#             thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
-#         else:
-#             thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
-#         new_part = normal_image.split("/")[-1]
-#         thumb_url = thumb_image + new_part
-#         if uri_exists_stream(thumb_url):
-#             thumb_image = thumb_url
-#         else:
-#             thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
-#
-#     else:
-#         thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
-#
-#     return thumb_image
-
 def create_thumb(normal_image):
-    if 'wikimedia' not in normal_image:
-        return "/static/assets/img/thumbs/" + thumbnails(normal_image)
+    if normal_image.find('wikimedia') != -1:
+        style = normal_image.split("/")[4]
 
-    style = normal_image.split("/")[4]
-    if style == "en":
-        thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
-    else:
-        thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
+        if style == "en":
+            thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
+        else:
+            thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
+        new_part = normal_image.split("/")[-1]
+        thumb_url = thumb_image + new_part
+        thumb_image = thumb_url
+        # if uri_exists_stream(thumb_url):
+        #     print('true')
+        #     thumb_image = thumb_url
+        # else:
+        #     print('false')
+        #     thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
 
-    thumb_url = thumb_image + normal_image.split("/")[-1]
-    if uri_exists_stream(thumb_url):
-        return thumb_url
     else:
-        return "/static/assets/img/thumbs/" + thumbnails(normal_image)
+        thumb_image = "/static/assets/img/thumbs/" + thumbnails(normal_image)
+
+    return thumb_image
+
+# def create_thumb(normal_image):
+#     if 'wikimedia' not in normal_image:
+#         return "/static/assets/img/thumbs/" + thumbnails(normal_image)
+#
+#     style = normal_image.split("/")[4]
+#     if style == "en":
+#         thumb_image = normal_image.replace('/en/', '/en/thumb/') + "/300px-"
+#     else:
+#         thumb_image = normal_image.replace('/commons/', '/commons/thumb/') + "/300px-"
+#
+#     thumb_url = thumb_image + normal_image.split("/")[-1]
+#     if uri_exists_stream(thumb_url):
+#         return thumb_url
+#     else:
+#         return "/static/assets/img/thumbs/" + thumbnails(normal_image)
 
 
 def create_link(to_do_link):

@@ -1,24 +1,24 @@
 from question_classifier.bert import get_pretrained_bert
 import os
-from PIL import Image
-import requests
-from transformers import DistilBertForQuestionAnswering, DistilBertTokenizer, ViltProcessor, ViltForQuestionAnswering
+from transformers import DistilBertForQuestionAnswering, DistilBertTokenizer
 import torch
 from google_trans_new import google_translator
 from .git_vqa import generate_answers
 import openai
 import json
+from dotenv import load_dotenv
+
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-json_key = open('./static/assets/json/api-k.json')
-json_which = open('./static/assets/json/which_to_use.json')
 # OPEN-AI APIs
-key_data = json.load(json_key)
-which_data = json.load(json_which)
-which = which_data['using']
-openai.api_key = key_data['openAI_key']
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_KEY')
 # Set up the model
 model_engine = "text-davinci-003"
+# WHICH TO USE
+json_which = open('./static/assets/json/which_to_use.json')
+which_data = json.load(json_which)
+which = which_data['using']
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -28,8 +28,7 @@ class AnswerGenerator:
         super(AnswerGenerator, self).__init__()
 
         self.question_classifier = get_pretrained_bert(use_cuda=False)
-        self.translator = google_translator()  # Translator()
-        # device = torch.device('cpu')
+        self.translator = google_translator()
 
         model_name = 'distilbert-base-uncased'
 

@@ -13,14 +13,14 @@ def home_view(request):
     obj = Artwork.objects.all()
     context = {'artwork': obj}
 
-    # to delete an Artwork
-    # delete_artwork1 = Artwork.objects.filter(image="https://upload.wikimedia.org/wikipedia/commons/c/cd/Dauerausstellung_360GRAZ_-_Euphrosina_Scholastica_Dann_de_Wilfersdorf%2C_Baronissa_A._Maswanau%2C_1636.jpg").delete()
-    # delete_artwork2 = Artwork.objects.filter(image="https://upload.wikimedia.org/wikipedia/commons/1/16/Dauerausstellung_360GRAZ_-_Ionas_Liber_Baro_a_Wilfersdorf%2C_1635.jpg").delete()
-    # delete_artwork3 = Artwork.objects.filter(image="https://upload.wikimedia.org/wikipedia/commons/a/a2/Dauerausstellung_360GRAZ_-_Maria_Anna_Remschmidin_aus_Graz%2C_die_Gattin_des_Maurermeisters_Witalm_auf_einem_Gem%C3%A4lde_von_Josef_Schlanderer_um_1810.jpg").delete()
-    # delete_artwork4 = Artwork.objects.filter(image="https://portal-os.si/wp-content/uploads/sites/15/2019/09/KOLIZEJ-01-255x300.jpg").delete()
+    # TO DELETE A SINGLE ARTWORK
+    # delete_artwork1 = Artwork.objects.filter(image="YOUR_IMAGE_URL").delete()
 
-    # to add an Artwork
-    # json_file = json.load(open('./static/assets/json/rehineritpedia.json', 'rb'))
+    # TO DELETE ALL ARTWORKS
+    # obj.delete()
+
+    # TO ADD ARTWORK/s
+    # json_file = json.load(open('./static/assets/json/reinheritpedia.json', 'rb'))
     # import_datas(json_file, Artwork)
 
     return render(request, "index.html", context)

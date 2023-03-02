@@ -1,1 +1,3 @@
-!/static/assets/json/api-k.json
+
+/.env
+!/question_classifier/models/
