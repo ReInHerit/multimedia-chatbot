@@ -45,7 +45,16 @@ You need to rename the file .env_template to .env and fill in the fields with yo
     ``` 
     If Conda is not installed, follow the installation instructions from the official Anaconda website: https://docs.anaconda.com/anaconda/install/
   - **Docker**: you'll need to set up and run Docker on your operating system. If you are not familiar with Docker, please refer to the official documentation [here](https://docs.docker.com/). 
+### How to switch between openAI GPT-3 and Bert & GIT Methods
+If you want to test the app using both methods, you can switch between them. Before proceeding, you'll need to modify the value of the 'using' variable in the 'which_to_use.json' file located in 'static/assets/json'..
 
+```
+{
+  "using": "open_ai"
+}
+```
+If you want to use the openAI GPT-3 method, set the value to **open_ai**.\
+If you want to use the Bert & GIT method, set the value to anything other than **open_ai**.
 ### How to manage python virtual environment
 - #### Create a virtual environment and install the requirements
     Open a terminal and navigate to the folder containing the requirements.txt file. \
