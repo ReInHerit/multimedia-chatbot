@@ -37,7 +37,7 @@ You need to rename the file .env_template to .env and fill in the fields with yo
       4. Access your OpenAI key page by visiting https://platform.openai.com/account/api-keys.
       5. Click the "Create new secret key" button on the key page to generate a new key.
       6. Copy the key and paste it in the OPENAI_KEY field of the .env file. Don't forget to put it in quotation marks.
-
+      7. Download pytorch_model.bin from https://huggingface.co/Faisalrahi/pytorch_model.bin/blob/main/pytorch_model.bin and place it in the question_classifier/models/vqa_bert folder.
 - Depending on which method you have chosen to test the app you must:
   - **Python Virtual Environment**: we recommend using Conda to manage virtual environments, so check in your terminal or command prompt if you have Conda installed by running the command 
     ```
