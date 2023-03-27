@@ -40,6 +40,7 @@ class AnswerGenerator:
     def produce_answer(self, question, artwork_title, year, context, image_url):
         print(question)
         if which == 'open_ai':
+            print('using open ai')
             # prompt contextual
             prompt = f"Consider the painting {artwork_title}  depicted in {year}. {question}" \
                      f"Answer truthfully using the Context as source of information and with up to 15 words. " \
@@ -66,10 +67,11 @@ class AnswerGenerator:
                 answer = self.use_cqa_or_vqa(question, context, image_url)
         else:
             answer = self.use_cqa_or_vqa(question, context, image_url)
-        print('A: ', answer)
+        print('return Answer: ', answer)
         return answer
     
     def use_cqa_or_vqa(self, question, context, url):
+        print('using cqa or vqa')
         predictions, raw_outputs = self.question_classifier.predict([question])
     
         if predictions[0] == 0:
@@ -96,6 +98,8 @@ class AnswerGenerator:
         if type(answer_prediction) != list:
             answer_prediction = answer_prediction.split('.')[0]
         return answer_prediction
+
+
 def concatenate_strings(strings):
     # Extract the right part after '?' of the first string
     string1 = strings[0][0]

@@ -3,15 +3,14 @@ FROM python:3.9
 WORKDIR /webapp
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-#RUN pip install tensorboardX
 RUN pip install --upgrade simpletransformers
 
 COPY package.json ./
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y npm
 RUN npm install --force
-COPY question_classifier/models/vqa_bert/config.json /app/question_classifier/models/vqa_bert/config.json
-COPY question_classifier/models/vqa_bert/pytorch_model.bin /app/question_classifier/models/vqa_bert/pytorch_model.bin
+#COPY question_classifier/models/vqa_bert/config.json /app/question_classifier/models/vqa_bert/config.json
+#COPY question_classifier/models/vqa_bert/pytorch_model.bin /app/question_classifier/models/vqa_bert/pytorch_model.bin
 
 COPY . .
 EXPOSE 8000

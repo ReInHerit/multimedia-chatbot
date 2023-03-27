@@ -61,15 +61,18 @@ class Artworkchat(View):
 
 @csrf_exempt
 def handle_chat_question(request):
+    print('in handle question')
     img_url = request.POST["img"]
     question = request.POST["question"]
     artwork = Artwork.objects.get(image=img_url)
+    print('get image url')
     v_desc = artwork.visual_description
     c_desc = artwork.contextual_description
     title = artwork.title
     year = " this painting was depicted in " + str(artwork.year)
     text_info = c_desc + year + ' ' + v_desc
     img_feats = img_url
+    print('setting data info')
     answer = AnswerGenerator().produce_answer(question, title, str(artwork.year), text_info, img_feats)
 
     return JsonResponse({'answer': answer})

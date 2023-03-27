@@ -82,15 +82,14 @@ function goPython(text, p_link) {
     $.ajax({
         type: "POST",
         url: "/handle_chat_question/",
-        //context: {'data': $(".input_text").val()}
         data: {
             'question': text,
             'img': p_link.toString(),
             'csrfmiddlewaretoken': '{{ csrf_token }}'
         }
     }).done(function (result) {
-        let answer = result['answer'].toString()//.split("? ")
-        insertChat("you", answer, 1500);
+        let answer = result['answer'].toString()
+        insertChat("you", answer, 150);
     });
 }
 
