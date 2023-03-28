@@ -1,2 +1,3 @@
 /.env
 /question_classifier/models/vqa_bert/pythorc_model.bin
+/question_classifier/
