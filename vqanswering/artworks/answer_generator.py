@@ -1,5 +1,4 @@
 import os
-import torch
 import openai
 import json
 from dotenv import load_dotenv
@@ -15,9 +14,6 @@ model_engine = "text-davinci-003"
 json_which = open('./static/assets/json/which_to_use.json')
 which_data = json.load(json_which)
 which = which_data['using']
-
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
 
 class AnswerGenerator:
     def __init__(self):

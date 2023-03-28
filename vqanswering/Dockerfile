@@ -17,8 +17,8 @@ ENV OPENAI_KEY=$OPENAI_KEY
 ENV DJANGO_KEY=$DJANGO_KEY
 
 # run the server
-ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]
+#ENTRYPOINT ["python", "manage.py"]
+#CMD ["runserver", "0.0.0.0:8000"]
 #for heroku
-#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "webapp.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "vqanswering.wsgi"]
 
