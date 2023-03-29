@@ -20,16 +20,17 @@ from artworks.views import home_view, gallery_view, ArtworkDetails, handle_chat_
 from artworks.models import Artwork
 
 urlpatterns = [
-    path('home/', home_view, {}),
+    path('', home_view, {}, name='home_view'),
     path('admin/', admin.site.urls),
-    path('home/gallery', gallery_view),
-    path('home/chat', chat_view),
+    path('gallery/', gallery_view, name='gallery_view'),
+    path('chat/', chat_view),
     path('handle_chat_question/', handle_chat_question, name='handle_chat')
 ]
 
 obj = Artwork.objects.all()
+
 for article in obj:
-    link = 'home/' + article.link + '/'
+    link = 'gallery/' + article.link + '/'
     link_chat = link + 'chat/'
     urlpatterns.append(path(link, ArtworkDetails.as_view(art=article)))
     urlpatterns.append(path(link_chat, Artworkchat.as_view(art=article)))

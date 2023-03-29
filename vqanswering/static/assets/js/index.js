@@ -181,9 +181,6 @@ recognition.onresult = function (event) {
     var question = event.results[0][0].transcript + '?';
     insertChat("me", question);
     var answer = goPython(question, link.src)
-    //$(".input_text").val('');
-    //diagnostic.textContent = 'Result received: ' + color + '.';
-    //bg.style.backgroundColor = color;
 }
 
 recognition.onspeechend = function () {

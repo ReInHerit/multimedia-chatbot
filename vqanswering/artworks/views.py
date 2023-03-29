@@ -42,7 +42,6 @@ class ArtworkDetails(View):
         for element in obj:
             if element.title == self.art.title:
                 questions.append(element)
-
         context = {'artwork': self.art, 'question': questions, 'chat_link': self.art.link + '/chat/'}
         return render(request, "gallery-details.html", context)
 

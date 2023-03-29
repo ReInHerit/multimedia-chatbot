@@ -31,7 +31,7 @@
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top d-flex align-items-center "> <!-- justify-content-center -->
-    <a href="/home" title="HOME"><img id="header_logo"  alt="reinherit logo"
+    <a href="{% url 'home_view' %}" title="HOME"><img id="header_logo"  alt="reinherit logo"
          src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
@@ -39,8 +39,8 @@
     </div>
     <nav class="nav-menu d-none d-lg-block">
         <ul>
-            <li class="menu_passive"><a href="/home">Home</a></li>
-            <li class="active menu_active"><a href="/home/gallery">Gallery</a></li>
+            <li class="menu_passive"><a href="{% url 'home_view' %}">Home</a></li>
+            <li class="active menu_active"><a href="{% url 'gallery_view' %}">Gallery</a></li>
         </ul>
     </nav>
 </header>
