@@ -3,7 +3,6 @@ import openai
 import json
 from dotenv import load_dotenv
 
-
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 # OPEN-AI APIs
 load_dotenv()
@@ -15,10 +14,10 @@ json_which = open('./static/assets/json/which_to_use.json')
 which_data = json.load(json_which)
 which = which_data['using']
 
+
 class AnswerGenerator:
     def __init__(self):
         super(AnswerGenerator, self).__init__()
-
 
     def produce_answer(self, question, artwork_title, year, context, image_url):
         print(question)
@@ -44,8 +43,22 @@ class AnswerGenerator:
                 temperature=0.5,
             )
             answer = completion.choices[0].text
+        except openai.error.TimeoutError:
+            print("The request to OpenAI API has timed out")
+            answer = "There was a timeout error, please try again later"
+        except openai.error.APIError as e:
+            print("An error occurred: {}".format(e))
+            answer = "There's a problem with the OpenAI API, please try again later"
         except openai.error.OpenAIError as e:
-                print("An error occurred: {}".format(e))
+            print("An error occurred: {}".format(e))
+            answer = "There's a connection problem, please ask the question later"
+        except Exception as e:
+            print("An unexpected error occurred: {}".format(e))
+            answer = "An unexpected error occurred, please try again later"
+        finally:
+            # Code to execute regardless of whether an exception was raised or not
+            print("Completed the request to OpenAI API")
 
+        print(f"Answer: {answer}")
         return answer
     
