@@ -19,7 +19,7 @@ Follow above prerequisites and instructions paying attention to the parts relati
 ### Prerequisites
 - **Python 3.9** installed on your machine. If you don't have it, you can download it from the official website: https://www.python.org/downloads/ or follow this online guide: https://realpython.com/installing-python/ to install Python on your machine.
 - **Javascript** enabled on your browser. If not, you can follow this online guide: https://www.enable-javascript.com/
-- a **Django secret key** and an **OpenAI API key** are required:\
+- a **Django secret key** and an **OpenAI API key** are required, **Google Analytics** is optional:\
 You need to rename the file .env_template to .env and fill in the fields with your own key values:<br>
   1. ___Django secret key___: 
      1. You can generate one by typing in a terminal 
@@ -38,6 +38,17 @@ You need to rename the file .env_template to .env and fill in the fields with yo
       5. Click the "Create new secret key" button on the key page to generate a new key.
       6. Copy the key and paste it in the OPENAI_KEY field of the .env file. Don't forget to put it in quotation marks.
       7. Download pytorch_model.bin and config.json from https://huggingface.co/Faisalrahi/pytorch_model.bin/tree/main and place it in the question_classifier/models/vqa_bert folder.
+  3. ___Google Analytics key___
+     1. Go to https://analytics.google.com/analytics/web/ and click on the "Get Started for Free" button.
+     2. Sign in with your Google account.
+     3. Follow the instructions to create a new account.
+     4. Once you have created your account, you will be redirected to the dashboard. Click on the "Admin" button in the top left corner.
+     5. Click on the "Create Property" button.
+     6. Select "Web" as the property type and click on the "Continue" button.
+     7. Enter a name for your property and click on the "Create" button.
+     8. Click on the "Tracking Info" button.
+     9. Click on the "Tracking Code" button.
+     10. Copy the "Tracking ID" and paste it in the GA_KEY field of the .env file.
 - Depending on which method you have chosen to test the app you must:
   - **Python Virtual Environment**: we recommend using Conda to manage virtual environments, so check in your terminal or command prompt if you have Conda installed by running the command 
     ```
@@ -45,16 +56,9 @@ You need to rename the file .env_template to .env and fill in the fields with yo
     ``` 
     If Conda is not installed, follow the installation instructions from the official Anaconda website: https://docs.anaconda.com/anaconda/install/
   - **Docker**: you'll need to set up and run Docker on your operating system. If you are not familiar with Docker, please refer to the official documentation [here](https://docs.docker.com/). 
-### How to switch between openAI GPT-3 and Bert & GIT Methods
-If you want to test the app using both methods, you can switch between them. Before proceeding, you'll need to modify the value of the 'using' variable in the 'which_to_use.json' file located in 'static/assets/json'..
+ 
 
-```
-{
-  "using": "open_ai"
-}
-```
-If you want to use the openAI GPT-3 method, set the value to **open_ai**.\
-If you want to use the Bert & GIT method, set the value to anything other than **open_ai**.
+
 ### How to manage python virtual environment
 - #### Create a virtual environment and install the requirements
     Open a terminal and navigate to the folder containing the requirements.txt file. \
