@@ -37,7 +37,7 @@ class AnswerGenerator:
             completion = openai.Completion.create(
                 engine=model_engine,
                 prompt=prompt,
-                max_tokens=25,
+                max_tokens=40,
                 n=1,
                 stop=None,
                 temperature=0.5,
