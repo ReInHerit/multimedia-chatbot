@@ -26,12 +26,20 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ga_key}}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', "{{ga_key}}");
+    </script>
 </head>
 
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top  d-flex align-items-center header-transparent"> <!-- justify-content-center -->
-    <img id="header_logo" href="/home" alt="reinherit logo"
+    <img id="header_logo" href="{% url 'home_view' %}" alt="reinherit logo"
          src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg">
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
@@ -39,8 +47,8 @@
     </div>
     <nav class="nav-menu d-none d-lg-block">
         <ul>
-            <li class="active menu_active"><a href="/home">Home</a></li>
-            <li class="menu_passive"><a href="/home/gallery">Gallery</a></li>
+            <li class="active menu_active"><a href="{% url 'home_view' %}">Home</a></li>
+            <li class="menu_passive"><a href="{% url 'gallery_view' %}">Gallery</a></li>
         </ul>
     </nav><!-- .nav-menu -->
 </header><!-- End Header -->
@@ -58,15 +66,15 @@
 
             <div>
                 <div class="owl-carousel portfolio-details-carousel">
-                    <a href="/home/gallery">
+                    <a href="{% url 'gallery_view' %}">
                         <img src="{% static 'assets/img/portfolio/venere.jpeg' %}" class="img-fluid"
                              alt="venere-preview">
                     </a>
-                    <a href="/home/gallery">
+                    <a href="{% url 'gallery_view' %}">
                         <img src="{% static 'assets/img/portfolio/herbe.jpg' %}" class="img-fluid"
                              alt="dejeuner-sur-herbe-preview">
                     </a>
-                    <a href="/home/gallery">
+                    <a href="{% url 'gallery_view' %}">
                         <img src="{% static 'assets/img/portfolio/persistence.jpg' %}" class="img-fluid"
                              alt="persistence-of-memory-preview">
                     </a>
@@ -74,7 +82,7 @@
                 </div>
 
                 <div class="link-block">
-                    <h3><a class=link-button href="/home/gallery">Select a painting and ask a question</a></h3>
+                    <h3><a class=link-button href="{% url 'gallery_view' %}">Select a painting and ask a question</a></h3>
                 </div>
             </div>
         </div>

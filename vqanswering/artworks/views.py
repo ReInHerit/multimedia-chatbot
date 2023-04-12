@@ -8,10 +8,15 @@ from .answer_generator import AnswerGenerator
 from .import_datas import import_datas
 import json
 
+from django.conf import settings
+
+ga_key = settings.GA_MEASUREMENT_ID
+
 
 def home_view(request):
     obj = Artwork.objects.all()
-    context = {'artwork': obj}
+    print(ga_key, "ga_key")
+    # context = {'artwork': obj, 'ga_key': ga_key}
 
     # TO DELETE A SINGLE ARTWORK
     # delete_artwork1 = Artwork.objects.filter(image="YOUR_IMAGE_URL").delete()
@@ -23,12 +28,12 @@ def home_view(request):
     # json_file = json.load(open('./static/assets/json/reinheritpedia.json', 'rb'))
     # import_datas(json_file, Artwork)
 
-    return render(request, "index.html", context)
+    return render(request, "index.html", {'artwork': obj, 'ga_key': ga_key})
 
 
 def gallery_view(request):
     obj = Artwork.objects.all().order_by('year')
-    context = {'artwork': obj}
+    context = {'artwork': obj, 'ga_key': ga_key}
 
     return render(request, "gallery.html", context)
 
@@ -42,8 +47,7 @@ class ArtworkDetails(View):
         for element in obj:
             if element.title == self.art.title:
                 questions.append(element)
-
-        context = {'artwork': self.art, 'question': questions, 'chat_link': self.art.link + '/chat/'}
+        context = {'artwork': self.art, 'question': questions, 'chat_link': self.art.link + '/chat/', 'ga_key': ga_key}
         return render(request, "gallery-details.html", context)
 
 
@@ -51,11 +55,11 @@ class Artworkchat(View):
     art = "tmp"
 
     def post(self, request):
-        context = {'artwork': self.art}
+        context = {'artwork': self.art, 'ga_key': ga_key}
         return render(request, "artwork-chat.html", context)
 
     def get(self, request):
-        context = {'artwork': self.art}
+        context = {'artwork': self.art, 'ga_key': ga_key}
         return render(request, "artwork-chat.html", context)
 
 

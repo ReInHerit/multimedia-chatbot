@@ -5,15 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vqanswering/question_classifier/models" />
       <excludeFolder url="file://$MODULE_DIR$/vqanswering/static/assets/img/full_images" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (demo_vqa)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="OldPhotoRestoration" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-  <component name="PackageRequirementsSettings">
-    <option name="versionSpecifier" value="Strong equality (==x.y.z)" />
-    <option name="removeUnused" value="true" />
-  </component>
-  <component name="PyDocumentationSettings">
-    <option name="format" value="PLAIN" />
-    <option name="myDocStringFormat" value="Plain" />
   </component>
 </module>
