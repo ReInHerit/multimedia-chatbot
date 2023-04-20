@@ -23,6 +23,8 @@ urlpatterns = [
     path('', home_view, {}, name='home_view'),
     path('admin/', admin.site.urls),
     path('gallery/', gallery_view, name='gallery_view'),
+    # path('gallery/<str:century>/', gallery_view, name='gallery'),
+    # path('gallery/<str:century>/<int:page>/', gallery_view, name='gallery'),
     path('chat/', chat_view),
     path('handle_chat_question/', handle_chat_question, name='handle_chat')
 ]

@@ -637,12 +637,12 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     #artwork-schedule2 #painting_link {
-        max-height: 50vh;
+        max-height: 70vh;
     }
-
-    #painting_link {
+    #artwork-schedule #painting_link {
         max-height: 36vh;
     }
+
 }
 
 /*--------------------------------------------------------------
@@ -863,15 +863,16 @@ input {
     #chat-section {
         width: 100vw;
         max-width: 100%;
-        padding: 2vh 0 0 0;
+        padding: 5px 0;
     }
 
     .chat-ul {
-        max-height: 50vh;
+        max-height: 30vh;
     }
 
     .chat-ul ul {
-        max-height: 36vh;
+        max-height: 30vh;
+        padding: 0;
         margin: 0
     }
 
@@ -920,13 +921,16 @@ input {
     max-height: 55vh;
     margin: auto;
 }
+.owl-dots {
+    display: none;
+}
 
 .link-block {
     padding: 1vh;
     display: flex;
     position: relative;
     justify-content: center;
-    margin-top: auto;
+    margin-top: 10px;
     z-index: 2;
 
 }
@@ -950,7 +954,6 @@ input {
 }
 
 .link-button:hover {
-    /*border: 1px solid #c4be00;*/
     background: #fdf003;
     color: #11303b;
 }
@@ -966,7 +969,6 @@ input {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-    /*font-size: 2rem;*/
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -1153,7 +1155,9 @@ button[type="submit"]:hover {
     margin-top: 0;
     margin-bottom: 0;
 }
-
+.pagination {
+    margin-bottom: 4vh
+}
 @media screen and (min-width: 450px) and (max-width: 769px) {
     .large-view {
         display: block;

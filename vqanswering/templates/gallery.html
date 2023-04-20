@@ -17,7 +17,7 @@
     <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
     <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-<!--    <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">-->
+    <!--    <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">-->
     <!-- Main CSS File -->
     <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
 </head>
@@ -25,7 +25,7 @@
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top  d-flex align-items-center "><!-- justify-content-center -->
     <a href="{% url 'home_view' %}" title="HOME"><img id="header_logo" alt="reinherit logo"
-                                      src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
+                                                      src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
         <div id="undertitle">Redefining the Future of Cultural Heritage</div>
@@ -44,145 +44,98 @@
         <div class="centuries_container">
             <div class="large-view">
                 <ul id="gallery-filters" class="d-flex justify-content-center">
+                    {% if current_century == "" %}
                     <li data-filter="*" class="filter-active">All</li>
-                    <li data-filter=".filter-2">1200</li>
-                    <li data-filter=".filter-3">1300</li>
-                    <li data-filter=".filter-4">1400</li>
-                    <li data-filter=".filter-5">1500</li>
-                    <li data-filter=".filter-6">1600</li>
-                    <li data-filter=".filter-7">1700</li>
-                    <li data-filter=".filter-8">1800</li>
-                    <li data-filter=".filter-9">1900</li>
-                    <li data-filter=".filter-0">2000</li>
+                    {% else %}
+                    <li data-filter="*">All</li>
+                    {% endif %}
+                    {% for century in centuries %}
+                    {% if century == current_century %}
+                    <li data-filter=".filter-{{ century }}" class="filter-active"
+                        data_current-century="{{ current_century }}" data-century="{{ century }}">{{ century }}
+                    </li>
+                    {% else %}
+                    <li data-filter=".filter-{{ century }}" data_current-century="{{ current_century }}"
+                        data-century="{{ century }}">{{ century }}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
-            <!--                    </ul>-->
             <div class="choose-century">
                 <label for="myDropdown" class="select-cn">Select a century: </label>
-                <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn">OOOOOOOOO</button>
+                <div id="gallery-filters" class="dropdown">
+                    {% if current_century == "" %}
+                    <button onclick="myFunction()" class="dropbtn">0000000</button>
+                    {% else %}
+                    <button onclick="myFunction()" class="dropbtn">{{ current_century }}</button>
+                    {% endif %}
                     <div id="myDropdown" class="dropdown-content">
-                        <ul id="gallery-filters">
+                        <ul>
+                            {% if current_century == "" %}
                             <li data-filter="*" class="filter-active">All</li>
-                            <li data-filter=".filter-2">1200</li>
-                            <li data-filter=".filter-3">1300</li>
-                            <li data-filter=".filter-4">1400</li>
-                            <li data-filter=".filter-5">1500</li>
-                            <li data-filter=".filter-6">1600</li>
-                            <li data-filter=".filter-7">1700</li>
-                            <li data-filter=".filter-8">1800</li>
-                            <li data-filter=".filter-9">1900</li>
-                            <li data-filter=".filter-0">2000</li>
+                            {% for century in centuries %}
+                            <li data-filter=".filter-{{ century }}" data-century="{{ century }}">{{ century }}</li>
+                            {% endfor %}
+                            {% else %}
+                            <li data-filter="*">All</li>
+                            {% for century in centuries %}
+                            {% if century == current_century %}
+                            <li data-filter=".filter-{{ century }}" class="filter-active"
+                                data_current-century="{{ current_century }}" data-century="{{ century }}">{{ century }}
+                            </li>
+                            {% else %}
+                            <li data-filter=".filter-{{ century }}" data_current-century="{{ current_century }}"
+                                data-century="{{ century }}">{{ century }}
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="gallery-container">
-            {% for work in artwork %}
-            {% if work.century == 1200 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-2">
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
+            {% for work in page_obj %}
+            <div class="col-lg-4 col-md-6 gallery-item filter-{{ work.century }}">
+                <a href="{{ work.link }}">
+                    <img src="{{ work.thumb_image }}" class="img-fluid" alt="{{ work.title }}">
                 </a>
                 <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
+                    <h4>{{ work.title }}</h4>
+                    <p>{{ work.year }}</p>
                 </div>
             </div>
-            {%elif work.century == 1300 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-3">
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-
-            </div>
-            {%elif work.century == 1400 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-4">
-
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-
-            </div>
-            {% elif work.century == 1500 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-5">
-
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-
-                </div>
-            </div>
-            {% elif work.century == 1600 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-6">
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-            </div>
-            {% elif work.century == 1700 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-7">
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-            </div>
-            {% elif work.century == 1800 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-8">
-
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-
-                </div>
-            </div>
-            {%elif work.century == 1900 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-9">
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-            </div>
-            {%elif work.century == 2000 %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-0">
-
-                <a href="{{work.link}}">
-                    <img src="{{work.thumb_image}}" class="img-fluid" alt="{{work.title}}">
-                </a>
-                <div class="gallery-info">
-                    <h4>{{work.title}}</h4>
-                    <p>{{work.year}}</p>
-                </div>
-
-            </div>
-            {% endif %}
+            {% empty %}
+            <p>No artworks found.</p>
             {% endfor %}
         </div>
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page=1{% if current_century %}&century={{ current_century }}{% endif %}">&laquo;</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if current_century %}&century={{ current_century }}{% endif %}">&lsaquo;</a>
+            {% else %}
+            <span class="disabled">&laquo;</span>
+            <span class="disabled">&lsaquo;</span>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <span class="current-page">{{ num }}</span>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}{% if current_century %}&century={{ current_century }}{% endif %}">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if current_century %}&century={{ current_century }}{% endif %}">&rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if current_century %}&century={{ current_century }}{% endif %}">&raquo;</a>
+            {% else %}
+            <span class="disabled">&rsaquo;</span>
+            <span class="disabled">&raquo;</span>
+            {% endif %}
+        </div>
     </section>
+
     <!-- End My gallery Section -->
 </main>
 <!-- End #main -->
