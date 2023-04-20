@@ -21,11 +21,11 @@ def home_view(request):
     # delete_artwork1 = Artwork.objects.filter(image="YOUR_IMAGE_URL").delete()
 
     # TO DELETE ALL ARTWORKS
-    obj.delete()
+    # obj.delete()
 
     # TO ADD ARTWORK/s
-    json_file = json.load(open('./static/assets/json/artpedia.json', 'rb'))
-    import_datas(json_file, Artwork)
+    # json_file = json.load(open('./static/assets/json/artpedia.json', 'rb'))
+    # import_datas(json_file, Artwork)
 
     return render(request, "index.html", {'artwork': obj, 'ga_key': ga_key})
 
