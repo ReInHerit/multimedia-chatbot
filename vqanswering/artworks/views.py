@@ -91,6 +91,8 @@ def handle_chat_question(request):
     print('in handle question')
     img_url = request.POST["img"]
     question = request.POST["question"]
+    # eliminate gostname and keep from /static/...
+    img_url = '/static' + img_url.split('static')[1]
     artwork = Artwork.objects.get(image=img_url)
     print('get image url')
     v_desc = artwork.visual_description
