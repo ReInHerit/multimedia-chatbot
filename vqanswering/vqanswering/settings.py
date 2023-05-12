@@ -88,6 +88,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 AUTH_PASSWORD_VALIDATORS = [
     {

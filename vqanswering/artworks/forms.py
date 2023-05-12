@@ -1,9 +1,17 @@
 from django import forms
+import json
 
-from .models import Question_Answer
 
+class ImportArtworksForm(forms.Form):
+    json_file = forms.FileField(label='Select JSON file')
 
-class QAForm(forms.ModelForm):
-    class Meta:
-        model = Question_Answer
-        fields = ('title', 'question', 'answer', 'question_error_type', 'answer_error_type')
+    def clean_json_file(self):
+        json_file = self.cleaned_data.get('json_file')
+        if json_file:
+            try:
+                artworks = json.loads(json_file.read().decode('utf-8'))
+                return artworks
+            except:
+                raise forms.ValidationError('Invalid JSON file.')
+        else:
+            raise forms.ValidationError('Please select a JSON file.')

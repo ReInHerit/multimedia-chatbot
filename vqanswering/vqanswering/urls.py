@@ -1,38 +1,20 @@
-"""vqanswering URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from artworks.views import home_view, gallery_view, ArtworkDetails, handle_chat_question, chat_view, \
-    Artworkchat
+from artworks.views import home_view, gallery_view, handle_chat_question, Artworkchat,  admin_home, add_artworks_from_json
 from artworks.models import Artwork
 
+# app_name = 'myapp'
 urlpatterns = [
     path('', home_view, {}, name='home_view'),
     path('admin/', admin.site.urls),
     path('gallery/', gallery_view, name='gallery_view'),
-    # path('gallery/<str:century>/', gallery_view, name='gallery'),
-    # path('gallery/<str:century>/<int:page>/', gallery_view, name='gallery'),
-    path('chat/', chat_view),
-    path('handle_chat_question/', handle_chat_question, name='handle_chat')
+    path('handle_chat_question/', handle_chat_question, name='handle_chat'),
+    path('admin/', admin_home, name='admin_home'),
+    path('add-artworks-from-json/', add_artworks_from_json, name='add_artworks_from_json'),
 ]
 
 obj = Artwork.objects.all()
 
 for article in obj:
     link = 'gallery/' + article.link + '/'
-    link_chat = link + 'chat/'
-    urlpatterns.append(path(link, ArtworkDetails.as_view(art=article)))
-    urlpatterns.append(path(link_chat, Artworkchat.as_view(art=article)))
+    urlpatterns.append(path(link, Artworkchat.as_view(art=article)))

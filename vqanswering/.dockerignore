@@ -2,3 +2,4 @@
 /Dockerfile
 /static/assets/img/reinherit-logo-square-300x300.jpg
 
+!/artworks/import_datas.py

@@ -1,14 +1,25 @@
-from django.shortcuts import render, redirect
+import io
+import math
+import urllib.parse
+import io
+import json
+import math
+import urllib.parse
 
-from .models import Artwork, Question_Answer
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.core.checks import messages
+from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+
+from .forms import ImportArtworksForm
+from .models import Artwork
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .answer_generator import AnswerGenerator
-from .import_datas import import_datas
-import json
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.conf import settings
 
 ga_key = settings.GA_MEASUREMENT_ID
@@ -16,16 +27,6 @@ ga_key = settings.GA_MEASUREMENT_ID
 
 def home_view(request):
     obj = Artwork.objects.all()
-
-    # TO DELETE A SINGLE ARTWORK
-    # delete_artwork1 = Artwork.objects.filter(image="YOUR_IMAGE_URL").delete()
-
-    # TO DELETE ALL ARTWORKS
-    # obj.delete()
-
-    # TO ADD ARTWORK/s
-    # json_file = json.load(open('./static/assets/json/artpedia.json', 'rb'))
-    # import_datas(json_file, Artwork)
 
     return render(request, "index.html", {'artwork': obj, 'ga_key': ga_key})
 
@@ -61,17 +62,34 @@ def gallery_view(request, century=None, page=None):
     return render(request, "gallery.html", context)
 
 
-class ArtworkDetails(View):
-    art = "momentaneo"
+@csrf_exempt
+def add_artworks_from_json(request):
+    if request.method == 'POST':
+        json_file = request.FILES['json_file']
+        print("json_path", json_file)
+        try:
+            json_data = json.load(io.TextIOWrapper(json_file))
+            for article_id in json_data:
+                file_name = urllib.parse.quote(json_data[article_id]['img_url'].split("/")[-1], safe="")
+                century = (json_data[article_id]['year'] // 10 ** (int(math.log(json_data[article_id]['year'], 10)) - 1)) * 100
+                link = str(json_data[article_id]['title']).replace(" ", "-")
+                artwork = Artwork(
+                    title=json_data[article_id]['title'],
+                    image="/static/assets/img/full/" + file_name,
+                    thumb_image="/static/assets/img/thumbs/" + file_name,
+                    year=json_data[article_id]['year'],
+                    visual_description=json_data[article_id]['visual_sentences'],
+                    contextual_description=json_data[article_id]['contextual_sentences'],
+                    century=century,
+                    link=link,
+                )
+                artwork.save()
 
-    def get(self, request):
-        obj = Question_Answer.objects.all()
-        questions = []
-        for element in obj:
-            if element.title == self.art.title:
-                questions.append(element)
-        context = {'artwork': self.art, 'question': questions, 'chat_link': self.art.link + '/chat/', 'ga_key': ga_key}
-        return render(request, "gallery-details.html", context)
+            return JsonResponse({'success': True})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON file'})
+    else:
+        return JsonResponse({'success': False, 'message': 'No file uploaded'})
 
 
 class Artworkchat(View):
@@ -107,5 +125,35 @@ def handle_chat_question(request):
     return JsonResponse({'answer': answer})
 
 
-def chat_view(request):
-    return render(request, "chat.html")
+@login_required
+@staff_member_required
+def admin_home(request):
+    return render(request, 'admin_home.html')
+
+
+# class ArtworkImport(FormView):
+#     form_class = ImportArtworksForm
+#     # template_name = 'import_artworks.html'
+#     success_url = reverse_lazy('admin:artwork_artwork_changelist')
+#
+#     def form_valid(self, form):
+#         file = form.cleaned_data['file']
+#         artworks = form.process_data(file)
+#
+#         if artworks:
+#             for artwork in artworks:
+#                 Artwork.objects.create(
+#                     title=artwork['title'],
+#                     image=artwork['image'],
+#                     thumb_image=artwork['thumb_image'],
+#                     year=artwork['year'],
+#                     visual_description=artwork['visual_description'],
+#                     contextual_description=artwork['contextual_description'],
+#                     century=artwork['century'],
+#                     link=artwork['link'],
+#                 )
+#             messages.success(self.request, f'Successfully imported {len(artworks)} artworks.')
+#         else:
+#             messages.warning(self.request, 'No artworks were imported.')
+#
+#         return super().form_valid(form)
