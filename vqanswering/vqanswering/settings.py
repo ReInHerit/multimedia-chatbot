@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import sys
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -19,7 +19,8 @@ django_key = os.getenv('DJANGO_KEY')
 GA_MEASUREMENT_ID = os.getenv('GA_KEY')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
+print('BASE_DIR', BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR, 'utils'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 

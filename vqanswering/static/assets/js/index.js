@@ -84,7 +84,7 @@ function goPython(text, p_link) {
         url: "/handle_chat_question/",
         data: {
             'question': text,
-            'img': p_link.toString(),
+            'url': p_link.toString(),
             'csrfmiddlewaretoken': '{{ csrf_token }}'
         }
     }).done(function (result) {
@@ -96,11 +96,12 @@ function goPython(text, p_link) {
 
 $(".input_text").on("keydown", function (e) {
     if (e.which === 13) {
-        const link = document.querySelector("#painting_link")
+        const currentUrl = window.location.href;
+        console.log('Current URL:', currentUrl);
         let text = $(this).val();
         if (text !== "") {
             insertChat("me", text);
-            let answer = goPython($(this).val(), link.src)
+            const answer = goPython($(this).val(), currentUrl)
             $(this).val('');
         }
     }
@@ -141,10 +142,10 @@ function startRecording() {
 
             // Handle recognition results
             recognition.onresult = function (event) {
-                const link = document.querySelector("#painting_link")
-                let question = event.results[0][0].transcript + '?';
+                const currentUrl = window.location.href;
+                const question = event.results[0][0].transcript + '?';
                 insertChat("me", question);
-                let answer = goPython(question, link.src)
+                const answer = goPython(question, currentUrl)
             };
 
             // Handle recognition errors
@@ -169,10 +170,10 @@ micro_div.click(function () {
 });
 
 recognition.onresult = function (event) {
-    var link = document.querySelector("#painting_link")
-    var question = event.results[0][0].transcript + '?';
+    const currentUrl = window.location.href;
+    const question = event.results[0][0].transcript + '?';
     insertChat("me", question);
-    var answer = goPython(question, link.src)
+    const answer = goPython(question, currentUrl)
 }
 
 recognition.onspeechend = function () {
@@ -190,6 +191,6 @@ resetChat();
 
 //-- Print Messages
 insertChat("you", "Hi! Nice to meet you!", 0);
-insertChat("you", "Ask me something about the painting!", 1500);
+insertChat("you", "Ask me something about this artwork!", 1500);
 
 //-- NOTE: No use time on insertChat.

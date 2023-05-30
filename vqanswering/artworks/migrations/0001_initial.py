@@ -17,8 +17,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=150)),
                 ('image', models.ImageField(upload_to='')),
                 ('year', models.DateField()),
-                ('visual_description', models.TextField()),
-                ('contextual_description', models.TextField()),
+                ('description', models.TextField()),
             ],
         ),
     ]

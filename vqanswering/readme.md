@@ -117,57 +117,88 @@ Once ready with the .env file you can create and launch the docker image.
     ```
   
 ---
+## ADMINISTRATOR GUIDE
+### How to create a superuser
+To set up a superuser for the Django admin, you can follow these steps:
 
-## Database
-The database is created starting from a json file which contains the data of each artwork.\
-The basic model of a card is as follows:
-```
-"1 (the numeric id of the artwork)": {
- "title": "title of the artwork",
- "img_url": "path or url to the image",
- "year": 1970,
- "visual_sentences": [
-   "A list of sentences describing the visual aspect of the artwork",
-   "The more detailed your list, the better the answer you will receive."
- ],
- "contextual_sentences": [
-   "A list of sentences describing the contextual aspect of the artwork",
-   "The more you put here better answer you receive."
- ],
- "split": "you can use this parameter to find if the schedule is present (ADDED) or not (TRAIN) in the database"
-}
-```
-To import the works into the system, we provide a JSON file containing all the card information as input to the import_datas() function in the import_datas.py file. This function transfers the data into Artwork objects, which are used by the system to provide information to the chatbot and user interface as needed.
+- Open a terminal or command prompt.
 
-### How to replace the actual database with your own artworks
-[Only for the python virtual environment method!]
-<p>You need to:
+- Navigate to your Django project's root directory where the manage.py file is located.
 
-- Create a new json file with the same structure as the **rehineritpedia.json** file in the _static/assets/json_ folder.
-- Edit the content with your artworks datas, remember to fill in the "visual_sentences" and "contextual_sentences" fields with as many descriptive sentences as possible, the more you enter the more accurate the chatbot will be.
-- Replace the rehineritpedia.json file with the new one.
-- In the **artworks/views.py** file, uncomment lines 20, 23 and 24 (incidentally those under the comments **# TO DELETE ALL ARTWORKS** and **# TO ADD ARTWORK/s**)
-- Save the file and either refresh **localhost:8000/home** if the server is already running or follow the instructions on _[how to run the server](#how-to-run-the-server)_.
-- Navigate to gallery and wait till is loaded.
-- To prevent adding the artworks more than once, comment above lines in the "artworks/views.py" file and save again.
-- Refresh localhost:8000/home and navigate to gallery. Everything should be ok. 
+- Run the following command to create a superuser:
+   ```
+    python manage.py createsuperuser
+   ```
+- You will be prompted to enter a username. Type in the desired username for the superuser and press Enter.
 
-### How to add some artworks to the database:
-- Duplicate and rename the **rehineritpedia.json** file in the _static/assets/json_ folder with a name of your choice.
-- Delete the old entries in the **rehineritpedia.json** file and fill it with the data of only the new paintings you want to add.
-- In the **artworks/views.py** file, uncomment lines 23 and 24 (beneath **# TO ADD ARTWORK/s** comment)
-- Save the file and either refresh **localhost:8000/home** if the server is already running or follow the instructions on _[how to run the server](#how-to-run-the-server)_.
-- Navigate to gallery and wait till is loaded.
-- To prevent adding the artworks more than once, comment above lines in the "artworks/views.py" file and save again.
-- Refresh localhost:8000/home and navigate to gallery. Everything should be ok. 
+- Next, you will be prompted to enter an email address. You can either provide a valid email address or leave it blank by pressing Enter.
 
-### How to remove one (or some) artwork from the database:
-- In the "artworks/views.py" file, uncomment line 17 and enter the URL of the artwork to be removed in the "image" option.
-- To remove multiple artworks at once, duplicate the line and give each variable a unique name, such as "delete_artwork1", "delete_artwork2", etc.
-- Save the file.
-- If the server is running, refresh "localhost:8000/home" and then click on "enter gallery". If not, follow the instructions on _[how to run the server](#how-to-run-the-server)_ and then click on "enter gallery".
-- To prevent adding the artworks more than once, comment above line/s in the "artworks/views.py" file and save again.
-- Refresh localhost:8000/home and navigate to gallery. Everything should be ok. 
+- Lastly, you will be prompted to enter a password. Type in a secure password for the superuser. Note that the password won't be visible as you type for security reasons. Press Enter when done.
+
+If the superuser is created successfully, you should see a message like:
+   ```
+    Superuser created successfully
+   ```
+That's it! You have now set up a superuser for the Django admin. You can use the provided username and password to log in to the admin interface and access administrative features.
+
+To access the Django admin, run your Django development server:
+   ```
+   python manage.py runserver
+   ```
+and navigate to http://localhost:8000/admin/ 
+
+Log in using the superuser credentials, and you will have full administrative access to manage your Django application.
+### Manage Database
+Clicking on **Artworks** you can see all the artworks in the database if they exist in the database.
+
+You may filter the artworks by year or century or search the artworks with text.
+Clicking on an Artwork's title you access to the change section of that artwork where you can modify the artwork's information.
+#### Add new artwork/s 
+
+You have 3 ways to add a new artwork to the database:
+ - Load artworks from a json file:\
+   Click on **LOAD FROM JSON** button and select the json file containing the artworks you want to add.\
+    The json file must be in the following format:
+    ```
+    {
+     "1": {
+          "title": "title of the artwork",
+          "year": 1970,
+          "title": "title_of_the_artwork_wikipage",
+          "wiki_url": " url to the wikipage of the artwork",
+          "image_url": "url to the image of the artwork",
+          "context": [
+                "A list of sentences describing the artwork",
+                "The more detailed your list, the better the answer you will receive."
+          ]
+     },
+     "2": {
+          "title": "title of the artwork",
+          "year": 1970,
+          "title": "title_of_the_artwork_wikipage",
+          "wiki_url": " url to the wikipage of the artwork",
+          "image_url": "url to the image of the artwork",
+          "context": [
+                "A list of sentences describing the artwork",
+                "The more detailed your list, the better the answer you will receive."
+          ]
+     }
+    }
+    ```
+    The json file must be in the _static/assets/json_ folder.
+ - Add a single Artwork:\
+   Click on **ADD ARTWORK** button and fill in the form with the artwork's data.\
+   Remember to fill in the "context" field with as many descriptive sentences as possible, the more you enter the more accurate the chatbot will be.
+ - Add a single Artwork from wikipedia page:\
+   Click on **ADD FROM WIKIPEDIA** button and fill in the form with the artwork's wikipedia page url.\
+   The form will be filled in automatically with the data found on the page.\
+   You can then check and modify the data clicking on it in the database list.
+
+#### How to remove one (or some) artwork from the database:
+- Check the box next to the artwork/s you want to remove.
+- then under Action select **Delete selected artworks** and click on **GO** button.
+- you will be promped on a new page with the list of the artworks you selected to delete. There you can confirm or cancel the operation.
+- Click on **YES, I'M SURE** to confirm the operation.
 ---
 ## Chatbot
 On the chatbot page, the user interface is split into two sections, the left-hand side of which displays the artwork's title, year, and image, while the right-hand side displays the chat interface. \
@@ -177,37 +208,39 @@ When the user submits a question, Django handles the request, and the ***handle_
 
 The produce_answer function takes in the user's question, along with the artwork's title, year, context (which consists of both visual and contextual phrases from the artwork's card), and image URL as inputs. It then sends a prompt, which is a structured string, to the OpenAI GPT-3 API. The prompt is structured to inform the API about the artwork in question and to provide a template for the response.
 ```
-prompt = f"Consider the painting {artwork_title} depicted in {year}. {question}" \
-         f"Answer truthfully using the Context as source of information and with up to 15 words. " \
-         f"If the answer is not contained in the Context, provide accurate information on the painting. " \
-         f"If the question is not relevant to the painting, kindly state so. " \
-         f"If the question is relevant but you don't have a relevant answer, state that you don't have the information. " \
-         f"Context: {context}."
+prompt = f"Consider the painting {artwork_title} and its following context. " \
+                 f"Provide a complete and truthful answer using the Context as a source of information within 15 words. " \
+                 f"If the answer is contained in the Context, provide accurate information on the painting. " \
+                 f"If the question is not relevant to the painting, kindly state so. " \
+                 f"If the question is relevant but you don't have a relevant answer, state that you don't have the information. " \
+                 f"If you don't understand the question due to errors in the orthography or bad English, " \
+                 f"state that you don't understand and kindly ask to rewrite the question. \n" \
+                 f"Never start your answer with: 'Answer:'.\n" \
+                 f"Question: {question}. \n" \
+                 f"Context: {context}."
 ```
 
 The OpenAI GPT-3 API takes the prompt and searches for an answer within the context of the artwork provided. If the answer is found within the contextual phrases, it is reformulated to ensure that the response does not exceed 15 words. If the answer cannot be found within the contextual phrases, the API will return "I don't know" as a response.
 
-In the event that there is a problem with the API query, such as a network issue, the system will pass the user's question to **BERT**, which is responsible for determining whether the question is visual or contextual. 
-- If the question is contextual, BERT attempts to provide an answer using the sentences contained in the corresponding artwork card. 
-- If the question is visual in nature, the chatbot server sends the question and image to **GIT**, an image analysis tool. GIT analyzes the image and attempts to generate a response to the user's question.
+
 ---
 ## To-Do
-- [ ] Currently, there is a delay in loading artworks when the user navigates to the gallery page. This is due to the page evaluating each artwork's image and retrieving its thumbnail online. 
-  - To address this issue, we could consider implementing a loading bar or a similar feature. Alternatively, we could revise the logic and store the images on the server side instead of relying on internet links.
-- [ ] The selected artwork page is poor of content. Currently, it's just a pass-through page for the chatbot. It only contains the title, year, and image of the artwork, and a link to the chatbot below it. 
-  - We could either integrate the chatbot directly into this page or add a textual description of the artwork, for example, using the contextual and visual phrases in the database's JSON file.
-  - We could also add a link to the artwork's Wikipedia page, if it exists.
-  - We could also add a link to the artwork's source, if it exists.
-  - We could also add a link to the artist's Wikipedia page, if it exists.
-- [ ] We have to find tune the chatbot answer. 
-  1. The chatbot is currently limited to 15 words, so sometimes it responds with a truncated answer. 
+1. [x] Currently, there is a delay in loading artworks when the user navigates to the gallery page. This is due to the page evaluating each artwork's image and retrieving its thumbnail online. 
+   - ~~To address this issue, we could consider implementing a loading bar or a similar feature~~. Alternatively, we could revise the logic and store the images on the server side instead of relying on internet links.
+2. [x] The selected artwork page is poor of content. Currently, it's just a pass-through page for the chatbot. It only contains the title, year, and image of the artwork, and a link to the chatbot below it. 
+   - **We could** ~~either~~ **integrate the chatbot directly into this page** or ~~add a textual description of the artwork, for example, using the contextual and visual phrases in the database's JSON file~~.
+   - We could also add a link to the artwork's Wikipedia page, if it exists.
+   - ~~We could also add a link to the artwork's source, if it exists.~~
+   - ~~We could also add a link to the artist's Wikipedia page, if it exists.~~
+3. [ ] We have to find tune the chatbot answer. 
+   - The chatbot is currently limited to 15 words, so sometimes it responds with a truncated answer. 
      - We could consider increasing the word limit to 30 or 50 words.
      - We could also consider adding a "read more" button to the chatbot response, which would open a modal with the full answer.
-  2. The chatbot sometimes responds with empty answers:
+   - The chatbot sometimes responds with empty answers:
      - We need to write a better prompt that manage also this case.
-  3. The user can write his question in a language different from English, but the answer is always in English:
+   - The user can write his question in a language different from English, but the answer is always in English:
      - We need to write in the prompt to translate tha answer in the same language of the question.
-  4. The chatbot answers to questions do not take into account previous questions/answers, which generates issues such as:
+   - The chatbot answers to questions do not take into account previous questions/answers, which generates issues such as:
         > Q1: Who do we see depicted in the painting?
       
         > A1: The painting depicts the Virgin Mary, the Christ Child, six angels, and various figures including apostles, prophets, and saints.

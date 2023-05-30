@@ -58,7 +58,53 @@
             });
             fileInput.click();
         });
+        document.getElementById('add-wikipedia').addEventListener('click', function () {
+            var input = prompt("Enter masterpiece's Wikipedia URL:");
+            if (input) {
+                var formData = new FormData();
+                // var isUrl = /^https?:\/\//.test(input);
+                if (isWikipediaUrl(input)) {
+                    // Input is a URL
+                    formData.append('url', input);
+                    fetch('/add-artworks-via-wikipedia/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            // handle response data here
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // handle error here
+                        });
+
+
+                } else {
+                    // Input is a JSON string
+                    alert("Invalid Wikipedia URL. Please enter a valid Wikipedia URL for the English language (en.wikipedia.org).");
+                }
+
+                var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            };
+
+        });
     });
+    // Function to check if a given string is a valid URL
+    function isWikipediaUrl(url) {
+    // Remove any leading/trailing whitespace
+    url = url.trim();
+
+    // Check if the URL matches the pattern for English Wikipedia URLs
+    var wikipediaUrlPattern = /^https?:\/\/en\.wikipedia\.org\/wiki\/[^#?]+(?:#[^?]+)?$/i;
+    return wikipediaUrlPattern.test(url);
+}
+
 </script>
 {% endblock %}
 
@@ -81,8 +127,9 @@
     {% block object-tools %}
     <ul class="object-tools">
         {% block object-tools-items %}
-        {% change_list_object_tools %}
-        <li><a href="#" id="add-artwork">LOAD FROM JSON</a></li>
+            {% change_list_object_tools %}
+            <li><a href="#" class="addlink" id="add-wikipedia">ADD FROM WIKIPEDIA</a></li>
+            <li><a href="#" id="add-artwork">LOAD FROM JSON</a></li>
         {% endblock %}
     </ul>
     {% endblock %}
