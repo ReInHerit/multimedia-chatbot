@@ -160,10 +160,8 @@ def add_artworks_from_json(request):
 
 @csrf_exempt
 def add_artworks_via_wikipedia(request):
-    excluded_titles = ["Notes", "References", "External links", "Further reading", "See also", "Sources", "Bibliography"]
     if request.method == 'POST':
         wikipedia.set_lang("en")
-        wikipedia.BeautifulSoup(features="lxml")
         wiki_url = request.POST.get('url')
         print("url", wiki_url)
         wiki_title = wiki_url.rsplit('wiki/')[1]

@@ -22,7 +22,7 @@ Follow above prerequisites and instructions paying attention to the parts relati
 - a **Django secret key** and an **OpenAI API key** are required, **Google Analytics** is optional:\
 You need to rename the file .env_template to .env and fill in the fields with your own key values:<br>
   1. ___Django secret key___: 
-     1. You can generate one by typing in a terminal 
+     1. To generate a Django secret key in the terminal, navigate to the "utils" folder and run the following command: 
         >   python getYourDjangoKey.py 
 
      2. copy and paste the generated key in the DJANGO_KEY field of the .env file. Don't forget to put it in quotation marks.

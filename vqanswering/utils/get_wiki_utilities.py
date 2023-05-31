@@ -8,18 +8,13 @@ import wikipedia
 from bs4 import BeautifulSoup
 
 
-wikipedia.BeautifulSoup(features="lxml")
-
-
 def get_wikipage_from_title(json_title):
     wiki_title = None
     wiki_page = None
     input_query = f"intitle:'{json_title}'"
     try:
         search = wikipedia.search(input_query, suggestion=False, results=50)
-        # print('search', search)
         founds = [item for item in search if 'disambiguation' not in item.lower()]
-        # print('founds', founds)
         if len(founds) == 1:
             # Unique title found
             wiki_title = founds[0]
@@ -29,51 +24,43 @@ def get_wikipage_from_title(json_title):
                 exact_matches = [found for found in founds if json_title.lower() in found.lower()]
             if len(exact_matches) == 1:
                 wiki_title = exact_matches[0]
-                # print("1) Unique title found:", wiki_title)
             elif len(exact_matches) > 1:
                 in_subject_matches = [found for found in exact_matches if "painting" in wikipedia.summary(found)]
                 if len(in_subject_matches) >= 1:
                     wiki_title = in_subject_matches[0]
-                    # print("2) Unique title found:", wiki_title)
                 else:
                     print("No matches found containing the word 'painting' in the title or summary.")
             else:
                 matches_with_whole_title = [found for found in founds if json_title.lower() in found.lower()]
                 if len(matches_with_whole_title) == 1:
                     wiki_title = matches_with_whole_title[0]
-                    # print("3) Unique title found:", wiki_title)
                 elif len(matches_with_whole_title) > 1:
                     painting_matches = [found for found in founds if "painting" in found.lower()]
                     if len(painting_matches) == 1:
                         wiki_title = painting_matches[0]
-                        # print("4) Unique title found:", wiki_title)
                     elif len(painting_matches) > 1:
                         print("Multiple titles found, unable to determine a unique title.")
                     else:
                         in_subject_matches = [found for found in founds if "painting" in wikipedia.summary(found)]
                         if len(in_subject_matches) >= 1:
                             wiki_title = in_subject_matches[0]
-
                         else:
                             print("No matches found containing the word 'painting' in the title or summary.")
                 else:
                     matches_with_founds = [found for found in founds if found.lower() in json_title.lower()]
                     if len(matches_with_founds) == 1:
                         wiki_title = matches_with_founds[0]
-                        # print("5) Unique title found:", wiki_title)
 
                     elif len(matches_with_founds) > 1:
                         in_subject_matches = [found for found in founds if "painting" in wikipedia.summary(found)]
                         if len(in_subject_matches) >= 1:
                             wiki_title = in_subject_matches[0]
-                            # print("6) Unique title found:", wiki_title)
                         else:
                             print("No matches found containing the word 'painting' in the title or summary.")
         else:
             disambiguos = [item for item in search[0] if 'disambiguation' in item.lower()]
             print('disambiguous: ', disambiguos)
             print("No titles found matching the given title.")
-        # print('wiki_title', wiki_title)
         if wiki_title:
             wiki_page = wikipedia.WikipediaPage(wiki_title)
 
@@ -92,7 +79,6 @@ def get_wikipage_from_title(json_title):
         print(f"PageError: {json_title}")
         wiki_page = wikipedia.WikipediaPage(json_title)
         wiki_title = wiki_page.title
-    # print('wiki_title', wiki_title)
     return wiki_page, wiki_title
 
 
@@ -143,15 +129,11 @@ def get_image_url(wiki_title, wiki_url):
                     main_image = first_thumbinner_div.find('img')
 
             main_image_url = main_image.get('src') if main_image else None
-            # print('1 Main Image URL:', main_image_url)
             if main_image_url and 'thumb' in main_image_url:
-                # print('thumb in', main_image_url)
                 main_image_url = main_image_url.replace('/thumb', '')
                 main_image_url = main_image_url.rsplit('/', 1)[0]
-                # print('2 Main Image URL:', main_image_url)
             # Prepend 'https:' to the URL if the scheme is missing
             if main_image_url and not main_image_url.startswith('https:'):
-                # print('https not in', main_image_url)
                 main_image_url = 'https:' + main_image_url
         else:
             print('Failed to retrieve the Wikipedia page.')

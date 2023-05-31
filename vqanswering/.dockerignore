@@ -1,5 +1,3 @@
 /.env
 /Dockerfile
-/static/assets/img/reinherit-logo-square-300x300.jpg
-
 /static/assets/json/artpedia.json
