@@ -32,7 +32,8 @@
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top d-flex align-items-center "> <!-- justify-content-center -->
     <a href="{% url 'home_view' %}" title="HOME"><img id="header_logo"  alt="reinherit logo"
-         src="https://www.reinherit.eu/wp-content/uploads/2022/07/reinherit-logo-square-300x300.jpg"></a>
+         src="{% static 'assets/img/reinherit-logo-square-300x300.jpg' %}">
+    </a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
         <div id="undertitle">Redefining the Future of Cultural Heritage</div>

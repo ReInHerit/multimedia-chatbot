@@ -2,4 +2,3 @@
 /question_classifier/models/vqa_bert/pythorc_model.bin
 /question_classifier/
 /static/assets/json/artpedia.json
-/static/assets/json/which_to_use.json
