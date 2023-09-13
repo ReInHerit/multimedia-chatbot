@@ -7,13 +7,20 @@ from .signals import delete_artwork_images
 class Artwork(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=150)
+    year = models.CharField(max_length=7, default="Unknown")
+    century = models.CharField(max_length=7, default="Unknown")
+    time_period = models.CharField(max_length=200, null=True, blank=True, default="Unknown")
     image = models.CharField(max_length=200)
     thumb_image = models.CharField(max_length=200)
-    year = models.DecimalField(max_digits=4, decimal_places=0)
+    subject = models.CharField(max_length=200, default="Unknown")
+    type_of_object = models.CharField(max_length=200, default="Unknown")
+    measurement = models.CharField(max_length=200, default="Unknown")
+    maker = models.CharField(max_length=200, default="Unknown")
+    materials_and_techniques = models.CharField(max_length=200, default="Unknown")
+    location = models.CharField(max_length=200, default="Unknown")
     description = models.TextField()
-    century = models.IntegerField()
-    link = models.CharField(max_length=200)
-    wiki_url = models.URLField(default='', blank=True)
+    web_link = models.CharField(max_length=200, default="-", blank=True)
+    link = models.CharField(max_length=200, default="-")
 
 
 # Connect the signal receiver to the pre_delete signal of Artwork

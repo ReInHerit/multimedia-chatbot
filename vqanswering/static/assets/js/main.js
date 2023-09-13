@@ -121,7 +121,7 @@
 
     // Gallery isotope and filter
 
-    $(window).on('load', function () {
+     $(window).on('load', function () {
         var galleryIsotope = $('.gallery-container').isotope({
             itemSelector: '.gallery-item'
         });
@@ -130,12 +130,13 @@
             $("#gallery-filters li").removeClass('filter-active');
             $(this).addClass('filter-active');
             var url = window.location.href.split('?')[0];
-            var centuryFilter = $(this).text();
+            var letterFilter = $(this).text().trim();  // Change from centuryFilter to letterFilter
 
-            if (centuryFilter !== 'All') {
-                url += '?century=' + centuryFilter + '&page=1';
+            if (letterFilter !== 'All') {
+                url += '?letter=' + encodeURIComponent(letterFilter) + '&page=1';  // Change from century to letter
+            } else {
+                url += '?page=1';  // Default to page 1 when 'All' is selected
             }
-
 
             window.location.href = url;
         });

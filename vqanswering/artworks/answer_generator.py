@@ -24,17 +24,28 @@ class AnswerGenerator:
         # if which == 'open_ai':
         print('using open ai')
         # prompt contextual
-        prompt = f"Consider the painting {artwork_title} and its following context. " \
-                 f"Provide a complete and truthful answer using the Context as a source of information within 25 words. " \
-                 f"If the answer is contained in the Context, provide accurate information on the painting. " \
-                 f"If the question is not relevant to the painting, kindly state so. " \
-                 f"If the question is relevant but you don't have a relevant answer, state that you don't have the information. " \
-                 f"If you don't understand the question due to errors in the orthography or bad English, " \
-                 f"state that you don't understand and kindly ask to rewrite the question. \n" \
-                 f"Never start your answer with: 'Answer:' and never use names or information that are not in the 'Context'.\n" \
+        # prompt = f"Consider the painting {artwork_title} and its following context. " \
+        #          f"Provide a complete and truthful answer using the Context as a source of information within 20 words." \
+        #          f"The answer should conclude with a period and maintain sentence continuity." \
+        #          f"If the answer is contained in the Context, provide accurate information on the painting. " \
+        #          f"If the question is not relevant to the painting, kindly state so. " \
+        #          f"If the question is relevant but you don't have a relevant answer, state that you don't have the information. " \
+        #          f"If you don't understand the question due to errors in the orthography or bad English, " \
+        #          f"state that you don't understand and kindly ask to rewrite the question. \n" \
+        #          f"Never start your answer with: 'Answer:' and never use names or information that are not in the 'Context'.\n" \
+        #          f"Question: {question}. \n" \
+        #          f"Context: {context}." \
+        #          f"Answer:"
+        prompt = f"Consider the artwork titled '{artwork_title}' and its context. " \
+                 f"Provide a clear and concise answer within 20 words. " \
+                 f"If the question is unrelated to the artwork, please state so. " \
+                 f"If the information is not available in the context, indicate that. " \
+                 f"If there's difficulty understanding the question, request clarification. \n" \
+                 f"Never start your answer with 'Answer:' and never use names or information that are not in the 'Context'.\n" \
                  f"Question: {question}. \n" \
                  f"Context: {context}." \
                  f"Answer:"
+
         print(prompt)
 
         retry_count = 0
@@ -46,10 +57,10 @@ class AnswerGenerator:
                 completion = openai.Completion.create(
                     engine=model_engine,
                     prompt=prompt,
-                    max_tokens=40,
+                    max_tokens=50,
                     n=1,
                     stop=None,
-                    temperature=0.5,
+                    temperature=0.2,
                 )
                 answer = completion.choices[0].text
                 break  # Break the loop if the API call is successful

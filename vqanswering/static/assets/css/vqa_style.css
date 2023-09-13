@@ -567,21 +567,33 @@ h1, h2, h3, h4, h5, h6 {
 .artwork-section {
     display: flex;
     flex-direction: column;
-    width: auto;
-    max-width: 85vw;
+    padding: 4vh 1vw 0 0;
+    width: 100%;
+    height: 86vh;
+    max-width: 50%;
+    justify-content: flex-start;
     align-items: baseline;
-    justify-content: center;
 }
 
 .title {
     max-width: 100%;
-    margin: auto;
-    padding: 2vw 0 0 0;
+    padding: 0 0 1vw 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .title h3 {
     font-size: 2vw;
+    position: relative;
 }
+/*#h3_title{*/
+/*    float: left;*/
+/*}*/
+/*#h3_period{*/
+/*    float: right;*/
+/*}*/
 
 .artwork-image {
     max-height: 100%;
@@ -594,13 +606,37 @@ h1, h2, h3, h4, h5, h6 {
 #painting_link {
     max-width: 100%;
     height: auto;
-    max-height: 70vh;
+    max-height: 60vh;
     border-radius: 1vh;
 }
-
+.artwork-data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 1vw 1vh 1vw;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+.artwork-data p{
+    font-size: 1vw;
+    margin: 0;
+    padding: 0;
+}
 @media screen and (max-width: 449px) {
+    .artwork-data {
+        flex-wrap: wrap;
+        flex-direction: unset;
+        justify-content: space-around;
+    }
+    .artwork-data p{
+        font-size: 2vw;
+    }
     .artwork-section {
         max-width: 90vw;
+        padding: 1vh 1vw 0 0;
         margin: auto;
         align-items: center;
         width: 100%;
@@ -609,6 +645,7 @@ h1, h2, h3, h4, h5, h6 {
     #artwork-schedule, .schedule {
         flex-direction: column;
     }
+
 
     #artwork-schedule, #artwork-schedule2 {
         top: 8vh;
@@ -620,12 +657,13 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .title {
-        max-height: 4vh;
-        padding: 0 0 1vw 0;
+        padding: 0px 8px 1vw 8px;
+        width: 100%;
+        flex-direction: row;
     }
-
     .title h3 {
-        font-size: 3.5vw;
+        font-size: 4vw;
+        position: relative;
     }
 
     .artwork-image {
@@ -652,7 +690,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 4vh 0 0 1vw;
     width: 100%;
     height: 86vh;
-    max-width: 45vw;
+    max-width: 50%;
     display: flex;
     flex-direction: column;
 }

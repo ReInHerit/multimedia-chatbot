@@ -46,49 +46,49 @@
         <div class="centuries_container">
             <div class="large-view">
                 <ul id="gallery-filters" class="d-flex justify-content-center">
-                    {% if current_century == "" %}
+                    {% if current_letter == "" %}
                     <li data-filter="*" class="filter-active">All</li>
                     {% else %}
                     <li data-filter="*">All</li>
                     {% endif %}
-                    {% for century in centuries %}
-                    {% if century == current_century %}
-                    <li data-filter=".filter-{{ century }}" class="filter-active"
-                        data_current-century="{{ current_century }}" data-century="{{ century }}">{{ century }}
+                    {% for letter in starting_letters %}
+                    {% if letter == current_letter %}
+                    <li data-filter=".filter-{{ letter }}" class="filter-active"
+                        data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}
                     </li>
                     {% else %}
-                    <li data-filter=".filter-{{ century }}" data_current-century="{{ current_century }}"
-                        data-century="{{ century }}">{{ century }}
+                    <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"
+                        data-letter="{{ letter }}">{{ letter }}
                     </li>
                     {% endif %}
                     {% endfor %}
                 </ul>
             </div>
             <div class="choose-century">
-                <label for="myDropdown" class="select-cn">Select a century: </label>
+                <label for="myDropdown" class="select-cn">Select a letter: </label>
                 <div id="gallery-filters" class="dropdown">
-                    {% if current_century == "" %}
-                    <button onclick="myFunction()" class="dropbtn">0000000</button>
+                    {% if current_letter == "" %}
+                    <button onclick="myFunction()" class="dropbtn">All</button>
                     {% else %}
-                    <button onclick="myFunction()" class="dropbtn">{{ current_century }}</button>
+                    <button onclick="myFunction()" class="dropbtn">{{ current_letter }}</button>
                     {% endif %}
                     <div id="myDropdown" class="dropdown-content">
                         <ul>
-                            {% if current_century == "" %}
+                            {% if current_letter == "" %}
                             <li data-filter="*" class="filter-active">All</li>
-                            {% for century in centuries %}
-                            <li data-filter=".filter-{{ century }}" data-century="{{ century }}">{{ century }}</li>
+                            {% for letter in starting_letters %}
+                            <li data-filter=".filter-{{ letter }}" data-letter="{{ letter }}">{{ letter }}</li>
                             {% endfor %}
                             {% else %}
                             <li data-filter="*">All</li>
-                            {% for century in centuries %}
-                            {% if century == current_century %}
-                            <li data-filter=".filter-{{ century }}" class="filter-active"
-                                data_current-century="{{ current_century }}" data-century="{{ century }}">{{ century }}
+                            {% for letter in starting_letters %}
+                            {% if letter == current_letter %}
+                            <li data-filter=".filter-{{ letter }}" class="filter-active"
+                                data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}
                             </li>
                             {% else %}
-                            <li data-filter=".filter-{{ century }}" data_current-century="{{ current_century }}"
-                                data-century="{{ century }}">{{ century }}
+                            <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"
+                                data-letter="{{ letter }}">{{ letter }}
                             </li>
                             {% endif %}
                             {% endfor %}
@@ -100,13 +100,13 @@
         </div>
         <div class="gallery-container">
             {% for work in page_obj %}
-            <div class="col-lg-4 col-md-6 gallery-item filter-{{ work.century }}">
+            <div class="col-lg-4 col-md-6 gallery-item filter-{{ work.title|first|upper }}">
                 <a href="{{ work.link }}">
                     <img src="{{ work.thumb_image }}" class="img-fluid" alt="{{ work.title }}">
                 </a>
                 <div class="gallery-info">
                     <h4>{{ work.title }}</h4>
-                    <p>{{ work.year }}</p>
+                    <p>{{ work.time_period }}</p>
                 </div>
             </div>
             {% empty %}
@@ -115,8 +115,8 @@
         </div>
         <div class="pagination">
             {% if page_obj.has_previous %}
-            <a href="?page=1{% if current_century %}&century={{ current_century }}{% endif %}">&laquo;</a>
-            <a href="?page={{ page_obj.previous_page_number }}{% if current_century %}&century={{ current_century }}{% endif %}">&lsaquo;</a>
+            <a href="?page=1{% if current_letter %}&letter={{ current_letter }}{% endif %}">&laquo;</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&lsaquo;</a>
             {% else %}
             <span class="disabled">&laquo;</span>
             <span class="disabled">&lsaquo;</span>
@@ -125,12 +125,12 @@
             {% if page_obj.number == num %}
             <span class="current-page">{{ num }}</span>
             {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a href="?page={{ num }}{% if current_century %}&century={{ current_century }}{% endif %}">{{ num }}</a>
+            <a href="?page={{ num }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">{{ num }}</a>
             {% endif %}
             {% endfor %}
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if current_century %}&century={{ current_century }}{% endif %}">&rsaquo;</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}{% if current_century %}&century={{ current_century }}{% endif %}">&raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&raquo;</a>
             {% else %}
             <span class="disabled">&rsaquo;</span>
             <span class="disabled">&raquo;</span>

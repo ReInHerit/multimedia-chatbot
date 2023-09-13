@@ -197,7 +197,7 @@ You have 3 ways to add a new artwork to the database:
 #### How to remove one (or some) artwork from the database:
 - Check the box next to the artwork/s you want to remove.
 - then under Action select **Delete selected artworks** and click on **GO** button.
-- you will be promped on a new page with the list of the artworks you selected to delete. There you can confirm or cancel the operation.
+- you will be prompted on a new page with the list of the artworks you selected to delete. There you can confirm or cancel the operation.
 - Click on **YES, I'M SURE** to confirm the operation.
 ---
 ## Chatbot

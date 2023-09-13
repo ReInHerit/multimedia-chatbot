@@ -19,22 +19,26 @@ headers = {
 Image.MAX_IMAGE_PIXELS = None
 
 
-def create_thumb(image_url, file_name):
+def create_thumb(url_or_path, file_name):
     try:
         print('trying... ', file_name)
         if file_name in os.listdir(thumbs_path):
             return file_name
-        response = requests.get(image_url + "?raw=true", headers=headers)
-        t_width = 300
-        i_width = 1000
 
-        image = Image.open(BytesIO(response.content))
-        print('image: ', image)
+        if url_or_path.startswith('http://') or url_or_path.startswith('https://'):
+            # If the input is a web URL
+            response = requests.get(url_or_path + "?raw=true", headers=headers)
+            image = Image.open(BytesIO(response.content))
+        else:
+            # If the input is a local file path
+            image = Image.open(url_or_path)
 
         if image.mode == 'RGBA':
             print("Image has an alpha channel, so convert it to RGB")
             image = image.convert('RGB')
 
+        t_width = 300
+        i_width = 1000
         t_delta = float(t_width / image.size[0])
         t_size = int((float(image.size[1]) * t_delta))
         i_delta = float(i_width / image.size[0])
@@ -46,8 +50,10 @@ def create_thumb(image_url, file_name):
         # file_name
         thumb = os.path.join(thumbs_path, file_name)
         full = os.path.join(full_path, file_name)
+
         i_resized.save(full)
         t_resized.save(thumb)
+
     except IOError as exc:
         if exc.errno != errno.EISDIR:
             raise
