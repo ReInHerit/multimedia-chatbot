@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 #header {
     z-index: 997;
     transition: all 0.5s;
-    height: 7vh;
+    height: 7%;
     background: rgba(1, 72, 100, 0.8);
     position: fixed;
 }
@@ -65,9 +65,6 @@ h1, h2, h3, h4, h5, h6 {
 # Navigation Menu
 --------------------------------------------------------------*/
 /* Desktop Navigation */
-
-
-/*}*/
 .nav-menu {
     padding: 0;
     margin: 1vh 2vw 0 auto;
@@ -99,10 +96,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #fdf003;
 }
 
-/*.nav-menu .menu_active  > a*/
-/*{*/
-/*  color: #fdf003;*/
-/*}*/
 .nav-menu .menu_passive > a {
     color: white;
 }
@@ -189,17 +182,17 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile Navigation */
 .mobile-nav-toggle {
     position: fixed;
+    top: 1vh;
     right: 1vw;
-    top: 2vh;
     z-index: 9998;
     border: 0;
     background: none;
-    font-size: 24px;
+    font-size: 5vh;
     transition: all 0.4s;
-    outline: none !important;
-    line-height: 1;
-    cursor: pointer;
-    text-align: right;
+    /*outline: none !important;*/
+    /*line-height: 1;*/
+    /*cursor: pointer;*/
+    /*text-align: right;*/
 }
 
 .mobile-nav-toggle i {
@@ -335,11 +328,13 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 2;
 }
-.sup {
-  position: relative;
-  bottom: 1ex;
-  font-size: 80%;
-}
+
+/*.sup {*/
+/*    position: relative;*/
+/*    bottom: 1ex;*/
+/*    font-size: 80%;*/
+/*}*/
+
 .section-title p {
     margin-bottom: 0;
     position: relative;
@@ -372,14 +367,8 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-/*.centuries_container {*/
-/*    padding: 0;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: stretch;*/
-/*}*/
+
 .gallery-container {
-/*/ height: 100 vh;*/
     width: 100vw;
     display: flex;
     flex-wrap: wrap;
@@ -426,13 +415,6 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden
 }
 
-/*.gallery-img {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    overflow: hidden*/
-/*}*/
-
 .gallery-item img {
     flex-shrink: 0;
     min-width: 100%;
@@ -449,7 +431,6 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(0, 0, 0, 0.5);
     padding: 1vh;
     position: absolute;
-    /*font-size: 20px;*/
     color: #ffc041;
     transition: 0.3s;
 }
@@ -467,7 +448,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0;
 }
 
-
 .gallery-item img:hover {
     transform: scale(1.2);
 }
@@ -475,7 +455,8 @@ h1, h2, h3, h4, h5, h6 {
 .gallery-item:hover .gallery-info {
     opacity: 1;
 }
-.col-lg-4{
+
+.col-lg-4 {
     flex: 0 0 25%;
     max-width: 25%;
     width: calc(25% - 2vw);
@@ -483,40 +464,43 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (min-width: 769px) and (max-width: 991px) {
-.col-lg-4{
-    flex: 0 0 33.33%;
-    max-width: 33.33%;
-    width: calc(33.33% - 2vw);
-    margin: 1vw;
-}
+    .col-lg-4 {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+        width: calc(33.33% - 2vw);
+        margin: 1vw;
+    }
 
     .gallery-info h4 {
         font-size: 3.5vw;
     }
-    }
+}
+
 @media screen and (min-width: 450px) and (max-width: 768px) {
-.col-lg-4{
-    flex: 0 0 50%;
-    max-width: 50%;
-    width: calc(50% - 2vw);
-    margin: 1vw;
-}
+    .col-lg-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        width: calc(50% - 2vw);
+        margin: 1vw;
+    }
 
     .gallery-info h4 {
         font-size: 3.5vw;
     }
-        }
-@media screen and (max-width: 449px) {
-    .col-lg-4{
-    flex: 0 0 100%;
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
 }
+
+@media screen and (max-width: 449px) {
+    .col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+    }
+
     .gallery-info {
+        margin: auto;
         opacity: 90%;
         width: 300px;
-        left: 10%;
     }
 
     #gallery-filters li {
@@ -541,27 +525,17 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # ARTWORK
 --------------------------------------------------------------*/
-#artwork-schedule {
-    top: 7vh;
+#artwork-card {
+    top: 7%;
     position: relative;
     display: flex;
     flex-direction: row;
     margin: auto;
-    max-width: 93vw;
-    max-height: 85vh;
+    max-width: 98vw;
+    height: 90vh;
+    max-height: 89%;
     align-items: flex-start;
     justify-content: space-evenly;
-}
-
-#artwork-schedule2 {
-    top: 7vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    max-width: 93vw;
-    max-height: 85vh;
-    align-items: center;
 }
 
 .artwork-section {
@@ -588,12 +562,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2vw;
     position: relative;
 }
-/*#h3_title{*/
-/*    float: left;*/
-/*}*/
-/*#h3_period{*/
-/*    float: right;*/
-/*}*/
 
 .artwork-image {
     max-height: 100%;
@@ -609,6 +577,7 @@ h1, h2, h3, h4, h5, h6 {
     max-height: 60vh;
     border-radius: 1vh;
 }
+
 .artwork-data {
     display: flex;
     flex-direction: column;
@@ -620,20 +589,24 @@ h1, h2, h3, h4, h5, h6 {
     height: auto;
     max-height: 100%;
 }
-.artwork-data p{
+
+.artwork-data p {
     font-size: 1vw;
     margin: 0;
     padding: 0;
 }
+
 @media screen and (max-width: 449px) {
     .artwork-data {
         flex-wrap: wrap;
         flex-direction: unset;
         justify-content: space-around;
     }
-    .artwork-data p{
+
+    .artwork-data p {
         font-size: 2vw;
     }
+
     .artwork-section {
         max-width: 90vw;
         padding: 1vh 1vw 0 0;
@@ -642,18 +615,10 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
     }
 
-    #artwork-schedule, .schedule {
+    #artwork-card {
         flex-direction: column;
-    }
 
-
-    #artwork-schedule, #artwork-schedule2 {
-        top: 8vh;
-    }
-
-    .schedule {
-        align-items: center;
-        padding: 0;
+        max-height: 88%;
     }
 
     .title {
@@ -661,6 +626,7 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
         flex-direction: row;
     }
+
     .title h3 {
         font-size: 4vw;
         position: relative;
@@ -674,10 +640,7 @@ h1, h2, h3, h4, h5, h6 {
         min-height: 36vh;
     }
 
-    #artwork-schedule2 #painting_link {
-        max-height: 70vh;
-    }
-    #artwork-schedule #painting_link {
+    #artwork-card #painting_link {
         max-height: 36vh;
     }
 
@@ -689,7 +652,7 @@ h1, h2, h3, h4, h5, h6 {
 #chat-section {
     padding: 4vh 0 0 1vw;
     width: 100%;
-    height: 86vh;
+    height: 88vh;
     max-width: 50%;
     display: flex;
     flex-direction: column;
@@ -959,6 +922,7 @@ input {
     max-height: 55vh;
     margin: auto;
 }
+
 .owl-dots {
     display: none;
 }
@@ -1012,14 +976,16 @@ input {
     bottom: 0;
     width: 100%;
     padding: 0;
+    z-index: 10;
 }
 
 .footer_container {
     background: rgba(1, 72, 100, 0.8);
     position: relative;
+    height: 5vh;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -1028,7 +994,7 @@ input {
     font-weight: 400;
     color: #fff;
     position: relative;
-    line-height: 5vh;
+    line-height: 5%;
     margin: 0 1vw 0 2vw;
 }
 
@@ -1131,7 +1097,7 @@ button[type="submit"]:hover {
 }
 
 /*--------------------------------------------------------------
-# SELECT CENTURY GROUP
+# SELECT TITLE GROUP
 --------------------------------------------------------------*/
 /* Dropdown Button */
 .dropbtn {
@@ -1178,30 +1144,32 @@ button[type="submit"]:hover {
     display: block;
 }
 
-.select-cn {
+.select-letter-group {
     text-transform: uppercase;
     font-size: 15px;
     font-weight: 600;
     margin-left: 2vh;
 }
 
-.choose-century {
+.choose-letter {
     display: none;
 }
 
-.choose-century #gallery-filters ul {
+.choose-letter #gallery-filters ul {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .pagination {
     margin-bottom: 4vh
 }
+
 @media screen and (min-width: 450px) and (max-width: 769px) {
     .large-view {
         display: block;
     }
 
-    .choose-century {
+    .choose-letter {
         display: none;
     }
 }
@@ -1212,7 +1180,7 @@ button[type="submit"]:hover {
         display: none;
     }
 
-    .choose-century {
+    .choose-letter {
         display: block;
     }
 

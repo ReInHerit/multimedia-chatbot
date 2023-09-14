@@ -106,17 +106,19 @@ class Artworkchat(View):
 
 @csrf_exempt
 def handle_chat_question(request):
-    print('in handle question')
-    url = request.POST["url"]
-    question = request.POST["question"]
-    wiki_title = url.rsplit('gallery/')[1][:-1]
-    title = wiki_title.replace('_', ' ')
-    wiki_url = 'https://en.wikipedia.org/wiki/' + wiki_title
-    # Case-insensitive lookup using Q objects
-    artwork = Artwork.objects.filter(Q(wiki_url__iexact=wiki_url) | Q(title__iexact=title)).first()
+    url = request.POST.get("url")
+    question = request.POST.get("question")
+
+    if not url or not question:
+        return JsonResponse({'answer': 'Invalid request'})
+
+    address_title = url.rsplit('gallery/')[1][:-1]
+    title = address_title.replace('_', ' ')
+
+    artwork = Artwork.objects.filter(title__iexact=title).first()
+
     if artwork is None:
-        print('artwork is None')
-        pass
+        return JsonResponse({'answer': 'Artwork not found'})
 
     context = artwork.description
     answer = AnswerGenerator().produce_answer(question, title, context)
@@ -206,13 +208,9 @@ def add_artworks_via_folder(request):
         file_list = os.listdir(admin_files_directory)
         print("file_list", file_list)
         # Process the files as needed
-        # processed_files = []
-        # masterpieces = {}
         text_files = []
         image_files = []
         for file in file_list:
-            # name_without_extension = file.split('.')[0]
-
             if file.endswith(".txt"):
                 text_files.append(file)
             elif file.endswith(".jpg") or file.endswith(".png"):
@@ -224,91 +222,45 @@ def add_artworks_via_folder(request):
 
             masterpiece = file.split('.')[0]
             title = masterpiece.replace('_', ' ')
-            with open(os.path.join(admin_files_directory, masterpiece + ".txt"), "r", encoding='utf-8') as txt_file:
+            txt_file_path = os.path.join(admin_files_directory, masterpiece + ".txt")
+            with open(txt_file_path, "r", encoding='utf-8') as txt_file:
                 description = txt_file.read()
-            # Define regular expressions to match each piece of information
-            time_period_pattern = r"Date: (.+)"
-            size_pattern = r"Measurement: (.+)"
-            artist_pattern = r"Maker: (.+)"
-            material_pattern = r"Materials and techniques: (.+)"
-            institution_pattern = r"Location: (.+)"
-            subject_pattern = r"Subject: (.+)"
-            typeof_pattern = r"Type of object: (.+)"
-            link_pattern = r"Link: (.+)"
-            # Use regular expressions to extract data
-            time_period_match = re.search(time_period_pattern, description)
-            size_match = re.search(size_pattern, description)
-            artist_match = re.search(artist_pattern, description)
-            material_match = re.search(material_pattern, description)
-            institution_match = re.search(institution_pattern, description)
-            subject_match = re.search(subject_pattern, description)
-            typeof_match = re.search(typeof_pattern, description)
-            link_match = re.search(link_pattern, description)
 
-            time_period = "Unknown"
-            year = "Unknown"
-            century = "Unknown"
-            size = "Unknown"
-            artist = "Unknown"
-            material = "Unknown"
-            institution = "Unknown"
-            subject = "Unknown"
-            typeof = "Unknown"
-            link = "-"
+            regex_patterns = {
+                'Time Period': r"Date: (.+)",
+                'Measurement': r"Measurement: (.+)",
+                'Maker': r"Maker: (.+)",
+                'Materials and Techniques': r"Materials and techniques: (.+)",
+                'Location': r"Location: (.+)",
+                'Subject': r"Subject: (.+)",
+                'Type of Object': r"Type of object: (.+)",
+                'Link': r"Link: (.+)",
+            }
 
-            # Check if matches were found and extract the data
-            if time_period_match:
-                time_period = time_period_match.group(1)
-                year, century = find_year_century_from_period(time_period)
-
-            if size_match:
-                size = size_match.group(1)
-
-            if artist_match:
-                artist = artist_match.group(1)
-
-            if material_match:
-                material = material_match.group(1)
-
-            if institution_match:
-                institution = institution_match.group(1)
-
-            if subject_match:
-                subject = subject_match.group(1)
-
-            if typeof_match:
-                typeof = typeof_match.group(1)
-
-            if link_match:
-                link = link_match.group(1)
-
-            # Print the extracted data
-            print("Time Period:", time_period)
-            print("Year:", year)
-            print("Century:", century)
-            print("Measure:", size)
-            print("Maker:", artist)
-            print("Materials and techniques:", material)
-            print("Location:", institution)
-            print("Subject:", subject)
-            print("Type of object:", typeof)
-            print("Link:", link)
+            extracted_data = {}
+            for key, pattern in regex_patterns.items():
+                match = re.search(pattern, description)
+                if match:
+                    extracted_data[key] = match.group(1)
+                else:
+                    extracted_data[key] = "Unknown"
+            time_period, year, century = find_year_century_from_period(extracted_data['Time Period'])
 
             artwork = Artwork(
-                title=masterpiece.replace('_', ' '),
+                title=title,
                 image="/static/assets/img/full/" + file,
                 thumb_image="/static/assets/img/thumbs/" + file,
                 year=year,
                 description=description,
                 time_period=time_period,
-                measurement=size,
-                maker=artist,
-                materials_and_techniques=material,
-                location=institution,
-                subject=subject,
-                type_of_object=typeof,
+                measurement=extracted_data['Measurement'],
+                maker=extracted_data['Maker'],
+                materials_and_techniques=extracted_data['Materials and Techniques'],
+                location=extracted_data['Location'],
+                subject=extracted_data['Subject'],
+                type_of_object=extracted_data['Type of Object'],
                 century=century,
-                web_link=link,
+                web_link=extracted_data['Link'],
                 link=masterpiece,
             )
             artwork.save()
@@ -317,59 +269,38 @@ def add_artworks_via_folder(request):
 
 
 def find_year_century_from_period(time_period):
-    # Initialize year and century
-    year = ""
-    century = ""
-
-    if time_period is None:
-        # Case: time_period is None
-        year = "Unknown"
-        century = "Unknown"
-    else:
-        # Remove any extra spaces and convert to lowercase
+    year = "Unknown"
+    century = "Unknown"
+    new_time_period = time_period
+    if time_period:
         time_period = time_period.strip().lower()
-        # Count the occurrences of \d{1,4} in time_period
         year_matches = re.findall(r'\d{1,4}', time_period)
-        print("year_matches", year_matches, 'time_period', time_period)
-        year_count = len(year_matches)
-        if year_count == 2:
-            # Case 1: Multiple years with BCE/CE
-            year = "Unknown"
-            century = "Unknown"
-        elif year_count == 1:
-            # Split time_period by spaces
+
+        if len(year_matches) == 1:
             parts = time_period.split()
-            print("parts", parts)
             if len(parts) == 1:
-                # Case 2: Only a year is provided
                 if len(parts[0]) == len(year_matches[0]):
                     year = year_matches[0]
                     century = math.ceil(int(year) / 100)
-                else:
-                    if parts[0].startswith("-") or parts[0].endswith("bc") or parts[0].endswith("bce"):
-                        year = "-" + year_matches[0]
-                        century = math.ceil(int(year) / 100) - 1
-                    elif time_period.endswith("ad") or time_period.endswith("ce"):
-                        year = year_matches[0]
-                        century = math.ceil(int(year) / 100) + 1
-                    else:
-                        year = "Unknown"
-                        century = "Unknown"
+                    new_time_period = year + " CE"
+                elif parts[0].startswith("-") or parts[0].endswith(("bc", "bce")):
+                    year = "-" + year_matches[0]
+                    century = math.ceil(int(year) / 100) - 1
+                    new_time_period = year_matches[0] + " BCE"
+                elif parts[0].endswith(("ad", "ce")):
+                    year = year_matches[0]
+                    century = math.ceil(int(year) / 100) + 1
+                    new_time_period = year_matches[0] + " CE"
             elif len(parts) == 2:
                 year = year_matches[0]
-                if parts[0] == "-" or parts[1] == "bc" or parts[1] == "bce":
+                if parts[1] in ("-","bc","bce"):
                     year = "-" + year
                     century = math.ceil(int(year) / 100) - 1
-                elif parts[1] == "ad" or parts[1] == "ce":
+                    new_time_period = year_matches[0] + " BCE"
+                elif parts[1] in ("ad","ce"):
                     century = math.ceil(int(year) / 100) + 1
-                else:
-                    year = "Unknown"
-                    century = "Unknown"
-            else:
-                year = "Unknown"
-                century = "Unknown"
-
-    return year, century
+                    new_time_period = year_matches[0] + " CE"
+    return new_time_period, year, century
 
 
 def check_url(url):
