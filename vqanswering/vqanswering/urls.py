@@ -15,9 +15,9 @@ urlpatterns = [
     path('add-artworks-via-folder/', add_artworks_via_folder, name='add_artworks_via_folder'),
 ]
 
-obj = Artwork.objects.all()
+objs = Artwork.objects.all()
 
-for article in obj:
-    print(article.link)
-    link = 'gallery/' + article.link + '/'
-    urlpatterns.append(path(link, Artworkchat.as_view(art=article)))
+for masterpiece in objs:
+    print(masterpiece.link)
+    link = 'gallery/' + masterpiece.link + '/'
+    urlpatterns.append(path(link, Artworkchat.as_view(art=masterpiece)))

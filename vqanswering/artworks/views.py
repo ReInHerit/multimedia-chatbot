@@ -271,6 +271,7 @@ def add_artworks_via_folder(request):
 def find_year_century_from_period(time_period):
     year = "Unknown"
     century = "Unknown"
+    print("time_period", time_period)
     new_time_period = time_period
     if time_period:
         time_period = time_period.strip().lower()
@@ -300,6 +301,7 @@ def find_year_century_from_period(time_period):
                 elif parts[1] in ("ad","ce"):
                     century = math.ceil(int(year) / 100) + 1
                     new_time_period = year_matches[0] + " CE"
+    print("new_time_period", new_time_period, year, century)
     return new_time_period, year, century
 
 
