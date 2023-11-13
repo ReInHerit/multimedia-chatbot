@@ -19,7 +19,7 @@ class Artwork(models.Model):
     materials_and_techniques = models.CharField(max_length=200, default="Unknown")
     location = models.CharField(max_length=200, default="Unknown")
     description = models.TextField()
-    web_link = models.CharField(max_length=200, default="-", blank=True)
+    web_link = models.CharField(max_length=250, default="-", blank=True)
     link = models.CharField(max_length=200, default="-")
 
 

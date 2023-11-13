@@ -16,13 +16,23 @@ model_engine = "gpt-4"  #"text-davinci-003""gpt-4"gpt-3.5-turbo
 
 
 class AnswerGenerator:
-    def __init__(self):
-        super(AnswerGenerator, self).__init__()
+    _instance = None
 
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(AnswerGenerator, cls).__new__(cls)
+            cls._instance.last_question = ""
+            cls._instance.last_answer = ""
+            cls._instance.last_artwork_title = ""
+        return cls._instance
     def produce_answer(self, question, artwork_title, context):
-        print(question)
-        # if which == 'open_ai':
-        print('using open ai')
+        if artwork_title != self.last_artwork_title:
+            # Reset last_question and last_answer if artwork_title has changed
+            self.last_question = ""
+            self.last_answer = ""
+
+        self.last_artwork_title = artwork_title
+
         prompt = f"Consider the artwork titled '{artwork_title}' and its Context. " \
                  f"Context: {context}. \n" \
                  f"Question: {question}. \n" \
@@ -36,8 +46,10 @@ class AnswerGenerator:
                  f"I want you to act as an art expert and remember to answer in the same language of the question. \n " \
                  f"If the translated answer is longer than the limit of 30 words, rephrase it to stay in that limit.\n"\
                  f"If the Context is not enough to answer respond with your internal knowledge, saying that the answer could be imprecise.\n"
+        if self.last_question != "" and self.last_answer != "":
+            system_prompt += f"if they exist, take in account also the last question and answer: Q: {self.last_question} A: {self.last_answer} \n"
 
-        print(prompt, system_prompt)
+        print(prompt, "\n", system_prompt)
 
         retry_count = 0
         max_retries = 3
@@ -50,7 +62,6 @@ class AnswerGenerator:
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": prompt},
                     ],
-                    # max_tokens=80,
                     temperature=0.25,
                 )
 
@@ -63,34 +74,7 @@ class AnswerGenerator:
             retry_count += 1
             print("Retrying in {} second(s)...".format(retry_delay))
             time.sleep(retry_delay)
-        # while retry_count < max_retries:
-        #     try:
-        #         completion = openai.Completion.create(
-        #             engine=model_engine,
-        #             prompt=prompt,
-        #             max_tokens=80,
-        #             n=1,
-        #             stop=None,
-        #             temperature=0.2,
-        #         )
-        #         answer = completion.choices[0].text
-        #         break  # Break the loop if the API call is successful
-        #     except requests.Timeout:
-        #         print("The request to OpenAI API has timed out")
-        #         answer = "There was a timeout error, please try again later"
-        #     except openai.error.APIError as e:
-        #         print("An error occurred: {}".format(e))
-        #         answer = "There's a problem with the OpenAI API, please try again later"
-        #     except openai.error.OpenAIError as e:
-        #         print("An error occurred: {}".format(e))
-        #         answer = "There's a connection problem, please ask the question later"
-        #     except Exception as e:
-        #         print("An unexpected error occurred: {}".format(e))
-        #         answer = "An unexpected error occurred, please try again later"
-        #
-        #     retry_count += 1
-        #     print("Retrying in {} second(s)...".format(retry_delay))
-        #     time.sleep(retry_delay)
-
+        self.last_question = question
+        self.last_answer = answer
         print(answer)
         return answer

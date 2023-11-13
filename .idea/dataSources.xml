@@ -9,7 +9,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="db [2]" uuid="c895c9b2-6bca-4435-bf4a-6c3384534b1c">
-      <driver-ref>sqlite.xerial</driver-ref>
+      <driver-ref>7923239d-0c88-4d3a-b9ce-c315354e7116</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/vqanswering/db.sqlite3</jdbc-url>

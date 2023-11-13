@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>const micro_icon_path="{% static 'assets/img/microphone.png'%}";
-            const no_micro_icon_path="{% static 'assets/img/block-microphone.png'%}";</script>
+    <script>const micro_icon_path = "{% static 'assets/img/microphone.png'%}";
+    const no_micro_icon_path = "{% static 'assets/img/block-microphone.png'%}";</script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>ReInHerit Toolkit - Multimedia ChatBot</title>
@@ -24,15 +24,15 @@
     <link href="{% static 'assets/libraries/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/libraries/icofont/icofont.min.css'%}" rel="stylesheet">
     <link href="{% static 'assets/libraries/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-<!--    <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">-->
+    <!--    <link href="{% static 'assets/libraries/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">-->
     <!-- Main CSS File -->
     <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
 </head>
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top d-flex align-items-center "> <!-- justify-content-center -->
-    <a href="{% url 'home_view' %}" title="HOME"><img id="header_logo"  alt="reinherit logo"
-         src="{% static 'assets/img/reinherit-logo-square-300x300.jpg' %}">
+    <a href="{% url 'home_view' %}" title="HOME"><img id="header_logo" alt="reinherit logo"
+                                                      src="{% static 'assets/img/reinherit-logo-square-300x300.jpg' %}">
     </a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
@@ -47,10 +47,11 @@
 </header>
 <main id="main">
     <div id="artwork-card">
-            <div class="artwork-section">
+        <div class="artwork-section">
+            <div id="artwork-info">
                 <div class="title">
                     <h3 id="h3_title"><strong>{{artwork.title}}</strong></h3>
-                    <h3 id="h3_period">{{artwork.time_period}}</h3>
+                        <h3 id="h3_period">{{artwork.time_period}}</h3>
                 </div>
                 <div class="artwork-data">
                     <p><strong>Maker:</strong> {{artwork.maker}}</p>
@@ -58,22 +59,23 @@
                     <p><strong>Measurement:</strong> {{artwork.measurement}}</p>
                     <p><strong>Location:</strong> {{artwork.location}}</p>
                 </div>
-                <div class="artwork-image">
-                    <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
-                </div>
             </div>
+            <div class="artwork-image">
+                <img id="painting_link" src="{{artwork.image}}" class="img-fluid" alt="{{artwork.title}}">
+            </div>
+        </div>
 
-            <div id="chat-section" class="chat-link">
-                <h2 id="chat_title">Artwork Chat</h2>
-                <div class="chat-ul">
-                    <ul style="line-height: 120%"></ul>
-                </div>
-                <div class="typing">
-                    <input class="input_text" name="question" id="question"
-                           placeholder="Click here and type a question!"/>
-                    <div id="microphone"><img id="micro-icon" src="{% static 'assets/img/microphone.png'%}"></div>
-                </div>
+        <div id="chat-section" class="chat-link">
+            <h2 id="chat_title">Artwork Chat</h2>
+            <div class="chat-ul">
+                <ul style="line-height: 120%"></ul>
             </div>
+            <div class="typing">
+                <input class="input_text" name="question" id="question"
+                       placeholder="Click here and type a question!"/>
+                <div id="microphone"><img id="micro-icon" src="{% static 'assets/img/microphone.png'%}"></div>
+            </div>
+        </div>
     </div>
 
 </main>
@@ -84,11 +86,16 @@
         <h3><em>Re</em><strong>InHerit</strong> Toolkit - VIOLA ChatBot </h3>
 
         <div class="social-links">
-            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube" class="youtube"><i class="bx bxl-youtube"></i></a>
+            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i
+                    class="bx bxl-twitter"></i></a>
+            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i
+                    class="bx bxl-facebook"></i></a>
+            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin"
+               class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube"
+               class="youtube"><i class="bx bxl-youtube"></i></a>
         </div>
     </div>
 </footer>
