@@ -3,7 +3,7 @@ requests==2.29.0
 beautifulsoup4==4.12.2
 wikipedia==1.4.0
 pillow==9.4.0
-openai==0.26.5
+openai==0.28.1
 transformers==4.26.1
 python-dotenv==1.0.0
 pandas==1.5.3
