@@ -39,15 +39,17 @@
 <body>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top  d-flex align-items-center header-transparent"> <!-- justify-content-center -->
-    <img id="header_logo" href="{% url 'home_view' %}" alt="reinherit logo"
-         src="{% static 'assets/img/reinherit-logo-square-300x300.jpg' %}">
+    <a href="https://reinherit-hub.eu/applications" target="_blank" title="ReInHerit Digital Hub">
+        <img id="header_logo" alt="reinherit logo"
+             src="{% static 'assets/img/reinherit-logo-square-300x300.jpg' %}">
+    </a>
     <div id="header_title">
         <em>Re</em><strong>InHerit</strong>
         <div id="undertitle">Redefining the Future of Cultural Heritage</div>
     </div>
     <nav class="nav-menu d-none d-lg-block">
         <ul>
-            <li class="active menu_active"><a href="{% url 'home_view' %}">Home</a></li>
+            <li class="active menu_active"><a href="{% url 'home_view' %}">Viola Home</a></li>
             <li class="menu_passive"><a href="{% url 'gallery_view' %}">Gallery</a></li>
         </ul>
     </nav><!-- .nav-menu -->
