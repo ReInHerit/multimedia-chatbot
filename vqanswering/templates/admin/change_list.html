@@ -26,70 +26,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        // document.getElementById('add-artwork').addEventListener('click', function () {
-        //     var fileInput = document.createElement('input');
-        //     fileInput.type = 'file';
-        //     fileInput.accept = 'application/json';
-        //     fileInput.addEventListener('change', function () {
-        //         var file = fileInput.files[0];
-        //         var reader = new FileReader();
-        //         reader.readAsText(file);
-        //         reader.onload = function () {
-        //             var formData = new FormData();
-        //             formData.append('json_file', file);
-        //
-        //             // var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        //             fetch('/add-artworks-from-json/', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'X-CSRFToken': csrfToken
-        //                 },
-        //                 body: formData,
-        //             })
-        //                 .then(response => response.json())
-        //                 .then(data => {
-        //                     console.log(data);
-        //                     // handle response data here
-        //                 })
-        //                 .catch(error => {
-        //                     console.error(error);
-        //                     // handle error here
-        //                 });
-        //         }
-        //     });
-        //     fileInput.click();
-        // });
-        // document.getElementById('add-wikipedia').addEventListener('click', function () {
-        //     var input = prompt("Enter masterpiece's Wikipedia URL:");
-        //     if (input) {
-        //         var formData = new FormData();
-        //         // var isUrl = /^https?:\/\//.test(input);
-        //         if (isWikipediaUrl(input)) {
-        //             // Input is a URL
-        //             formData.append('url', input);
-        //             fetch('/add-artworks-via-wikipedia/', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'X-CSRFToken': csrfToken
-        //                 },
-        //                 body: formData,
-        //             })
-        //                 .then(response => response.json())
-        //                 .then(data => {
-        //                     console.log(data);
-        //                     // handle response data here
-        //                 })
-        //                 .catch(error => {
-        //                     console.error(error);
-        //                     // handle error here
-        //                 });
-        //         }
-        //     }
-        // });
+
         document.getElementById('add-folder').addEventListener('click', () => {
             console.log('clicked')
-            // Open folder selection dialog
-            // Send folder path via fetch to 'add_artworks_via_folder' route
             fetch('/add-artworks-via-folder/', {
                 method: 'POST',
                 headers: {
