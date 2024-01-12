@@ -10,6 +10,7 @@ class ArtworkAdmin(admin.ModelAdmin):
     readonly_fields = ('link',)  # Make the 'link' field read-only in the admin page
 
     def save_model(self, request, obj, form, change):
+        obj.link = obj.title.replace(' ', '_')
         if not obj.id:
             obj.created_by = request.user
         obj.updated_by = request.user

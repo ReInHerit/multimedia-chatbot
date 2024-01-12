@@ -1,9 +1,9 @@
 # reinHerit toolkits: VIOLA Multimedia ChatBot
-## Description of the web app
+
 **VIOLA** (**V**isual **I**ntelligence **O**n**L**ine **A**rt-assistant webapp) is a web application that uses visual content and text descriptions to provide AI assistance for artwork images. Through a chatbot, users can ask questions about the artwork and receive responses related to its visual or contextual aspects.</p> 
 The user asks questions about the artwork and receives answers from a chatbot relating to the visual or contextual scope of the work. </p>
 The web application follows a client-server architecture, with the client being the user interface created using HTML, CSS, and the jQuery framework, and the server being managed by the Django framework to handle database management and chatbot requests and responses. </p>
-The user interface is divided into two sections: the home page and the gallery. The home page features a carousel of three significant images and a button to access the gallery, where users can view all images in the database, filter them by century, and retrieve information about each artwork. Upon selecting an artwork, the user can access its file, which includes an enlarged image, and begin using the chatbot to ask questions about the artwork. </p>
+The user interface is divided into two sections: the home page and the gallery. The home page features a carousel of significant images and a button to access the gallery, where users can view all images in the database, filter them by name, and retrieve information about each artwork. Upon selecting an artwork, the user can access its file, which includes an enlarged image, and begin using the chatbot to ask questions about the artwork. </p>
 
 <p>Download the repository and follow the instructions below to set up the application.</p>
 
@@ -57,8 +57,7 @@ You need to rename the file .env_template to .env and fill in the fields with yo
     If Conda is not installed, follow the installation instructions from the official Anaconda website: https://docs.anaconda.com/anaconda/install/
   - **Docker**: you'll need to set up and run Docker on your operating system. If you are not familiar with Docker, please refer to the official documentation [here](https://docs.docker.com/). 
  
-
-
+    
 ### How to manage python virtual environment
 - #### Create a virtual environment and install the requirements
     Open a terminal and navigate to the folder containing the requirements.txt file. \
@@ -95,7 +94,7 @@ Once ready with the .env file you can create and launch the docker image.
 - ##### Create your docker container image 
     To build the image using the Dockerfile, open a terminal, navigate to the folder containing the Dockerfile and type:  
     ```
-    docker build -t my_webapp_name .
+    docker build -t chatbot .
     ```  
     The dot at the end specifies the current directory. \
     Replace my_webapp_name with a relevant name for your app. \
@@ -105,7 +104,7 @@ Once ready with the .env file you can create and launch the docker image.
 - ##### Run your app container
     Now that you have an image, you can run the application in a container. To do so, you will use the docker run command.  
     ```
-    docker run --env-file=.env -p 8000:8000 my_webapp_name
+    docker run --env-file=.env -p 8000:8000 chatbot
     ``` 
     Remember to replace my_webapp_name with the one chosen in the build process.\
     When you start the container run it will take a few minutes to download the models and files necessary for the app to function. Be patient here too.
@@ -113,7 +112,7 @@ Once ready with the .env file you can create and launch the docker image.
 - #### Open the home page
     Now open a browser and go to the address:  
     ```
-    localhost:8000/home
+    localhost:8000
     ```
   
 ---
@@ -153,51 +152,52 @@ Clicking on **Artworks** you can see all the artworks in the database if they ex
 
 You may filter the artworks by year or century or search the artworks with text.
 Clicking on an Artwork's title you access to the change section of that artwork where you can modify the artwork's information.
-#### Add new artwork/s 
+#### Add new Artwork/s 
+There are two methods to add a new artwork to the database:
+1. **Add artwork manually from Admin Page**: \
+Generate full and thumbnail images of the artwork and place them in the **static/assets/img/full** and **static/assets/img/thumbs** respectively.\
+Log in to the admin page and navigate to **Artworks**. \
+Click on either **Add** or **ADD ARTWORK** buttons and complete the form with the artwork's data: \
+   - Fill the **image** and **thumb** fields with the respective paths (e.g., static/assets/img/full/my_image.jpg and static/assets/img/thumbs/my_image.jpg).
+   - Ensure to provide a detailed description in the **Description** field for better accuracy in the chatbot.
+   - The **Link** field will be automatically populated.
 
-You have 3 ways to add a new artwork to the database:
- - Load artworks from a json file:\
-   Click on **LOAD FROM JSON** button and select the json file containing the artworks you want to add.\
-    The json file must be in the following format:
-    ```
-    {
-     "1": {
-          "title": "title of the artwork",
-          "year": 1970,
-          "title": "title_of_the_artwork_wikipage",
-          "wiki_url": " url to the wikipage of the artwork",
-          "image_url": "url to the image of the artwork",
-          "context": [
-                "A list of sentences describing the artwork",
-                "The more detailed your list, the better the answer you will receive."
-          ]
-     },
-     "2": {
-          "title": "title of the artwork",
-          "year": 1970,
-          "title": "title_of_the_artwork_wikipage",
-          "wiki_url": " url to the wikipage of the artwork",
-          "image_url": "url to the image of the artwork",
-          "context": [
-                "A list of sentences describing the artwork",
-                "The more detailed your list, the better the answer you will receive."
-          ]
-     }
-    }
-    ```
-    The json file must be in the _static/assets/json_ folder.
- - Add a single Artwork:\
-   Click on **ADD ARTWORK** button and fill in the form with the artwork's data.\
-   Remember to fill in the "context" field with as many descriptive sentences as possible, the more you enter the more accurate the chatbot will be.
- - Add a single Artwork from wikipedia page:\
-   Click on **ADD FROM WIKIPEDIA** button and fill in the form with the artwork's wikipedia page url.\
-   The form will be filled in automatically with the data found on the page.\
-   You can then check and modify the data clicking on it in the database list.
+
+2. **Add artworks from a Folder**: \
+Go to static/assets/add_new_files folder. Here you can save all the artworks images you want to add to the database following these rules:
+   - Thumbnails are not required as the system generates them automatically.
+   - Title the images with a meaningful name, preferably the artwork's title (replace spaces with underscores).
+   - Create a .txt file in the same folder with the same name as the image. 
+   - In the text file, provide: 
+     - Description of the artwork with as many details as possible (You should write a complete description).
+     - Additional information, each on a new line (put Unknown if you don't know):
+       - **Date:** (e.g. around 420 BC) 
+       - **Type of object:** (e.g. Pottery)
+       - **Measurement:** (e.g. H. 28.8 cm)
+       - **Maker:** (e.g. Leonardo da Vinci)
+       - **Materials and techniques:** (e.g. Clay)
+       - **Location:** (e.g. Museum of YourMuseum)
+       - **Link:** (e.g. [https://address_of_the_artwork]) \
+       
+Example: \
+       
+       The painting depicts the Virgin Mary, the Christ Child, six angels, and various figures including apostles, prophets, and saints.
+       Date: around 420 BC
+       Type of object: Pottery
+       Measurement: H. 28.8 cm
+       Maker: Leonardo da Vinci
+       Materials and techniques: Clay
+       Location: Museum of YourMuseum
+       Link: https://address_of_the_artwork
+       
+Once the folder is prepared, in the administrator page, click on **Artworks** and then on **Add artworks from folder**. The system will create the artworks in the database and move/create the images in the folders.
 
 #### How to remove one (or some) artwork from the database:
-- Check the box next to the artwork/s you want to remove.
-- then under Action select **Delete selected artworks** and click on **GO** button.
-- you will be prompted on a new page with the list of the artworks you selected to delete. There you can confirm or cancel the operation.
+Deleting an artwork from the database will remove all associated information, including images (full and thumb). Follow these steps in the admin page:
+- Navigate to **Artworks**. \
+- Check the box next to the artwork/s you wish to remove.
+- Under Action select **Delete selected artworks** and click on the **GO** button.
+- A new page will display the list of selected artworks. Confirm or cancel the operation.
 - Click on **YES, I'M SURE** to confirm the operation.
 ---
 ## Chatbot
@@ -208,51 +208,20 @@ When the user submits a question, Django handles the request, and the ***handle_
 
 The produce_answer function takes in the user's question, along with the artwork's title, year, context (which consists of both visual and contextual phrases from the artwork's card), and image URL as inputs. It then sends a prompt, which is a structured string, to the OpenAI GPT-3 API. The prompt is structured to inform the API about the artwork in question and to provide a template for the response.
 ```
-prompt = f"Consider the painting {artwork_title} and its following context. " \
-                 f"Provide a complete and truthful answer using the Context as a source of information within 15 words. " \
-                 f"If the answer is contained in the Context, provide accurate information on the painting. " \
-                 f"If the question is not relevant to the painting, kindly state so. " \
-                 f"If the question is relevant but you don't have a relevant answer, state that you don't have the information. " \
-                 f"If you don't understand the question due to errors in the orthography or bad English, " \
-                 f"state that you don't understand and kindly ask to rewrite the question. \n" \
-                 f"Never start your answer with: 'Answer:'.\n" \
-                 f"Question: {question}. \n" \
-                 f"Context: {context}."
+prompt = "Provide a clear and concise answer in the same language as the question within 30 words. "
+         "If the question is unrelated to the artwork, please state so. "
+         "If the information is not available in the Context, indicate that you don't have the information, "
+         "writing in the language of the question 'I don't have this information.' "
+         "If there's difficulty understanding the question, ask the user to clarify the question. "
+         "Never start your answer with 'Answer:' and never use names or information that are not in the 'Context'. "
+         "If the question is in first person singular, respond in second person singular. "
+         "I want you to act as an art expert and remember to answer in the same language of the question. "
+         "If the translated answer is longer than the limit of 30 words, rephrase it to stay in that limit. "
+         "If the Context is not enough to answer, respond with your internal knowledge, saying that the answer could be imprecise. "
 ```
 
-The OpenAI GPT-3 API takes the prompt and searches for an answer within the context of the artwork provided. If the answer is found within the contextual phrases, it is reformulated to ensure that the response does not exceed 15 words. If the answer cannot be found within the contextual phrases, the API will return "I don't know" as a response.
+The OpenAI GPT-3 API takes the prompt and searches for an answer within the context of the artwork provided. If the answer is found within the contextual phrases, it is reformulated to ensure that the response does not exceed 15 words. If the answer cannot be found within the contextual phrases, the API will return "I don't know" or "I don't have this information" as a response.
 
-
+When the chatbot could not find an answer within the contextual phrases, it feeds a json file called **unresolved_question.json** in **static/assets/json** folder with the artwork's title and the unanswered question. This file could be usefull for museum curator to improve the description with the missing information.
+```
 ---
-## To-Do
-1. [x] Currently, there is a delay in loading artworks when the user navigates to the gallery page. This is due to the page evaluating each artwork's image and retrieving its thumbnail online. 
-   - ~~To address this issue, we could consider implementing a loading bar or a similar feature~~. Alternatively, we could revise the logic and store the images on the server side instead of relying on internet links.
-2. [x] The selected artwork page is poor of content. Currently, it's just a pass-through page for the chatbot. It only contains the title, year, and image of the artwork, and a link to the chatbot below it. 
-   - **We could** ~~either~~ **integrate the chatbot directly into this page** or ~~add a textual description of the artwork, for example, using the contextual and visual phrases in the database's JSON file~~.
-   - We could also add a link to the artwork's Wikipedia page, if it exists.
-   - ~~We could also add a link to the artwork's source, if it exists.~~
-   - ~~We could also add a link to the artist's Wikipedia page, if it exists.~~
-3. [ ] We have to find tune the chatbot answer. 
-   - The chatbot is currently limited to 15 words, so sometimes it responds with a truncated answer. 
-     - We could consider increasing the word limit to 30 or 50 words.
-     - We could also consider adding a "read more" button to the chatbot response, which would open a modal with the full answer.
-   - The chatbot sometimes responds with empty answers:
-     - We need to write a better prompt that manage also this case.
-   - The user can write his question in a language different from English, but the answer is always in English:
-     - We need to write in the prompt to translate tha answer in the same language of the question.
-   - The chatbot answers to questions do not take into account previous questions/answers, which generates issues such as:
-        > Q1: Who do we see depicted in the painting?
-      
-        > A1: The painting depicts the Virgin Mary, the Christ Child, six angels, and various figures including apostles, prophets, and saints.
-  
-        > Q2: Who do we see on the sides of the painting?
-  
-        > A2: The six angels holding the ornate throne are seen on the sides of the painting.
-        
-        > Q3: What are their names? 
-  
-        > A3: The painting depicts the Virgin Mary and the Christ Child. 
-     
-     **[WRONG ANSWER]**  
-        The user is asking for the names of the angels, but the chatbot responds with the names of the main figures depicted in the painting, instead of answering with "I don't know".
-        - We need to write in the prompt to take into account previous questions/answers.

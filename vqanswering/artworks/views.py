@@ -268,6 +268,42 @@ def add_artworks_via_folder(request):
         return JsonResponse({'success': True})
 
 
+# def find_year_century_from_period(time_period):
+#     year = "Unknown"
+#     century = "Unknown"
+#     print("time_period", time_period)
+#     new_time_period = time_period
+#     if time_period:
+#         time_period = time_period.strip().lower()
+#         year_matches = re.findall(r'\d{1,4}', time_period)
+#
+#         if len(year_matches) == 1:
+#             parts = time_period.split()
+#             if len(parts) == 1:
+#                 if len(parts[0]) == len(year_matches[0]):
+#                     year = year_matches[0]
+#                     century = math.ceil(int(year) / 100)
+#                     new_time_period = year + " CE"
+#                 elif parts[0].startswith("-") or parts[0].endswith(("bc", "bce")):
+#                     year = "-" + year_matches[0]
+#                     century = math.ceil(int(year) / 100) - 1
+#                     new_time_period = year_matches[0] + " BCE"
+#                 elif parts[0].endswith(("ad", "ce")):
+#                     year = year_matches[0]
+#                     century = math.ceil(int(year) / 100) + 1
+#                     new_time_period = year_matches[0] + " CE"
+#             elif len(parts) == 2:
+#                 year = year_matches[0]
+#                 if parts[1] in ("-","bc","bce"):
+#                     year = "-" + year
+#                     century = math.ceil(int(year) / 100) - 1
+#                     new_time_period = year_matches[0] + " BCE"
+#                 elif parts[1] in ("ad","ce"):
+#                     century = math.ceil(int(year) / 100) + 1
+#                     new_time_period = year_matches[0] + " CE"
+#     print("new_time_period", new_time_period, year, century)
+#     return new_time_period, year, century
+
 def find_year_century_from_period(time_period):
     year = "Unknown"
     century = "Unknown"
@@ -276,35 +312,48 @@ def find_year_century_from_period(time_period):
     if time_period:
         time_period = time_period.strip().lower()
         year_matches = re.findall(r'\d{1,4}', time_period)
-
+        parts = time_period.split()
         if len(year_matches) == 1:
-            parts = time_period.split()
-            if len(parts) == 1:
-                if len(parts[0]) == len(year_matches[0]):
-                    year = year_matches[0]
-                    century = math.ceil(int(year) / 100)
-                    new_time_period = year + " CE"
-                elif parts[0].startswith("-") or parts[0].endswith(("bc", "bce")):
-                    year = "-" + year_matches[0]
-                    century = math.ceil(int(year) / 100) - 1
-                    new_time_period = year_matches[0] + " BCE"
-                elif parts[0].endswith(("ad", "ce")):
-                    year = year_matches[0]
-                    century = math.ceil(int(year) / 100) + 1
-                    new_time_period = year_matches[0] + " CE"
-            elif len(parts) == 2:
+
+
+            # Check if the input represents a century
+            if len(parts) == 2 and parts[1] == 'century':
+                century = int(year_matches[0])
+                new_time_period = year_matches[0] + "th century"
+            elif 'today' in time_period:
+                # If 'today' is present, assume CE and calculate the century based on the start year
+                start_year = int(year_matches[0])
+                century = math.ceil(start_year / 100)
+                new_time_period = f"{start_year} CE – today"
+            else:
                 year = year_matches[0]
-                if parts[1] in ("-","bc","bce"):
+
+                # Check the last part of the input to determine BCE or CE
+                if parts[-1] in ("bc", "bce"):
                     year = "-" + year
                     century = math.ceil(int(year) / 100) - 1
                     new_time_period = year_matches[0] + " BCE"
-                elif parts[1] in ("ad","ce"):
-                    century = math.ceil(int(year) / 100) + 1
+                elif parts[-1] in ("ad", "ce"):
+                    century = math.ceil(int(year) / 100)
                     new_time_period = year_matches[0] + " CE"
+                else:
+                    century = math.ceil(int(year) / 100)
+                    new_time_period = year_matches[0] + " CE"
+        elif len(year_matches) == 2:
+            start_year, end_year = map(int, year_matches)
+
+            if abs(end_year - start_year) <= 100:
+                century = math.ceil(start_year / 100)
+                new_time_period = f"{start_year} - {end_year} CE"
+                if parts[-1] in ("bc", "bce"):
+                    century = math.ceil(int(end_year) / 100)
+                    century = f"-{century}"
+                    new_time_period = f"{start_year} - {end_year} BCE"
+                elif parts[-1] in ("ad", "ce"):
+                    century = math.ceil(start_year / 100)
+                    new_time_period = f"{start_year} - {end_year} CE"
     print("new_time_period", new_time_period, year, century)
     return new_time_period, year, century
-
-
 def check_url(url):
     try:
         response = requests.head(url)
