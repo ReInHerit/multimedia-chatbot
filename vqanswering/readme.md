@@ -1,4 +1,4 @@
-# reinHerit toolkits: VIOLA Multimedia ChatBot
+# ReInHerit toolkit: VIOLA Multimedia ChatBot
 
 **VIOLA** (**V**isual **I**ntelligence **O**n**L**ine **A**rt-assistant webapp) is a web application that uses visual content and text descriptions to provide AI assistance for artwork images. Through a chatbot, users can ask questions about the artwork and receive responses related to its visual or contextual aspects.</p> 
 The user asks questions about the artwork and receives answers from a chatbot relating to the visual or contextual scope of the work. </p>
@@ -11,12 +11,12 @@ The user interface is divided into two sections: the home page and the gallery. 
 
 ## How to run the app
 You can choose to test the app in two ways:
-- creating a python virtual environment
+- creating a Python virtual environment
 - using docker
 
-Follow above prerequisites and instructions paying attention to the parts relating to the chosen method.
+Follow above pre-requisites and instructions paying attention to the parts relating to the chosen method.
 
-### Prerequisites
+### Pre-requisites
 - **Python 3.9** installed on your machine. If you don't have it, you can download it from the official website: https://www.python.org/downloads/ or follow this online guide: https://realpython.com/installing-python/ to install Python on your machine.
 - **Javascript** enabled on your browser. If not, you can follow this online guide: https://www.enable-javascript.com/
 - a **Django secret key** and an **OpenAI API key** are required, **Google Analytics** is optional:\
@@ -58,7 +58,7 @@ You need to rename the file .env_template to .env and fill in the fields with yo
   - **Docker**: you'll need to set up and run Docker on your operating system. If you are not familiar with Docker, please refer to the official documentation [here](https://docs.docker.com/). 
  
     
-### How to manage python virtual environment
+### How to manage Python virtual environment
 - #### Create a virtual environment and install the requirements
     Open a terminal and navigate to the folder containing the requirements.txt file. \
     Create a virtual environment by typing: 
@@ -91,7 +91,7 @@ You need to rename the file .env_template to .env and fill in the fields with yo
 ### How to manage docker
 Once ready with the .env file you can create and launch the docker image.
 
-- ##### Create your docker container image 
+- ##### Create your Docker container image 
     To build the image using the Dockerfile, open a terminal, navigate to the folder containing the Dockerfile and type:  
     ```
     docker build -t chatbot .

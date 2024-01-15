@@ -10,8 +10,10 @@ This system offers two different chatbots:
 - one based on Visual Question Answering techniques, using a neural network to classify the types of questions of the users in questions related to visual content or to the context of the artwork, and then using a specific neural network for each type of question, and the other method uses GPT-based networks to answer, again, questions on content and context.
 ![VQA example](images/vqa.jpg "VQA example")
 
-- Each modality is maintained in a different branch of the repository. The main branch contaning only the VQ system, the GPT3_VQA allows to use on or the opther method, based on a parameter in a configuration file, and then GPT3_only uses only GPT network.
+- Each modality is maintained in a different branch of the repository. The main branch containing only the VQ system, the GPT3_VQA allows to use on or the other method, based on a parameter in a configuration file, and then GPT3_only uses only GPT network.
 ![Chat example](images/chat-example.png "Chat example")
+
+The most up-to-date version of the code is in the v2.0 branch and is based on GPT models.
 
 ## Citation
 
