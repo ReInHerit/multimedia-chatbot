@@ -1,30 +1,21 @@
 import os
-import urllib.parse
-import io
-import json
 import math
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.core.checks import messages
-from django.db.models import Q
-from django.shortcuts import render, redirect
+
+from django.shortcuts import render
 from .models import Artwork
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from .answer_generator import AnswerGenerator
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.urls import reverse, reverse_lazy
 from django.conf import settings
 import re
 import requests
-import wikipedia
-from bs4 import BeautifulSoup
-#import create_thumbs from static/assets/py/download_thumbs
-
 from utils.download_thumbs import create_thumb
-from utils.get_wiki_utilities import get_wikipage_from_title, get_context, get_image_url, get_year
+
 ga_key = settings.GA_MEASUREMENT_ID
 not_allowed_chars = r'[<>:"/\\|?*]'
 
@@ -131,73 +122,6 @@ def handle_chat_question(request):
 def admin_home(request):
     return render(request, 'admin_home.html')
 
-# @csrf_exempt
-# def add_artworks_from_json(request):
-#     if request.method == 'POST':
-#         json_file = request.FILES['json_file']
-#         print("json_path", json_file)
-#         try:
-#             json_data = json.load(io.TextIOWrapper(json_file))
-#             for article_id in json_data:
-#                 wiki_title = json_data[article_id]['wiki_title']
-#                 file_name = sanitize_file_name(wiki_title)
-#                 file_name = file_name + '.jpg'
-#
-#                 create_thumb(json_data[article_id]['image_url'], file_name)
-#
-#                 century = (int(json_data[article_id]['year']) // 10 **
-#                            (int(math.log(int(json_data[article_id]['year']), 10)) - 1)) * 100
-#
-#                 artwork = Artwork(
-#                     title=json_data[article_id]['title'],
-#                     image="/static/assets/img/full/" + file_name,
-#                     thumb_image="/static/assets/img/thumbs/" + file_name,
-#                     year=json_data[article_id]['year'],
-#                     description=json_data[article_id]['context'],
-#                     century=century,
-#                     link=wiki_title,
-#                     wiki_url=json_data[article_id]['wiki_url'],
-#                 )
-#                 artwork.save()
-#
-#             return JsonResponse({'success': True})
-#         except json.JSONDecodeError:
-#             return JsonResponse({'success': False, 'message': 'Invalid JSON file'})
-#     else:
-#         return JsonResponse({'success': False, 'message': 'No file uploaded'})
-#
-# @csrf_exempt
-# def add_artworks_via_wikipedia(request):
-#     if request.method == 'POST':
-#         wikipedia.set_lang("en")
-#         wiki_url = request.POST.get('url')
-#         print("url", wiki_url)
-#         wiki_title = wiki_url.rsplit('wiki/')[1]
-#         title = wiki_title.replace('_', ' ')
-#
-#         main_image_source = get_image_url(title, wiki_url)
-#         file_name = sanitize_file_name(wiki_title) + '.jpg'
-#         create_thumb(main_image_source, file_name)
-#         print('wiki_title', wiki_title)
-#         wiki_page = wikipedia.WikipediaPage(wiki_title)
-#         year = get_year(wiki_title)
-#         context = get_context(wiki_page)
-#         if year:
-#             century = (int(year) // 10 ** (int(math.log(int(year), 10)) - 1)) * 100
-#         else:
-#             century = int(3000)
-#         artwork = Artwork(
-#             title=title,
-#             wiki_url=wiki_url,
-#             year=year,
-#             image="/static/assets/img/full/" + file_name,
-#             thumb_image="/static/assets/img/thumbs/" + file_name,
-#             description=context,
-#             century=century,
-#             link=wiki_title,
-#         )
-#         artwork.save()
-#         return JsonResponse({'success': True})
 
 @csrf_exempt
 def add_artworks_via_folder(request):
@@ -268,42 +192,6 @@ def add_artworks_via_folder(request):
         return JsonResponse({'success': True})
 
 
-# def find_year_century_from_period(time_period):
-#     year = "Unknown"
-#     century = "Unknown"
-#     print("time_period", time_period)
-#     new_time_period = time_period
-#     if time_period:
-#         time_period = time_period.strip().lower()
-#         year_matches = re.findall(r'\d{1,4}', time_period)
-#
-#         if len(year_matches) == 1:
-#             parts = time_period.split()
-#             if len(parts) == 1:
-#                 if len(parts[0]) == len(year_matches[0]):
-#                     year = year_matches[0]
-#                     century = math.ceil(int(year) / 100)
-#                     new_time_period = year + " CE"
-#                 elif parts[0].startswith("-") or parts[0].endswith(("bc", "bce")):
-#                     year = "-" + year_matches[0]
-#                     century = math.ceil(int(year) / 100) - 1
-#                     new_time_period = year_matches[0] + " BCE"
-#                 elif parts[0].endswith(("ad", "ce")):
-#                     year = year_matches[0]
-#                     century = math.ceil(int(year) / 100) + 1
-#                     new_time_period = year_matches[0] + " CE"
-#             elif len(parts) == 2:
-#                 year = year_matches[0]
-#                 if parts[1] in ("-","bc","bce"):
-#                     year = "-" + year
-#                     century = math.ceil(int(year) / 100) - 1
-#                     new_time_period = year_matches[0] + " BCE"
-#                 elif parts[1] in ("ad","ce"):
-#                     century = math.ceil(int(year) / 100) + 1
-#                     new_time_period = year_matches[0] + " CE"
-#     print("new_time_period", new_time_period, year, century)
-#     return new_time_period, year, century
-
 def find_year_century_from_period(time_period):
     year = "Unknown"
     century = "Unknown"
@@ -314,8 +202,6 @@ def find_year_century_from_period(time_period):
         year_matches = re.findall(r'\d{1,4}', time_period)
         parts = time_period.split()
         if len(year_matches) == 1:
-
-
             # Check if the input represents a century
             if len(parts) == 2 and parts[1] == 'century':
                 century = int(year_matches[0])
@@ -327,7 +213,6 @@ def find_year_century_from_period(time_period):
                 new_time_period = f"{start_year} CE – today"
             else:
                 year = year_matches[0]
-
                 # Check the last part of the input to determine BCE or CE
                 if parts[-1] in ("bc", "bce"):
                     year = "-" + year
