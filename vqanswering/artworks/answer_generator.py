@@ -13,7 +13,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_KEY')
 # Set up the model
-model_engine = "gpt-3.5-turbo"  # "text-davinci-003""gpt-4"gpt-3.5-turbo-1106
+model_engine = "gpt-3.5-turbo-0125"  # "text-davinci-003""gpt-4"gpt-3.5-turbo-1106
 i_dont_know_answer = ["I don't have this information",
                       "The context does not provide any",
                       "The context provided does not",

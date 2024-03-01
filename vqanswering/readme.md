@@ -37,7 +37,6 @@ You need to rename the file .env_template to .env and fill in the fields with yo
       4. Access your OpenAI key page by visiting https://platform.openai.com/account/api-keys.
       5. Click the "Create new secret key" button on the key page to generate a new key.
       6. Copy the key and paste it in the OPENAI_KEY field of the .env file. Don't forget to put it in quotation marks.
-      7. Download pytorch_model.bin and config.json from https://huggingface.co/Faisalrahi/pytorch_model.bin/tree/main and place it in the question_classifier/models/vqa_bert folder.
   3. ___Google Analytics key___
      1. Go to https://analytics.google.com/analytics/web/ and click on the "Get Started for Free" button.
      2. Sign in with your Google account.
@@ -161,7 +160,8 @@ Click on either **Add** or **ADD ARTWORK** buttons and complete the form with th
    - Fill the **image** and **thumb** fields with the respective paths (e.g., static/assets/img/full/my_image.jpg and static/assets/img/thumbs/my_image.jpg).
    - Ensure to provide a detailed description in the **Description** field for better accuracy in the chatbot.
    - The **Link** field will be automatically populated.
-
+After completing the form, click on the **Save** button to add the artwork to the database.
+When you finish adding the artwork, you need to exit and start the server again to interact the new artwork in the gallery.
 
 2. **Add artworks from a Folder**: \
 Go to static/assets/add_new_files folder. Here you can save all the artworks images you want to add to the database following these rules:
