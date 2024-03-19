@@ -13,7 +13,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_KEY')
 # Set up the model
-model_engine = "gpt-3.5-turbo-0125"  # "text-davinci-003""gpt-4"gpt-3.5-turbo-1106
+model_engine = "gpt-3.5-turbo-0125"  # "text-davinci-003""gpt-4"gpt-3.5-turbo-1106 gpt-4-0125-preview
 i_dont_know_answer = ["I don't have this information",
                       "The context does not provide any",
                       "The context provided does not",
@@ -44,6 +44,7 @@ class AnswerGenerator:
                  f"Question: {question}. \n" \
                  f"Answer:"
         system_prompt = (
+            "I want you to act as an art expert and to answer in the same language of the question. "
             "Provide a clear and concise answer in the same language as the question within 30 words. "
             "If the question is unrelated to the artwork, please state so. "
             "If the information is not available in the Context, indicate that you don't have the information, "
@@ -51,11 +52,10 @@ class AnswerGenerator:
             "If there's difficulty understanding the question, ask the user to clarify the question. "
             "Never start your answer with 'Answer:' and never use names or information that are not in the 'Context'. "
             "If the question is in first person singular, respond in second person singular. "
-            "I want you to act as an art expert and remember to answer in the same language of the question. "
             "If the translated answer is longer than the limit of 30 words, rephrase it to stay in that limit. "
             "If the Context is not enough to answer, respond with your internal knowledge, saying that the answer could be imprecise. "
-            # "Produce a json with the question and answer message and a boolean value that says if you can find the information in the context or not (true or false). "
-            # 'Here is an example of the output expected: {"question": "", "answer": "", "result_found": true}'
+            "Remember to answer in the same language as the question. "
+            "Examples: Question in english, answer in english. Question in italian, answer in italian. Question in French, answer in French."
         )
         if self.last_question != "" and self.last_answer != "":
             system_prompt += f"if they exist, take in account also the last question and answer: Q: {self.last_question} A: {self.last_answer} \n"
