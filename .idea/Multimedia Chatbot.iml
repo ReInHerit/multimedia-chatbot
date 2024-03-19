@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vqanswering/question_classifier/models" />
       <excludeFolder url="file://$MODULE_DIR$/vqanswering/static/assets/img/full_images" />
     </content>
-    <orderEntry type="jdk" jdkName="chatbot" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">

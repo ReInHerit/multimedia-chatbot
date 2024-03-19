@@ -225,3 +225,27 @@ The OpenAI GPT-3 API takes the prompt and searches for an answer within the cont
 When the chatbot could not find an answer within the contextual phrases, it feeds a json file called **unresolved_question.json** in **static/assets/json** folder with the artwork's title and the unanswered question. This file could be usefull for museum curator to improve the description with the missing information.
 ```
 ---
+
+## How to install on Heroku ?
+
+TO install the system on systems like Heroku, you need to follow these steps:
+
+1. **Create a Heroku account**: If you don't have a Heroku account, you can create one by visiting the Heroku website at https://www.heroku.com/. Click on the "Sign up" button and follow the instructions to create your account.
+2. **Install the Heroku CLI**: The Heroku Command Line Interface (CLI) is a tool that allows you to manage your Heroku applications directly from the command line. You can download and install the Heroku CLI from the official Heroku website at https://devcenter.heroku.com/articles/heroku-cli.
+3. **Log in to Heroku**: Once you have installed the Heroku CLI, open a terminal or command prompt and run the following command to log in to Heroku:
+   ```
+   heroku login
+   ```
+   You will be prompted to enter your Heroku credentials. Enter your email address and password to log in to Heroku.
+4. **Build the Docker** image: 
+   ```
+   docker build --platform linux/amd64   -t reinherit-multimedia-chatbot .
+   ```  
+    The dot at the end specifies the current directory. \
+    Replace reinherit-multimedia-chatbot with a relevant name for your app. \
+    The --platform linux/amd64 flag is used to specify the platform for the Docker image. This is necessary if you are building the image on a non-Linux system, such as macOS or Windows, and you want to deploy it to a Linux-based platform, such as Heroku.
+    
+5. docker tag reinherit-multimedia-chatbot registry.heroku.com/reinherit-multimedia-chatbot/web
+6. docker push registry.heroku.com/reinherit-multimedia-chatbot/web
+7. heroku container:release web --app reinherit-multimedia-chatbot
+   
