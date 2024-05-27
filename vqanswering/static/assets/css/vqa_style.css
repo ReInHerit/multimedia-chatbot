@@ -286,6 +286,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #home_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-height: 80vh;
     padding-top: 9vh;
 }
@@ -958,6 +961,7 @@ input {
 --------------------------------------------------------------*/
 .owl-carousel, .owl-carousel .owl-item {
     max-height: 63.5vh;
+    width: 50vw
 }
 
 .owl-carousel .owl-item img {

@@ -23,6 +23,20 @@ class Artwork(models.Model):
     web_link = models.CharField(max_length=250, default="-", blank=True)
     link = models.CharField(max_length=200, blank=True)
 
+    def __str__(self):
+        return self.title
+
+
+class Chat(models.Model):
+    artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE)
+    question = models.TextField()
+    answer = models.TextField()
+    question_language = models.CharField(max_length=50, default='English')
+    resolved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.question
+
 
 # Connect the signal receiver to the pre_delete signal of Artwork
 pre_delete.connect(delete_artwork_images, sender=Artwork)

@@ -16,6 +16,10 @@ from django.conf import settings
 import re
 import requests
 from utils.download_thumbs import create_thumb
+# views.py
+from django.core.management import call_command
+from django.http import HttpResponse
+
 
 ga_key = settings.GA_MEASUREMENT_ID
 not_allowed_chars = r'[<>:"/\\|?*]'
@@ -40,6 +44,13 @@ def sanitize_file_name(title):
     title = title.lower()
 
     return title
+
+
+def database_dump(request):
+    response = HttpResponse(content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="db.json"'
+    call_command('dumpdata', stdout=response, format='json', indent=4)
+    return response
 
 
 def home_view(request):

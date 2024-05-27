@@ -34,7 +34,7 @@
                 headers: {
                     'X-CSRFToken': csrfToken
                 },
-                body: JSON.stringify({ folderPath: 'static/assets/img/add_new_files' }),
+                body: JSON.stringify({folderPath: 'static/assets/img/add_new_files'}),
             })
                 .then(response => response.json())
                 .then(data => {
@@ -47,6 +47,7 @@
                 });
         });
     });
+
     // Function to check if a given string is a valid URL
     function isWikipediaUrl(url) {
         // Remove any leading/trailing whitespace
@@ -81,9 +82,13 @@
     <ul class="object-tools">
         {% block object-tools-items %}
         {% change_list_object_tools %}
-<!--        <li><a href="#" class="addlink" id="add-wikipedia">ADD FROM WIKIPEDIA</a></li>-->
+        <!--        <li><a href="#" class="addlink" id="add-wikipedia">ADD FROM WIKIPEDIA</a></li>-->
         <li><a href="#" class="addlink" id="add-folder">ADD FROM FOLDER</a></li>
-<!--        <li><a href="#" id="add-artwork">LOAD FROM JSON</a></li>-->
+        <li>
+            <a href="{% url 'database_dump' %}" class="btn btn-primary">
+                {% trans "Download database dump" %}
+            </a>
+        </li>
         {% endblock %}
     </ul>
     {% endblock %}
