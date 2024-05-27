@@ -84,7 +84,7 @@ You need to rename the file .env_template to .env and fill in the fields with yo
 - #### Open the home page
     Now open a browser and go to the address:  
     ```
-    localhost:8000/home
+    localhost:8000
     ```
 
 ### How to manage docker

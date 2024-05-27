@@ -963,7 +963,9 @@ input {
     max-height: 63.5vh;
     width: 50vw
 }
-
+.owl-item{
+    padding: 0 1vw;
+}
 .owl-carousel .owl-item img {
     max-height: 55vh;
     margin: auto;

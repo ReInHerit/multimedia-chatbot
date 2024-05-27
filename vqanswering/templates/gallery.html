@@ -43,61 +43,61 @@
 <main id="main">
     <!-- ======= Gallery ======= -->
     <section id="gallery" class="gallery">
-        <div class="centuries_container">
-            <div class="large-view">
-                <ul id="gallery-filters" class="d-flex justify-content-center">
-                    {% if current_letter == "" %}
-                    <li data-filter="*" class="filter-active">All</li>
-                    {% else %}
-                    <li data-filter="*">All</li>
-                    {% endif %}
-                    {% for letter in starting_letters %}
-                    {% if letter == current_letter %}
-                    <li data-filter=".filter-{{ letter }}" class="filter-active"
-                        data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}
-                    </li>
-                    {% else %}
-                    <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"
-                        data-letter="{{ letter }}">{{ letter }}
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="choose-letter">
-                <label for="myDropdown" class="select-letter-group">Select a letter: </label>
-                <div id="gallery-filters" class="dropdown">
-                    {% if current_letter == "" %}
-                    <button onclick="myFunction()" class="dropbtn">All</button>
-                    {% else %}
-                    <button onclick="myFunction()" class="dropbtn">{{ current_letter }}</button>
-                    {% endif %}
-                    <div id="myDropdown" class="dropdown-content">
-                        <ul>
-                            {% if current_letter == "" %}
-                            <li data-filter="*" class="filter-active">All</li>
-                            {% for letter in starting_letters %}
-                            <li data-filter=".filter-{{ letter }}" data-letter="{{ letter }}">{{ letter }}</li>
-                            {% endfor %}
-                            {% else %}
-                            <li data-filter="*">All</li>
-                            {% for letter in starting_letters %}
-                            {% if letter == current_letter %}
-                            <li data-filter=".filter-{{ letter }}" class="filter-active"
-                                data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}
-                            </li>
-                            {% else %}
-                            <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"
-                                data-letter="{{ letter }}">{{ letter }}
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="centuries_container">-->
+<!--            <div class="large-view">-->
+<!--                <ul id="gallery-filters" class="d-flex justify-content-center">-->
+<!--                    {% if current_letter == "" %}-->
+<!--                    <li data-filter="*" class="filter-active">All</li>-->
+<!--                    {% else %}-->
+<!--                    <li data-filter="*">All</li>-->
+<!--                    {% endif %}-->
+<!--                    {% for letter in starting_letters %}-->
+<!--                    {% if letter == current_letter %}-->
+<!--                    <li data-filter=".filter-{{ letter }}" class="filter-active"-->
+<!--                        data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}-->
+<!--                    </li>-->
+<!--                    {% else %}-->
+<!--                    <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"-->
+<!--                        data-letter="{{ letter }}">{{ letter }}-->
+<!--                    </li>-->
+<!--                    {% endif %}-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="choose-letter">-->
+<!--                <label for="myDropdown" class="select-letter-group">Select a letter: </label>-->
+<!--                <div id="gallery-filters" class="dropdown">-->
+<!--                    {% if current_letter == "" %}-->
+<!--                    <button onclick="myFunction()" class="dropbtn">All</button>-->
+<!--                    {% else %}-->
+<!--                    <button onclick="myFunction()" class="dropbtn">{{ current_letter }}</button>-->
+<!--                    {% endif %}-->
+<!--                    <div id="myDropdown" class="dropdown-content">-->
+<!--                        <ul>-->
+<!--                            {% if current_letter == "" %}-->
+<!--                            <li data-filter="*" class="filter-active">All</li>-->
+<!--                            {% for letter in starting_letters %}-->
+<!--                            <li data-filter=".filter-{{ letter }}" data-letter="{{ letter }}">{{ letter }}</li>-->
+<!--                            {% endfor %}-->
+<!--                            {% else %}-->
+<!--                            <li data-filter="*">All</li>-->
+<!--                            {% for letter in starting_letters %}-->
+<!--                            {% if letter == current_letter %}-->
+<!--                            <li data-filter=".filter-{{ letter }}" class="filter-active"-->
+<!--                                data_current-letter="{{ current_letter }}" data-letter="{{ letter }}">{{ letter }}-->
+<!--                            </li>-->
+<!--                            {% else %}-->
+<!--                            <li data-filter=".filter-{{ letter }}" data_current-letter="{{ current_letter }}"-->
+<!--                                data-letter="{{ letter }}">{{ letter }}-->
+<!--                            </li>-->
+<!--                            {% endif %}-->
+<!--                            {% endfor %}-->
+<!--                            {% endif %}-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="gallery-container">
             {% for work in page_obj %}
             <div class="col-lg-4 col-md-6 gallery-item filter-{{ work.title|first|upper }}">
@@ -113,29 +113,29 @@
             <p>No artworks found.</p>
             {% endfor %}
         </div>
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-            <a href="?page=1{% if current_letter %}&letter={{ current_letter }}{% endif %}">&laquo;</a>
-            <a href="?page={{ page_obj.previous_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&lsaquo;</a>
-            {% else %}
-            <span class="disabled">&laquo;</span>
-            <span class="disabled">&lsaquo;</span>
-            {% endif %}
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <span class="current-page">{{ num }}</span>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-            <a href="?page={{ num }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">{{ num }}</a>
-            {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&rsaquo;</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&raquo;</a>
-            {% else %}
-            <span class="disabled">&rsaquo;</span>
-            <span class="disabled">&raquo;</span>
-            {% endif %}
-        </div>
+<!--        <div class="pagination">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--            <a href="?page=1{% if current_letter %}&letter={{ current_letter }}{% endif %}">&laquo;</a>-->
+<!--            <a href="?page={{ page_obj.previous_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&lsaquo;</a>-->
+<!--            {% else %}-->
+<!--            <span class="disabled">&laquo;</span>-->
+<!--            <span class="disabled">&lsaquo;</span>-->
+<!--            {% endif %}-->
+<!--            {% for num in page_obj.paginator.page_range %}-->
+<!--            {% if page_obj.number == num %}-->
+<!--            <span class="current-page">{{ num }}</span>-->
+<!--            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}-->
+<!--            <a href="?page={{ num }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">{{ num }}</a>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
+<!--            {% if page_obj.has_next %}-->
+<!--            <a href="?page={{ page_obj.next_page_number }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&rsaquo;</a>-->
+<!--            <a href="?page={{ page_obj.paginator.num_pages }}{% if current_letter %}&letter={{ current_letter }}{% endif %}">&raquo;</a>-->
+<!--            {% else %}-->
+<!--            <span class="disabled">&rsaquo;</span>-->
+<!--            <span class="disabled">&raquo;</span>-->
+<!--            {% endif %}-->
+<!--        </div>-->
     </section>
 
     <!-- End My gallery Section -->
