@@ -180,32 +180,11 @@ class AnswerGenerator:
                 )
                 # choices = completion.choices
                 answer = completion.choices[0].message["content"]
+                print('completition answer', answer)
                 chat = analyze_answer(answer, question, language, artwork)
-                # answer_dic = analyze_answer(answer, question, language)
-                # normalized_question = normalize_question(question)
-                # unresolved = any(keyword in answer for keyword in i_dont_know_any_language[language])
-                # if not unresolved:
-                #     if artwork_title not in self.solved_questions:
-                #         self.solved_questions[artwork_title] = {"QA_pairs": []}
-                #     # Check if the question-answer pair already exists
-                #     qa_pairs = self.solved_questions[artwork_title]["QA_pairs"]
-                #     if not any(normalize_question(pair["question"]) == normalized_question for pair in qa_pairs):
-                #         self.solved_questions[artwork_title]["QA_pairs"].append({
-                #             "question": question,
-                #             "answer": answer_dic['answer']
-                #         })
-                # else:
-                #     if artwork_title not in self.unresolved_questions:
-                #         self.unresolved_questions[artwork_title] = {"unresolved": []}
-                #     unresolved_q = self.unresolved_questions[artwork_title]["unresolved"]
-                #     normalized_unresolved_q = [normalize_question(q) for q in unresolved_q]
-                #     if normalized_question not in normalized_unresolved_q:
-                #         self.unresolved_questions[artwork_title]["unresolved"].append(question)
 
                 self.last_question = question
                 self.last_answer = chat.answer
-                # self.last_answer = answer_dic['answer translated'] if is_english(answer_dic['answer']) and answer_dic[
-                #     'question language'].startswith("English") != True else answer_dic['answer']
 
                 self.save_data()
                 break  # Break the loop if the API call is successful
@@ -225,7 +204,7 @@ class AnswerGenerator:
 def encode_image(image_path):
     print(image_path)
     base_dir = os.path.dirname(__file__)
-    print(base_dir)# get the directory of the current script
+    print(base_dir)  # get the directory of the current script
     full_path = os.path.join(base_dir, '..', image_path.lstrip('/'))  # construct the full path
     print(full_path)
     with open(full_path, "rb") as image_file:
@@ -274,6 +253,8 @@ def extract_json(answer):
         start_index = answer.index("{")
         end_index = answer.rindex("}") + 1
         json_part = answer[start_index:end_index]
+        json_part = json_part.replace(': True', ': true').replace(': False', ': false')
+        print('Answer:', answer)
         print('JSON content found:', repr(json_part))
         try:
             return json.loads(json_part)

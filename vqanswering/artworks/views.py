@@ -197,7 +197,7 @@ def add_artworks_via_folder(request):
                 subject=extracted_data['Subject'],
                 type_of_object=extracted_data['Type of Object'],
                 century=century,
-                validated_by=extracted_data['Validated by'],
+                description_validated_by=extracted_data['Validated by'],
                 web_link=extracted_data['Link'],
                 link=masterpiece,
             )
