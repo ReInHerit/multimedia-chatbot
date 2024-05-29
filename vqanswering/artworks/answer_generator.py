@@ -124,11 +124,14 @@ class AnswerGenerator:
             "- Answer in the same language as the question. "
             "- Answer within 30 words "
             "- If the question is unrelated to the artwork, please state so. "
-            "- If there's difficulty understanding the question or if the question is not comprehensible, explicitly state that and ask the user to reformulate the question. Use one of these responses: "
+            "- If there's difficulty understanding the question or if the question is not comprehensible, "
+            "explicitly state that and ask the user to reformulate the question. Use one of these responses: "
             "'I'm sorry, I didn't understand the question. Could you please reformulate it?' "
             "'I didn't catch that. Could you clarify your question?' "
-            "'Your question is not clear to me. Could you please rephrase?' "            "- If the information is not available in the context, try your best to generate an answer based on the available information. "
-            "If you can't provide an answer, then you can randomly use one of these possible responses: "
+            "'Your question is not clear to me. Could you please rephrase?' "            
+            "- If the information is not available in the context, try your best to generate an answer based on the "
+            "available information. If you can't provide an answer, then you can randomly use one of these possible "
+            "responses: "
             "'I'm sorry, but I don't have that information in the context provided.' "
             "'I apologize, but I can't find that information in the details I have.' "
             "'Sorry, I don't have those details in the given context.' "
@@ -149,11 +152,12 @@ class AnswerGenerator:
             '"understood": "True if question is understood, False if not understood"'
             '}'
         )
-        prompt = f"Consider the artwork titled '{artwork_title}' and its Context. " \
-                 f"Context: {context}. \n" \
-                 f"Question: {question}. \n" \
+        prompt = (f"You are an assistant for question-answering tasks. Consider the artwork titled '{artwork_title}' "
+                  f"and use the following pieces of retrieved Context to answer the question "
+                 f"Context: {context}. \n"
+                 f"Question: {question}. \n"
                  f"Answer:"
-
+                  )
         if self.last_question != "" and self.last_answer != "":
             system_prompt += (f" - If the current question is the same as the last question, generate a different "
                               f"response to avoid repetition. Last Q: {self.last_question} Last A: {self.last_answer} \n")

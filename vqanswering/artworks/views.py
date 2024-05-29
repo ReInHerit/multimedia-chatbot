@@ -121,7 +121,10 @@ def handle_chat_question(request):
     if artwork is None:
         return JsonResponse({'answer': 'Artwork not found'})
 
-    context = artwork.description
+    context = artwork.descriptioncontext = (artwork.description + " year: " + str(artwork.year) + " subject: " +
+                                            artwork.subject + " type of object: " + artwork.type_of_object +
+                                            " materials and techniques: " + artwork.materials_and_techniques +
+                                            " measurament: " + artwork.measurement + " maker: " + artwork.maker)
     title = artwork.title
     print(title)
     answer = AnswerGenerator().produce_answer(question, language, title, context, artwork.thumb_image)
