@@ -178,21 +178,19 @@ h1, h2, h3, h4, h5, h6 {
         content: "\ea9d";
     }
 }
-
+/*.icofont-navigation-menu:before {*/
+/*        content: "\efa2";*/
+/*}*/
 /* Mobile Navigation */
 .mobile-nav-toggle {
     position: fixed;
-    top: 1vh;
     right: 1vw;
+    padding-top: 10;
     z-index: 9998;
     border: 0;
     background: none;
     font-size: 5vh;
     transition: all 0.4s;
-    /*outline: none !important;*/
-    /*line-height: 1;*/
-    /*cursor: pointer;*/
-    /*text-align: right;*/
 }
 
 .mobile-nav-toggle i {
@@ -353,6 +351,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .section-title p {
         font-size: 2.5vw;
+        padding: 0 10px;
     }
 }
 
@@ -558,8 +557,9 @@ h1, h2, h3, h4, h5, h6 {
 #artwork-info{
     display: flex;
     max-height: 30%;
+    padding: 0 0 10px;
     flex-direction: row;
-            width: 100%;
+    width: 100%;
     justify-content: space-between;
 }
 .title {
@@ -591,7 +591,7 @@ h1, h2, h3, h4, h5, h6 {
 #painting_link {
     max-width: 100%;
     /*height: auto;*/
-    max-height: 60vh;
+    max-height: 58vh;
     border-radius: 1vh;
 }
 
@@ -662,7 +662,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     #artwork-card #painting_link {
-        max-height: 36vh;
+        max-height: 33vh;
     }
 
 }
@@ -959,19 +959,28 @@ input {
 /*--------------------------------------------------------------
 # HOME CAROUSEL
 --------------------------------------------------------------*/
-.owl-carousel, .owl-carousel .owl-item {
-    max-height: 63.5vh;
-    width: 50vw
+.section-carousel {
+    width: 90vw;
+    max-height: 70vh;
 }
-.owl-item{
-    padding: 0 1vw;
-}
-.owl-carousel .owl-item img {
-    max-height: 55vh;
-    margin: auto;
+.carousel, .carousel-item {
+    max-height: 70.5vh;
+    width: 90vw;
 }
 
-.owl-dots {
+.carousel-item {
+    padding: 0 1vw;
+}
+
+.carousel-item img {
+    max-width: 90vw;
+    max-height: 52vh;
+    object-fit: contain;
+    width: auto;
+    height: auto;
+}
+
+.carousel-indicators {
     display: none;
 }
 

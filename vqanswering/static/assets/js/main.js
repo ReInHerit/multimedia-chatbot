@@ -171,3 +171,12 @@ window.onclick = function (event) {
         }
     }
 }
+window.onload = function () {
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+        alert("Kindly utilize an alternative browser for accessing the game. Safari is not compatible. Recommended browsers include Chrome, Firefox, and Edge.");
+    } else {
+        console.log("Not Safari")
+    }
+
+}
