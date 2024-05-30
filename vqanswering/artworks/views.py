@@ -116,18 +116,10 @@ def handle_chat_question(request):
     address_link = url.rsplit('gallery/')[1][:-1]
     decoded_link = urllib.parse.unquote(address_link)
     artwork = Artwork.objects.filter(link__iexact=decoded_link).first()
-    # print("in handle chat", decoded_link)
-    # print("artwork image", artwork.image)
     if artwork is None:
         return JsonResponse({'answer': 'Artwork not found'})
 
-    context = artwork.descriptioncontext = (artwork.description + " year: " + str(artwork.year) + " subject: " +
-                                            artwork.subject + " type of object: " + artwork.type_of_object +
-                                            " materials and techniques: " + artwork.materials_and_techniques +
-                                            " measurament: " + artwork.measurement + " maker: " + artwork.maker)
-    title = artwork.title
-    print(title)
-    answer = AnswerGenerator().produce_answer(question, language, title, context, artwork.thumb_image)
+    answer = AnswerGenerator().produce_answer(question, language, artwork)
 
     return JsonResponse({'answer': answer})
 

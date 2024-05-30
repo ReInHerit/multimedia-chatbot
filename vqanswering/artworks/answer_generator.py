@@ -109,14 +109,20 @@ class AnswerGenerator:
         with open("static/assets/json/unresolved_questions.json", "w", encoding='utf-8') as json_file:
             json.dump(self.unresolved_questions, json_file, indent=2, ensure_ascii=False)
 
-    def produce_answer(self, question, language, artwork_title, context, IMAGE_PATH):
-        if artwork_title != self.last_artwork_title:
+    def produce_answer(self, question, language, artwork):
+        context = (artwork.description + " year: " + str(artwork.year) + " subject: " + artwork.subject +
+                   " type of object: " + artwork.type_of_object +
+                   " materials and techniques: " + artwork.materials_and_techniques +
+                   " measurament: " + artwork.measurement + " maker: " + artwork.maker)
+        title = artwork.title
+        image_path = artwork.thumb_image
+        if title != self.last_artwork_title:
             # Reset last_question and last_answer if artwork_title has changed
             self.last_question = ""
             self.last_answer = ""
             print('resetted last question and last answer')
-        self.last_artwork_title = artwork_title
-        base64_image = encode_image(IMAGE_PATH)
+        self.last_artwork_title = title
+        base64_image = encode_image(image_path)
         system_prompt = (
             "Follow these steps to answer the user question: "
             "Step 1: Read the question carefully, understand it and remember the language it has been written. "
@@ -152,7 +158,7 @@ class AnswerGenerator:
             '"understood": "True if question is understood, False if not understood"'
             '}'
         )
-        prompt = (f"You are an assistant for question-answering tasks. Consider the artwork titled '{artwork_title}' "
+        prompt = (f"You are an assistant for question-answering tasks. Consider the artwork titled '{title}' "
                   f"and use the following pieces of retrieved Context to answer the question "
                  f"Context: {context}. \n"
                  f"Question: {question}. \n"
@@ -162,11 +168,10 @@ class AnswerGenerator:
             system_prompt += (f" - If the current question is the same as the last question, generate a different "
                               f"response to avoid repetition. Last Q: {self.last_question} Last A: {self.last_answer} \n")
         print(language)
-        answer = ""
+
         retry_count = 0
         max_retries = 3
         retry_delay = 1  # seconds
-        artwork = Artwork.objects.filter(title__iexact=artwork_title).first()
         while retry_count < max_retries:
             try:
                 completion = openai.ChatCompletion.create(
@@ -201,7 +206,6 @@ class AnswerGenerator:
             time.sleep(retry_delay)
 
         print('answer', chat.answer)
-        print(self.last_answer)
         return self.last_answer
 
 
@@ -213,10 +217,6 @@ def encode_image(image_path):
     print(full_path)
     with open(full_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
-
-
-def normalize_question(question):
-    return question.lower().translate(str.maketrans('', '', string.punctuation))
 
 
 def is_english(text):
@@ -294,7 +294,7 @@ def analyze_answer(answer, question, language, artwork):
     # Extract JSON content
     json_dict = extract_json(answer)
     if json_dict:
-        if check_existing_qa(artwork, question, json_dict['answer'], json_dict['question language'], json_dict['resolved']):
+        if check_existing_qa(artwork, question, json_dict['answer'], json_dict['resolved']):
             print('Similar Q&A already exists in the database.')
             return None
         else:
@@ -310,7 +310,7 @@ def analyze_answer(answer, question, language, artwork):
     print('Handle keyword-based responses')
     keyword_response = handle_keyword_responses(answer, question, language)
     if keyword_response:
-        if check_existing_qa(artwork, question, keyword_response['answer'], keyword_response['question language'], False):
+        if check_existing_qa(artwork, question, keyword_response['answer'], False):
             print('Similar Q&A already exists in the database.')
             return None
         else:
@@ -325,7 +325,7 @@ def analyze_answer(answer, question, language, artwork):
 
     print(' Default case: No JSON content or keyword match')
     translated_answer = answer if is_english(question) else i_dont_know_any_language.get(language, [answer])[0]
-    if check_existing_qa(artwork, question, translated_answer, "English (United Kingdom)" if is_english(question) else language, True):
+    if check_existing_qa(artwork, question, translated_answer, True):
         print('Similar Q&A already exists in the database.')
         return None
     else:
@@ -337,12 +337,13 @@ def analyze_answer(answer, question, language, artwork):
             resolved=True
         )
         return chat
-def check_existing_qa(artwork, question, answer, language, resolved):
+
+
+def check_existing_qa(artwork, question, answer, resolved):
     existing_chat = Chat.objects.filter(
         artwork=artwork,
         question=question,
         answer=answer,
-        question_language=language,
         resolved=resolved
     )
     return existing_chat.exists()
