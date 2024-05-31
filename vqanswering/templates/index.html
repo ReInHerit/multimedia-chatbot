@@ -28,11 +28,15 @@
     <link href="{% static 'assets/css/vqa_style.css' %}" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ga_key}}"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-      gtag('config', "{{ga_key}}");
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', "{{ga_key}}");
     </script>
 </head>
 
@@ -57,38 +61,54 @@
 
 <main id="main">
     <!-- ======= Portfolio Details Section ======= -->
-        <div id="home_container">
+    <div id="home_container">
 
-            <div class="section-title">
-                <h2>Welcome to Viola</h2>
-                <p>The first <strong>V</strong>isual <strong>I</strong>ntelligence <strong>O</strong>n<strong>L</strong>ine <strong>A</strong>rt-assistant AI for artwork's images which uses visual content and text description.</p>
+        <div class="section-title">
+            <h2>Welcome to Viola</h2>
+            <p>The first <strong>V</strong>isual <strong>I</strong>ntelligence <strong>O</strong>n<strong>L</strong>ine
+                <strong>A</strong>rt-assistant AI for artwork's images which uses visual content and text description.
+            </p>
 
-            </div>
-
-
-            <div class="section-carousel">
-                <div class="owl-carousel portfolio-details-carousel">
-                    <a href="{% url 'gallery_view' %}">
-                        <img src="{% static 'assets/img/portfolio/Cherry_Rage_1920.jpg' %}" class="img-fluid"
-                             alt="venere-preview">
-                    </a>
-                    <a href="{% url 'gallery_view' %}">
-                        <img src="{% static 'assets/img/portfolio/Cycladic_Figurine.png' %}" class="img-fluid"
-                             alt="dejeuner-sur-herbe-preview">
-                    </a>
-                    <a href="{% url 'gallery_view' %}">
-                        <img src="{% static 'assets/img/portfolio/Pyxis_with_Lid.png' %}" class="img-fluid"
-                             alt="persistence-of-memory-preview">
-                    </a>
-                </div>
-
-
-            </div>
-            <div class="link-block">
-                    <h3><a class=link-button href="{% url 'gallery_view' %}">Select an artwork and ask a question</a></h3>
-                </div>
         </div>
-<!--    </section>-->
+
+
+        <div class="section-carousel">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="{% url 'gallery_view' %}">
+                            <img src="{% static 'assets/img/portfolio/Cherry_Rage_1920.jpg' %}" class="d-block w-100"
+                                 alt="venere-preview">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{% url 'gallery_view' %}">
+                            <img src="{% static 'assets/img/portfolio/Cycladic_Figurine.png' %}" class="d-block w-100"
+                                 alt="dejeuner-sur-herbe-preview">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{% url 'gallery_view' %}">
+                            <img src="{% static 'assets/img/portfolio/Pyxis_with_Lid.png' %}" class="d-block w-100"
+                                 alt="persistence-of-memory-preview">
+                        </a>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="link-block">
+            <h3><a class=link-button href="{% url 'gallery_view' %}">Select an artwork and ask a question</a></h3>
+        </div>
+    </div>
+    <!--    </section>-->
 
 </main>
 <!-- End #main -->
@@ -99,16 +119,20 @@
         <h3><em>Re</em><strong>InHerit</strong> Toolkit - Multimedia ChatBot </h3>
 
         <div class="social-links">
-            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i class="bx bxl-twitter"></i></a>
-            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i class="bx bxl-facebook"></i></a>
-            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i class="bx bxl-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube" class="youtube"><i class="bx bxl-youtube"></i></a>
+            <a href="https://twitter.com/reinherit_" target="_blank" title="twitter" class="twitter"><i
+                    class="bx bxl-twitter"></i></a>
+            <a href="https://www.facebook.com/ReInHerit/" target="_blank" title="facebook" class="facebook"><i
+                    class="bx bxl-facebook"></i></a>
+            <a href="https://www.instagram.com/reinherit_/" target="_blank" title="instagram" class="instagram"><i
+                    class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/reinherit-h2020" target="_blank" title="linkedin"
+               class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCWg6SySC2I-RQ41qjxZmTmA" target="_blank" title="youtube"
+               class="youtube"><i class="bx bxl-youtube"></i></a>
         </div>
     </div>
 </footer>
 <!-- End Footer -->
-
 
 
 <!-- Libraries JS Files -->

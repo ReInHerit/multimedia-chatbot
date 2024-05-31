@@ -109,14 +109,20 @@ class AnswerGenerator:
         with open("static/assets/json/unresolved_questions.json", "w", encoding='utf-8') as json_file:
             json.dump(self.unresolved_questions, json_file, indent=2, ensure_ascii=False)
 
-    def produce_answer(self, question, language, artwork_title, context, IMAGE_PATH):
-        if artwork_title != self.last_artwork_title:
+    def produce_answer(self, question, language, artwork):
+        context = (artwork.description + " year: " + str(artwork.year) + " subject: " + artwork.subject +
+                   " type of object: " + artwork.type_of_object +
+                   " materials and techniques: " + artwork.materials_and_techniques +
+                   " measurament: " + artwork.measurement + " maker: " + artwork.maker)
+        title = artwork.title
+        image_path = artwork.thumb_image
+        if title != self.last_artwork_title:
             # Reset last_question and last_answer if artwork_title has changed
             self.last_question = ""
             self.last_answer = ""
             print('resetted last question and last answer')
-        self.last_artwork_title = artwork_title
-        base64_image = encode_image(IMAGE_PATH)
+        self.last_artwork_title = title
+        base64_image = encode_image(image_path)
         system_prompt = (
             "Follow these steps to answer the user question: "
             "Step 1: Read the question carefully, understand it and remember the language it has been written. "
@@ -124,11 +130,14 @@ class AnswerGenerator:
             "- Answer in the same language as the question. "
             "- Answer within 30 words "
             "- If the question is unrelated to the artwork, please state so. "
-            "- If there's difficulty understanding the question or if the question is not comprehensible, explicitly state that and ask the user to reformulate the question. Use one of these responses: "
+            "- If there's difficulty understanding the question or if the question is not comprehensible, "
+            "explicitly state that and ask the user to reformulate the question. Use one of these responses: "
             "'I'm sorry, I didn't understand the question. Could you please reformulate it?' "
             "'I didn't catch that. Could you clarify your question?' "
-            "'Your question is not clear to me. Could you please rephrase?' "            "- If the information is not available in the context, try your best to generate an answer based on the available information. "
-            "If you can't provide an answer, then you can randomly use one of these possible responses: "
+            "'Your question is not clear to me. Could you please rephrase?' "            
+            "- If the information is not available in the context, try your best to generate an answer based on the "
+            "available information. If you can't provide an answer, then you can randomly use one of these possible "
+            "responses: "
             "'I'm sorry, but I don't have that information in the context provided.' "
             "'I apologize, but I can't find that information in the details I have.' "
             "'Sorry, I don't have those details in the given context.' "
@@ -149,20 +158,20 @@ class AnswerGenerator:
             '"understood": "True if question is understood, False if not understood"'
             '}'
         )
-        prompt = f"Consider the artwork titled '{artwork_title}' and its Context. " \
-                 f"Context: {context}. \n" \
-                 f"Question: {question}. \n" \
+        prompt = (f"You are an assistant for question-answering tasks. Consider the artwork titled '{title}' "
+                  f"and use the following pieces of retrieved Context to answer the question "
+                 f"Context: {context}. \n"
+                 f"Question: {question}. \n"
                  f"Answer:"
-
+                  )
         if self.last_question != "" and self.last_answer != "":
             system_prompt += (f" - If the current question is the same as the last question, generate a different "
                               f"response to avoid repetition. Last Q: {self.last_question} Last A: {self.last_answer} \n")
         print(language)
-        answer = ""
+
         retry_count = 0
         max_retries = 3
         retry_delay = 1  # seconds
-        artwork = Artwork.objects.filter(title__iexact=artwork_title).first()
         while retry_count < max_retries:
             try:
                 completion = openai.ChatCompletion.create(
@@ -181,31 +190,9 @@ class AnswerGenerator:
                 # choices = completion.choices
                 answer = completion.choices[0].message["content"]
                 chat = analyze_answer(answer, question, language, artwork)
-                # answer_dic = analyze_answer(answer, question, language)
-                # normalized_question = normalize_question(question)
-                # unresolved = any(keyword in answer for keyword in i_dont_know_any_language[language])
-                # if not unresolved:
-                #     if artwork_title not in self.solved_questions:
-                #         self.solved_questions[artwork_title] = {"QA_pairs": []}
-                #     # Check if the question-answer pair already exists
-                #     qa_pairs = self.solved_questions[artwork_title]["QA_pairs"]
-                #     if not any(normalize_question(pair["question"]) == normalized_question for pair in qa_pairs):
-                #         self.solved_questions[artwork_title]["QA_pairs"].append({
-                #             "question": question,
-                #             "answer": answer_dic['answer']
-                #         })
-                # else:
-                #     if artwork_title not in self.unresolved_questions:
-                #         self.unresolved_questions[artwork_title] = {"unresolved": []}
-                #     unresolved_q = self.unresolved_questions[artwork_title]["unresolved"]
-                #     normalized_unresolved_q = [normalize_question(q) for q in unresolved_q]
-                #     if normalized_question not in normalized_unresolved_q:
-                #         self.unresolved_questions[artwork_title]["unresolved"].append(question)
 
                 self.last_question = question
                 self.last_answer = chat.answer
-                # self.last_answer = answer_dic['answer translated'] if is_english(answer_dic['answer']) and answer_dic[
-                #     'question language'].startswith("English") != True else answer_dic['answer']
 
                 self.save_data()
                 break  # Break the loop if the API call is successful
@@ -218,22 +205,17 @@ class AnswerGenerator:
             time.sleep(retry_delay)
 
         print('answer', chat.answer)
-        print(self.last_answer)
         return self.last_answer
 
 
 def encode_image(image_path):
     print(image_path)
     base_dir = os.path.dirname(__file__)
-    print(base_dir)# get the directory of the current script
+    print(base_dir)  # get the directory of the current script
     full_path = os.path.join(base_dir, '..', image_path.lstrip('/'))  # construct the full path
     print(full_path)
     with open(full_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
-
-
-def normalize_question(question):
-    return question.lower().translate(str.maketrans('', '', string.punctuation))
 
 
 def is_english(text):
@@ -274,6 +256,8 @@ def extract_json(answer):
         start_index = answer.index("{")
         end_index = answer.rindex("}") + 1
         json_part = answer[start_index:end_index]
+        json_part = json_part.replace(': True', ': true').replace(': False', ': false')
+        print('Answer:', answer)
         print('JSON content found:', repr(json_part))
         try:
             return json.loads(json_part)
@@ -309,7 +293,7 @@ def analyze_answer(answer, question, language, artwork):
     # Extract JSON content
     json_dict = extract_json(answer)
     if json_dict:
-        if check_existing_qa(artwork, question, json_dict['answer'], json_dict['question language'], json_dict['resolved']):
+        if check_existing_qa(artwork, question, json_dict['answer'], json_dict['resolved']):
             print('Similar Q&A already exists in the database.')
             return None
         else:
@@ -325,7 +309,7 @@ def analyze_answer(answer, question, language, artwork):
     print('Handle keyword-based responses')
     keyword_response = handle_keyword_responses(answer, question, language)
     if keyword_response:
-        if check_existing_qa(artwork, question, keyword_response['answer'], keyword_response['question language'], False):
+        if check_existing_qa(artwork, question, keyword_response['answer'], False):
             print('Similar Q&A already exists in the database.')
             return None
         else:
@@ -340,7 +324,7 @@ def analyze_answer(answer, question, language, artwork):
 
     print(' Default case: No JSON content or keyword match')
     translated_answer = answer if is_english(question) else i_dont_know_any_language.get(language, [answer])[0]
-    if check_existing_qa(artwork, question, translated_answer, "English (United Kingdom)" if is_english(question) else language, True):
+    if check_existing_qa(artwork, question, translated_answer, True):
         print('Similar Q&A already exists in the database.')
         return None
     else:
@@ -352,12 +336,13 @@ def analyze_answer(answer, question, language, artwork):
             resolved=True
         )
         return chat
-def check_existing_qa(artwork, question, answer, language, resolved):
+
+
+def check_existing_qa(artwork, question, answer, resolved):
     existing_chat = Chat.objects.filter(
         artwork=artwork,
         question=question,
         answer=answer,
-        question_language=language,
         resolved=resolved
     )
     return existing_chat.exists()
