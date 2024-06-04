@@ -35,4 +35,4 @@ Subject:craftsmanship, crafts, guilds, trade, ginger bread bakers, intangible cu
 Type of object: Depository furniture
 Location: Graz Museum
 Link: https://360.grazmuseum.at/en/objects/innungstruhe-der-grazer-lebzelter/    https://collection.reinherit-hub.eu/#object=184    https://reinherit-hub.eu/exhibitions/craftmanship/CraftmanshipObjects/CraftmanshipObjThree/
-Validated by: Catalin Betz - Graz Museum
+Validated by: Graz Museum
