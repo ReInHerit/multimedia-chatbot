@@ -15,6 +15,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.conf import settings
 import re
 import requests
+import tempfile
+import zipfile
 from utils.download_thumbs import create_thumb
 # views.py
 from django.core.management import call_command
@@ -47,9 +49,25 @@ def sanitize_file_name(title):
 
 
 def database_dump(request):
-    response = HttpResponse(content_type='application/json')
-    response['Content-Disposition'] = 'attachment; filename="db.json"'
-    call_command('dumpdata', stdout=response, format='json', indent=4)
+    # Create a temporary file for the JSON dump
+    dump_file_fd, dump_file_name = tempfile.mkstemp()
+    with os.fdopen(dump_file_fd, 'w', encoding='utf-8') as dump_file:
+        call_command('dumpdata', stdout=dump_file, format='json', indent=4)
+
+    # Create a temporary file for the zip file
+    zip_file_fd, zip_file_name = tempfile.mkstemp()
+    with os.fdopen(zip_file_fd, 'w+b') as zip_file:
+        with zipfile.ZipFile(zip_file, 'w', zipfile.ZIP_DEFLATED) as archive:
+            archive.write(dump_file_name, arcname='db.json')
+
+        # Create the response
+        response = HttpResponse(open(zip_file_name, 'rb'), content_type='application/zip')
+        response['Content-Disposition'] = 'attachment; filename="db.zip"'
+
+    # Delete the temporary files
+    os.remove(dump_file_name)
+    os.remove(zip_file_name)
+
     return response
 
 

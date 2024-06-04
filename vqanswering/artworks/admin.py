@@ -27,16 +27,6 @@ class ChatAdmin(admin.ModelAdmin):
 
     actions = ['delete_selected_chats']
 
-    # def download_database_dump(self, request, queryset):
-    #     return HttpResponseRedirect(reverse('database_dump'))
-    #
-    # download_database_dump.short_description = 'Download database dump'
-    #
-    # def response_action(self, request, queryset):
-    #     if "download_database_dump" in request.POST:
-    #         return self.download_database_dump(request, queryset)
-    #     return super().response_action(request, queryset)
-
 
 admin.site.register(Chat, ChatAdmin)
 admin.site.site_header = 'ReInHerit VIOLA Admin'

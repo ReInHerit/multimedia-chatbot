@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-CSRF_TRUSTED_ORIGINS = ['https://reinherit-multimedia-chatbot.herokuapp.com', "http://localhost:8000"]
+CSRF_TRUSTED_ORIGINS = ['https://reinherit-multimedia-chatbot.herokuapp.com',"http://localhost:8000"]
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
