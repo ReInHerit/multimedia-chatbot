@@ -29,7 +29,24 @@ SECRET_KEY = django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
+if os.getenv('HEROKU', 'False') == 'True':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('JAWSDB_DBNAME'),
+            'USER': os.getenv('JAWSDB_USERNAME'),
+            'PASSWORD': os.getenv('JAWSDB_PASSWORD'),
+            'HOST': os.getenv('JAWSDB_HOST'),
+            'PORT': os.getenv('JAWSDB_PORT', '3306'),
+        }
+    }
 ALLOWED_HOSTS = ['*']
 
 # Application definition
