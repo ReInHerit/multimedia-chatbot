@@ -3,11 +3,12 @@ FROM --platform=linux/amd64 python:3.9-slim-buster
 WORKDIR /webapp
 
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y gcc default-libmysqlclient-dev pkg-config && \
+    pip install -r requirements.txt
 
 COPY package.json ./
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y npm
+RUN apt-get install -y npm
 RUN npm install --force
 
 COPY . .

@@ -20,59 +20,10 @@ openai.api_key = os.getenv('OPENAI_KEY')
 model_engine = "gpt-4o-2024-05-13"  # "gpt-4-0125-preview""text-davinci-003""gpt-4"gpt-3.5-turbo-1106  gpt-3.5-turbo-0125
 
 
-# i_dont_know_answer = ["I don't have this information",
-#                       "The context does not provide any",
-#                       "The context provided does not",
-#                       "not specified in the provided",
-#                       "there is no information"]
-#
-# i_dont_know_any_language = {
-#     "English": [
-#         "I don't have this information",
-#         "The context does not provide any",
-#         "The context provided does not",
-#         "not specified in the provided",
-#         "there is no information"
-#     ],
-#     "Italian": [
-#         "Non ho queste informazioni",
-#         "Il contesto non fornisce alcuna informazione",
-#         "Il contesto fornito non fornisce",
-#         "non specificato nel fornito",
-#         "non c'è alcuna informazione"
-#     ],
-#     "French": [
-#         "Je n'ai pas cette information",
-#         "Le contexte ne fournit aucune information",
-#         "Le contexte fourni ne fournit pas",
-#         "non spécifié dans le fourni",
-#         "il n'y a pas d'information"
-#     ],
-#     "German": [
-#         "Ich habe diese Informationen nicht",
-#         "Der Kontext liefert keine Informationen",
-#         "Der bereitgestellte Kontext liefert nicht",
-#         "nicht im bereitgestellten spezifiziert",
-#         "es gibt keine Informationen"
-#     ],
-#     "Greek": [
-#         "Δεν έχω αυτές τις πληροφορίες",
-#         "Ο περιβάλλοντας χώρος δεν παρέχει καμία πληροφορία",
-#         "Ο παρεχόμενος περιβάλλοντας χώρος δεν παρέχει",
-#         "δεν προσδιορίζεται στο παρεχόμενο",
-#         "δεν υπάρχουν πληροφορίες"
-#     ]
-# }
-
-
-def load_i_dont_know_any_language():
-    with open("static/assets/json/i_dont_know_any_language.json", "r", encoding='utf-8') as json_file:
-        i_dont_know_any_language = json.load(json_file)
-    return i_dont_know_any_language
-
-
 def load_json_file(file):
+    print('before opening json file')
     with open(file, "r", encoding='utf-8') as json_file:
+        print('..opening json file')
         data = json.load(json_file)
     return data
 
@@ -90,30 +41,14 @@ class AnswerGenerator:
             cls._instance.last_question = ""
             cls._instance.last_answer = ""
             cls._instance.last_artwork_title = ""
-            cls._instance.unresolved_questions = {}
-            cls._instance.solved_questions = {}
-            cls._instance.load_existing_data()
         return cls._instance
 
-    def load_existing_data(self):
-        if os.path.exists("static/assets/json/qa_pairs.json"):
-            with open("static/assets/json/qa_pairs.json", "r", encoding='utf-8') as json_file:
-                self.solved_questions = json.load(json_file)
-        if os.path.exists("static/assets/json/unresolved_questions.json"):
-            with open("static/assets/json/unresolved_questions.json", "r", encoding='utf-8') as json_file:
-                self.unresolved_questions = json.load(json_file)
-
-    def save_data(self):
-        with open("static/assets/json/qa_pairs.json", "w", encoding='utf-8') as json_file:
-            json.dump(self.solved_questions, json_file, indent=2, ensure_ascii=False)
-        with open("static/assets/json/unresolved_questions.json", "w", encoding='utf-8') as json_file:
-            json.dump(self.unresolved_questions, json_file, indent=2, ensure_ascii=False)
-
     def produce_answer(self, question, language, artwork):
-        context = (artwork.description + " year: " + str(artwork.year) + " subject: " + artwork.subject +
+        context = (artwork.description + " year: " + str(artwork.year) + " time-period: " + str(artwork.time_period) + " subject: " + artwork.subject +
                    " type of object: " + artwork.type_of_object +
                    " materials and techniques: " + artwork.materials_and_techniques +
                    " measurament: " + artwork.measurement + " maker: " + artwork.maker)
+        print('context:' ,context)
         title = artwork.title
         image_path = artwork.thumb_image
         if title != self.last_artwork_title:
@@ -191,11 +126,9 @@ class AnswerGenerator:
                 answer = completion.choices[0].message["content"]
                 print('completition answer', answer)
                 chat = analyze_answer(answer, question, language, artwork)
-
                 self.last_question = question
                 self.last_answer = chat.answer
 
-                self.save_data()
                 break  # Break the loop if the API call is successful
             except openai.error.OpenAIError as e:
                 print("An error occurred: {}".format(e))
@@ -294,56 +227,36 @@ def analyze_answer(answer, question, language, artwork):
     # Extract JSON content
     json_dict = extract_json(answer)
     if json_dict:
-        if check_existing_qa(artwork, question, json_dict['answer'], json_dict['resolved']):
-            print('Similar Q&A already exists in the database.')
-            return None
-        else:
-            chat = Chat.objects.create(
-                artwork=artwork,
-                question=question,
-                answer=json_dict['answer'],
-                question_language=json_dict['question language'],
-                resolved=json_dict['resolved']
-            )
-            return chat
+        chat = Chat.objects.create(
+            artwork=artwork,
+            question=question,
+            answer=json_dict['answer'],
+            question_language=json_dict['question language'],
+            resolved=json_dict['resolved']
+        )
+        return chat
 
     print('Handle keyword-based responses')
     keyword_response = handle_keyword_responses(answer, question, language)
     if keyword_response:
-        if check_existing_qa(artwork, question, keyword_response['answer'], False):
-            print('Similar Q&A already exists in the database.')
-            return None
-        else:
-            chat = Chat.objects.create(
-                artwork=artwork,
-                question=question,
-                answer=keyword_response['answer'],
-                question_language=keyword_response['question language'],
-                resolved=False
-            )
-            return chat
-
-    print(' Default case: No JSON content or keyword match')
-    translated_answer = answer if is_english(question) else i_dont_know_any_language.get(language, [answer])[0]
-    if check_existing_qa(artwork, question, translated_answer, True):
-        print('Similar Q&A already exists in the database.')
-        return None
-    else:
         chat = Chat.objects.create(
             artwork=artwork,
             question=question,
-            answer=translated_answer,
-            question_language="English (United Kingdom)" if is_english(question) else language,
-            resolved=True
+            answer=keyword_response['answer'],
+            question_language=keyword_response['question language'],
+            resolved=False
         )
         return chat
 
-
-def check_existing_qa(artwork, question, answer, resolved):
-    existing_chat = Chat.objects.filter(
+    print(' Default case: No JSON content or keyword match')
+    translated_answer = answer if is_english(question) else i_dont_know_any_language.get(language, [answer])[0]
+    chat = Chat.objects.create(
         artwork=artwork,
         question=question,
-        answer=answer,
-        resolved=resolved
+        answer=translated_answer,
+        question_language="English (United Kingdom)" if is_english(question) else language,
+        resolved=True
     )
-    return existing_chat.exists()
+    return chat
+
+
