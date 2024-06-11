@@ -50,18 +50,19 @@ def sanitize_file_name(title):
 
 def database_dump(request):
     # Create a temporary file for the JSON dump
-    dump_file_fd, dump_file_name = tempfile.mkstemp()
-    with os.fdopen(dump_file_fd, 'w', encoding='utf-8') as dump_file:
+    with tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8') as dump_file:
         call_command('dumpdata', stdout=dump_file, format='json', indent=4)
+        dump_file_name = dump_file.name
 
     # Create a temporary file for the zip file
-    zip_file_fd, zip_file_name = tempfile.mkstemp()
-    with os.fdopen(zip_file_fd, 'w+b') as zip_file:
+    with tempfile.NamedTemporaryFile(delete=False, mode='w+b') as zip_file:
         with zipfile.ZipFile(zip_file, 'w', zipfile.ZIP_DEFLATED) as archive:
             archive.write(dump_file_name, arcname='db.json')
+        zip_file_name = zip_file.name
 
-        # Create the response
-        response = HttpResponse(open(zip_file_name, 'rb'), content_type='application/zip')
+    # Read the zip file content
+    with open(zip_file_name, 'rb') as zip_file:
+        response = HttpResponse(zip_file.read(), content_type='application/zip')
         response['Content-Disposition'] = 'attachment; filename="db.zip"'
 
     # Delete the temporary files
