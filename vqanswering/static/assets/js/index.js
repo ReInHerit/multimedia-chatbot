@@ -74,6 +74,15 @@ const goPython = (text, p_link) => {
     });
 };
 
+document.getElementById('mobile-chat-button').addEventListener('click', function() {
+    const currentUrl = window.location.href;
+    let text = document.querySelector(".input_text").value;
+    if (text !== "") {
+        insertChat("me", text);
+        goPython(text, currentUrl)
+        document.querySelector(".input_text").value = '';
+    }
+});
 $(".input_text").on("keydown", function (e) {
     if (e.which === 13) {
         const currentUrl = window.location.href;

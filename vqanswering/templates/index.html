@@ -68,45 +68,29 @@
             <p>The first <strong>V</strong>isual <strong>I</strong>ntelligence <strong>O</strong>n<strong>L</strong>ine
                 <strong>A</strong>rt-assistant AI for artwork's images which uses visual content and text description.
             </p>
-
-        </div>
-
-
-        <div class="section-carousel">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <a href="{% url 'gallery_view' %}">
-                            <img src="{% static 'assets/img/portfolio/Cherry_Rage_1920.jpg' %}" class="d-block w-100"
-                                 alt="venere-preview">
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="{% url 'gallery_view' %}">
-                            <img src="{% static 'assets/img/portfolio/Cycladic_Figurine.png' %}" class="d-block w-100"
-                                 alt="dejeuner-sur-herbe-preview">
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="{% url 'gallery_view' %}">
-                            <img src="{% static 'assets/img/portfolio/Guild_Chest.png' %}" class="d-block w-100"
-                                 alt="persistence-of-memory-preview">
-                        </a>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+            <div id="description">
+                <p>
+                The tool is part of the ReInHerit project that has received funding from the European Union’s Horizon
+                2020 research and innovation programme under grant agreement No 101004545. VIOLA is designed as a
+                user-centered tool to engage with and answer questions about artworks and their contexts. It facilitates
+                dialogue on the historical and scientific aspects, curiosities and stories behind artworks.
+                </p>
+                <p>
+                Using a collaborative and participatory approach, museum curators from ReinHerit Consortium
+                (GrazMuseum, Cycladic Museum, Bank of Cyprus Cultural Foundation) provided images and content,
+                ensuring a rich and user-oriented experience. Descriptive content is updated in steps and according
+                to users' unanswered questions.
+                </p>
+                <p><strong>Enter the Gallery and ask questions selecting an artwork!</strong></p>
             </div>
         </div>
+
         <div class="link-block">
-            <h3><a class=link-button href="{% url 'gallery_view' %}">Select an artwork and ask a question</a></h3>
+            <h3><a class=link-button href="{% url 'gallery_view' %}">ENTER THE GALLERY</a></h3>
+            <br>
+            <br>
         </div>
+
     </div>
     <!--    </section>-->
 
