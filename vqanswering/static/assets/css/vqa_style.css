@@ -18,11 +18,11 @@ body {
 
 main {
     display: inline;
-    max-height: 85vh;
+    /*max-height: 85vh;*/
     flex-grow: 1;
     overflow-x: clip;
     position: relative;
-    top: 9vh;
+    top: 8vh;
 }
 
 a:hover {
@@ -184,7 +184,7 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-nav-toggle {
     position: fixed;
     right: 1vw;
-    padding-top: 10px;
+    padding-top: 1.5vh;
     z-index: 9998;
     border: 0;
     background: none;
@@ -307,15 +307,16 @@ h1, h2, h3, h4, h5, h6 {
         transform: translateY(-5px);
     }
 }
-@media screen and (max-width: 449px) {
+@media (max-width: 449px) {
     .mobile-nav-toggle {
         font-size: 4vh;
+        padding-top: 0.5vh;
     }
 }
-@media (orientation: landscape) and (min-width: 450px){
+@media screen and (min-width: 450px){
     .mobile-nav-toggle {
         font-size: 6vh;
-        padding-top: 2px;
+        padding-top: 0;
     }
     #header {
         height: 9%;
@@ -362,23 +363,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0;
     position: relative;
     z-index: 2;
-    font-size: 1.5vw;
+    font-size: calc(max(1.5vw, 12px));;
 }
 
-@media (max-width: 459px) {
-    .section-title {
-        padding: 1vh 0 0vh 0;
-    }
-    .section-title h2 {
-        font-size: 7vw;
-        margin-bottom: 15px;
-    }
-
-    .section-title p {
-        font-size: 2.5vw;
-        padding: 0 10px;
-    }
-}
 
 /*--------------------------------------------------------------
 # Gallery
@@ -542,7 +529,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-@media screen and (min-width: 450px) and (max-width: 769px) {
+@media screen and (min-width: 450px) and (max-width: 768px) {
     #gallery-filters li {
         font-size: 2.5vw;
         margin: 0 .5vw 1vh .5vw;
@@ -583,7 +570,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     max-height: 30vh;
     min-height: 13vh;
-    padding: 0 0 10px;
+    padding: 2px 4px 5px;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
@@ -626,7 +613,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     align-items: flex-start;
     /*margin: 0 1vw;*/
-    padding: 0 0 0 5px;
+    /*padding: 0 0 0 5px;*/
     /*width: 100%;*/
     max-width: 100%;
     height: auto;
@@ -979,8 +966,8 @@ input {
 #description p, #description strong {
     font-size: calc(min(max(2vw, 15px), 15px));
     line-height: 1.5;
+    padding-top: 15px;
     text-align: left;
-    /*padding: 0 1vw;*/
 }
 #description strong {
     font-weight: 700;
@@ -991,8 +978,33 @@ input {
     -ms-animation: blink normal 2s infinite ease-in-out; /* IE */
     animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
 }
+@media screen and (min-width: 450px) and (orientation: landscape) and (max-height: 449px) {
+    #description p, #description strong {
+        font-size: 13px;
+    }
+    .mobile-nav-toggle {
+        padding-top: 0.5vh;
+    }
+}
 
 @media screen and (max-width: 449px) {
+    .section-title {
+        padding: 1vh 0 0vh 0;
+    }
+    .section-title h2 {
+        font-size: 7vw;
+        margin-bottom: 15px;
+    }
+    .section-title p {
+        font-size: 11px;
+    }
+
+    #description p, #description strong {
+        font-size: 13px;
+    }
+    #description p, .section-title p {
+        padding: 0 10px;
+    }
     #chat-section {
         width: 100vw;
         max-height: 38vh;
@@ -1044,7 +1056,7 @@ input {
         padding: 1vh 3vw;
     }
 }
-@media screen and (orientation: landscape) {
+@media screen and (orientation: landscape) and (max-width: 768px) {
     .text > p:first-of-type {
         font-size: 4vh;
     }
@@ -1102,7 +1114,7 @@ input {
     text-align: center;
     text-decoration: none;
     display: inline;
-    font-size: 2vw;
+    font-size: calc(max(1.5vw, 12px));
 }
 
 .link-button:hover {
@@ -1110,7 +1122,7 @@ input {
     color: #11303b;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
     .link-block {
         position: relative;
         margin-top: auto;
@@ -1141,7 +1153,7 @@ input {
 }
 
 #footer h3 {
-    font-size: calc(min(4vh, 30px));
+    font-size: calc(min(3vw, 30px));
     font-weight: 400;
     color: #fff;
     position: relative;
@@ -1173,7 +1185,7 @@ input {
     text-decoration: none;
 }
 
-@media screen and (min-width: 450px) and (max-width: 769px) {
+@media screen and (min-width: 450px) and (max-width: 768px) {
     /*#footer h3 {*/
     /*    font-size: 3vw;*/
     /*}*/
@@ -1319,7 +1331,7 @@ button[type="submit"]:hover {
     margin-bottom: 4vh
 }
 
-@media screen and (min-width: 450px) and (max-width: 769px) {
+@media screen and (min-width: 450px) and (max-width: 768px) {
     .large-view {
         display: block;
     }

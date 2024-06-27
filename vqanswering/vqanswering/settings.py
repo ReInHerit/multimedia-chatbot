@@ -21,10 +21,7 @@ GA_MEASUREMENT_ID = os.getenv('GA_KEY')
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 print('BASE_DIR', BASE_DIR)
 sys.path.append(os.path.join(BASE_DIR, 'utils'))
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -92,14 +89,8 @@ TEMPLATES = [
 ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 WSGI_APPLICATION = 'vqanswering.wsgi.application'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-
-CSRF_TRUSTED_ORIGINS = ['https://reinherit-multimedia-chatbot.herokuapp.com',"http://localhost:8000"]
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+CSRF_TRUSTED_ORIGINS = ['https://reinherit-multimedia-chatbot.herokuapp.com',"http://localhost:8000", "https://reinherit-test-c4a02ff84048.herokuapp.com"]
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 AUTH_PASSWORD_VALIDATORS = [

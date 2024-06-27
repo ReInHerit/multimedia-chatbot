@@ -10,4 +10,4 @@ pandas==1.5.3
 whitenoise==6.4.0
 gunicorn
 langdetect==1.0.9
-mysqlclient
+mysqlclient==2.2.4
