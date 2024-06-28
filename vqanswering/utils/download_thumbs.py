@@ -4,6 +4,7 @@ import json
 import requests
 from io import BytesIO
 from PIL import Image
+from django.conf import settings
 
 here = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.abspath(os.path.join(here, os.pardir))
@@ -31,6 +32,12 @@ def create_thumb(url_or_path, file_name):
             image = Image.open(BytesIO(response.content))
         else:
             # If the input is a local file path
+            if not os.path.isabs(url_or_path):
+                # If the path is not absolute, make it absolute
+                print('not absolute')
+                url_or_path = os.path.join(settings.BASE_DIR, url_or_path)
+                print('url_or_path', url_or_path)
+            print('absolute', url_or_path)
             image = Image.open(url_or_path)
 
         if image.mode == 'RGBA':

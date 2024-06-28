@@ -42,6 +42,9 @@ if os.getenv('HEROKU', 'False') == 'True':
             'PASSWORD': os.getenv('JAWSDB_PASSWORD'),
             'HOST': os.getenv('JAWSDB_HOST'),
             'PORT': os.getenv('JAWSDB_PORT', '3306'),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+            },
         }
     }
 ALLOWED_HOSTS = ['*']
